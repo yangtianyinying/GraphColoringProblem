@@ -780,6 +780,82 @@ button[type="button"] {
   color: var(--text-hint);
 }
 
+.btn-danger-soft {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.82rem;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: var(--radius-xs);
+  border: 1px solid rgba(160, 50, 50, 0.45);
+  background: rgba(160, 50, 50, 0.08);
+  color: #8b2a2a;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-danger-soft:hover {
+  background: rgba(160, 50, 50, 0.14);
+  border-color: rgba(160, 50, 50, 0.65);
+}
+
+.block-tree-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.block-tree-head-row strong {
+  font-weight: 700;
+}
+
+.block-tree-delete {
+  flex-shrink: 0;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.72rem;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid rgba(160, 50, 50, 0.4);
+  background: rgba(160, 50, 50, 0.06);
+  color: #8b2a2a;
+  cursor: pointer;
+}
+
+.block-tree-delete:hover {
+  background: rgba(160, 50, 50, 0.12);
+}
+
+.trial-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.trial-item-row .trial-item {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.trial-delete-btn {
+  flex-shrink: 0;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.7rem;
+  line-height: 1.2;
+  font-family: inherit;
+  border-radius: 4px;
+  border: 1px solid rgba(160, 50, 50, 0.4);
+  background: rgba(160, 50, 50, 0.06);
+  color: #8b2a2a;
+  cursor: pointer;
+}
+
+.trial-delete-btn:hover {
+  background: rgba(160, 50, 50, 0.12);
+}
+
 /* —— 实验区 —— */
 .panel-run .run-toolbar {
   margin-bottom: 1.25rem;

@@ -312,6 +312,98 @@
     renderTree();
   }
 
+  function deleteNodeFromCurrentTrial() {
+    ensureIds();
+    const trial = getCurrentTrial();
+    const sel = document.getElementById("editor-belief-node");
+    const id = sel && sel.value;
+    if (!id) {
+      alert("请先在「选择节点」中选择要删除的节点。");
+      return;
+    }
+    if (!trial.nodes.some((n) => n.id === id)) {
+      alert("该节点已不存在。");
+      return;
+    }
+    if (!confirm(`确定删除节点 ${id}？将同时移除相关边及该节点的初始着色。`)) return;
+    trial.nodes = trial.nodes.filter((n) => n.id !== id);
+    trial.edges = (trial.edges || []).filter(([u, v]) => u !== id && v !== id);
+    if (trial.initialBeliefs) delete trial.initialBeliefs[id];
+    trial.reportOrder = (trial.reportOrder || []).filter((x) => x !== id);
+    syncReportOrderFromUncolored(trial);
+    syncBeliefNodeSelect();
+    loadPickerFromBeliefSelect();
+    syncAdjMatrixTextareaFromEdges();
+    updateNodeOrderHint();
+    renderColoredPanel();
+    renderReportOrder();
+    drawEditorCanvas();
+    edgeMode = false;
+    pendingEdgeNode = null;
+    document.body.classList.remove("edge-mode");
+  }
+
+  function deleteTrialAt(bi, ti) {
+    ensureIds();
+    const total = stimulus.blocks.reduce((acc, b) => acc + b.trials.length, 0);
+    if (total <= 1) {
+      alert("至少保留一个 Trial。");
+      return;
+    }
+    if (!confirm("确定删除该 Trial？此操作不可撤销。")) return;
+    const trialRef = stimulus.blocks[bi].trials[ti];
+    stimulus.blocks[bi].trials.splice(ti, 1);
+    if (stimulus.blocks[bi].trials.length === 0) {
+      stimulus.blocks.splice(bi, 1);
+    }
+    if (stimulus.blocks.length === 0) {
+      stimulus.blocks.push({ blockId: "b1", trials: [createEmptyTrial()] });
+    }
+    let found = false;
+    stimulus.blocks.forEach((b, bbi) => {
+      b.trials.forEach((tr, tti) => {
+        if (tr === trialRef) {
+          currentBlockIdx = bbi;
+          currentTrialIdx = tti;
+          found = true;
+        }
+      });
+    });
+    if (!found) {
+      currentBlockIdx = 0;
+      currentTrialIdx = 0;
+    }
+    loadTrialToForm();
+    renderTree();
+  }
+
+  function deleteBlockAt(bi) {
+    ensureIds();
+    if (stimulus.blocks.length <= 1) {
+      alert("至少保留一个 Block。");
+      return;
+    }
+    if (!confirm("确定删除该 Block 及其全部 Trial？")) return;
+    const viewRef = getCurrentTrial();
+    stimulus.blocks.splice(bi, 1);
+    let found = false;
+    stimulus.blocks.forEach((b, bbi) => {
+      b.trials.forEach((tr, tti) => {
+        if (tr === viewRef) {
+          currentBlockIdx = bbi;
+          currentTrialIdx = tti;
+          found = true;
+        }
+      });
+    });
+    if (!found) {
+      currentBlockIdx = Math.min(bi, stimulus.blocks.length - 1);
+      currentTrialIdx = 0;
+    }
+    loadTrialToForm();
+    renderTree();
+  }
+
   function readDragPayload(e) {
     try {
       const raw = e.dataTransfer.getData("application/json");
@@ -335,8 +427,21 @@
       blockWrap.dataset.bi = String(bi);
 
       const head = document.createElement("div");
-      head.className = "block-tree-head block-tree-drop-target";
-      head.textContent = `Block ${bi + 1} (${block.blockId}) — 拖至标题可置顶`;
+      head.className = "block-tree-head block-tree-drop-target block-tree-head-row";
+      const headTitle = document.createElement("span");
+      headTitle.textContent = `Block ${bi + 1} (${block.blockId}) — 拖至标题可置顶`;
+      head.appendChild(headTitle);
+      const delBlockBtn = document.createElement("button");
+      delBlockBtn.type = "button";
+      delBlockBtn.className = "block-tree-delete";
+      delBlockBtn.textContent = "删 Block";
+      delBlockBtn.title = "删除该 Block";
+      delBlockBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        deleteBlockAt(bi);
+      });
+      head.appendChild(delBlockBtn);
       head.addEventListener("dragover", (e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = "move";
@@ -354,6 +459,8 @@
       trialsWrap.className = "block-tree-trials";
 
       block.trials.forEach((trialObj, ti) => {
+        const row = document.createElement("div");
+        row.className = "trial-item-row";
         const t = document.createElement("div");
         t.className =
           "trial-item" + (bi === currentBlockIdx && ti === currentTrialIdx ? " current" : "");
@@ -384,7 +491,19 @@
           loadTrialToForm();
           renderTree();
         });
-        trialsWrap.appendChild(t);
+        const delTrialBtn = document.createElement("button");
+        delTrialBtn.type = "button";
+        delTrialBtn.className = "trial-delete-btn";
+        delTrialBtn.textContent = "×";
+        delTrialBtn.title = "删除该 Trial";
+        delTrialBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          deleteTrialAt(bi, ti);
+        });
+        row.appendChild(t);
+        row.appendChild(delTrialBtn);
+        trialsWrap.appendChild(row);
       });
 
       const dropEnd = document.createElement("div");
@@ -787,6 +906,16 @@
       currentTrialIdx = block.trials.length - 1;
       loadTrialToForm();
       renderTree();
+    });
+
+    document.getElementById("btn-delete-node").addEventListener("click", () => {
+      deleteNodeFromCurrentTrial();
+    });
+    document.getElementById("btn-delete-trial").addEventListener("click", () => {
+      deleteTrialAt(currentBlockIdx, currentTrialIdx);
+    });
+    document.getElementById("btn-delete-block").addEventListener("click", () => {
+      deleteBlockAt(currentBlockIdx);
     });
 
     document.addEventListener("dragend", clearBlockTreeDragOver);
