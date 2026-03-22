@@ -44,26 +44,25 @@
   }
 
   /**
-   * 按 trial.nodes 顺序将节点 id 规范为 A、B、C…，并同步 edges / initialBeliefs / reportOrder。
-   * 在「应用初始信念」后调用，使每幅图编号从 A 起连续。
+   * 应用初始信念后：将「刚着色」的节点移到 trial.nodes 最前，并整体重编号为 A、B、C…
+   * （旧 B 着色后变为 A，其余按原相对顺序顺延为 B、C…）
    * @returns {Object<string,string>} oldId -> newId
    */
-  function renumberTrialNodesToLetters(trial) {
+  function renumberTrialNodesAfterApplyBelief(trial, chosenId) {
     const nodes = trial.nodes;
     if (!nodes.length) return {};
-    const oldIds = nodes.map((n) => n.id);
+    const idx = nodes.findIndex((n) => n.id === chosenId);
+    if (idx < 0) return {};
+    const chosen = nodes[idx];
+    const others = nodes.filter((_, i) => i !== idx);
+    trial.nodes = [chosen, ...others];
+
+    const oldIds = trial.nodes.map((n) => n.id);
     const newIds = sequentialLetterIds(oldIds.length);
     const map = {};
     for (let i = 0; i < oldIds.length; i++) map[oldIds[i]] = newIds[i];
-    let changed = false;
-    for (let i = 0; i < oldIds.length; i++) {
-      if (oldIds[i] !== newIds[i]) {
-        changed = true;
-        break;
-      }
-    }
-    if (!changed) return map;
-    for (const n of nodes) {
+
+    for (const n of trial.nodes) {
       n.id = map[n.id];
       n.label = n.id;
     }
@@ -825,7 +824,7 @@
       const [r, g, b] = global._editorPicker.getBelief();
       const chosenId = id;
       trial.initialBeliefs[chosenId] = [r, g, b];
-      const idMap = renumberTrialNodesToLetters(trial);
+      const idMap = renumberTrialNodesAfterApplyBelief(trial, chosenId);
       const newChosen = idMap[chosenId] != null ? idMap[chosenId] : chosenId;
       syncReportOrderFromUncolored(trial);
       syncBeliefNodeSelect(newChosen);
