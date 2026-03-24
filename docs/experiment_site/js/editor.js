@@ -43,39 +43,9 @@
     return out;
   }
 
-  /**
-   * 应用初始信念后：将「刚着色」的节点移到 trial.nodes 最前，并整体重编号为 A、B、C…
-   * （旧 B 着色后变为 A，其余按原相对顺序顺延为 B、C…）
-   * @returns {Object<string,string>} oldId -> newId
-   */
-  function renumberTrialNodesAfterApplyBelief(trial, chosenId) {
-    const nodes = trial.nodes;
-    if (!nodes.length) return {};
-    const idx = nodes.findIndex((n) => n.id === chosenId);
-    if (idx < 0) return {};
-    const chosen = nodes[idx];
-    const others = nodes.filter((_, i) => i !== idx);
-    trial.nodes = [chosen, ...others];
-
-    const oldIds = trial.nodes.map((n) => n.id);
-    const newIds = sequentialLetterIds(oldIds.length);
-    const map = {};
-    for (let i = 0; i < oldIds.length; i++) map[oldIds[i]] = newIds[i];
-
-    for (const n of trial.nodes) {
-      n.id = map[n.id];
-      n.label = n.id;
-    }
-    trial.edges = (trial.edges || []).map(([u, v]) => [map[u], map[v]]);
-    const ib = trial.initialBeliefs || {};
-    const nb = {};
-    for (const [k, v] of Object.entries(ib)) {
-      const nk = map[k];
-      if (nk != null) nb[nk] = v;
-    }
-    trial.initialBeliefs = nb;
-    trial.reportOrder = (trial.reportOrder || []).map((rid) => map[rid]).filter((x) => x != null);
-    return map;
+  function recordBeliefOperation(trial, nodeId) {
+    if (!trial.beliefApplyOrder) trial.beliefApplyOrder = [];
+    trial.beliefApplyOrder.push(nodeId);
   }
 
   function createEmptyTrial() {
@@ -87,6 +57,7 @@
       edges: [],
       initialBeliefs: {},
       reportOrder: [],
+      beliefApplyOrder: [],
     };
   }
 
@@ -330,6 +301,7 @@
     trial.edges = (trial.edges || []).filter(([u, v]) => u !== id && v !== id);
     if (trial.initialBeliefs) delete trial.initialBeliefs[id];
     trial.reportOrder = (trial.reportOrder || []).filter((x) => x !== id);
+    trial.beliefApplyOrder = (trial.beliefApplyOrder || []).filter((x) => x !== id);
     syncReportOrderFromUncolored(trial);
     syncBeliefNodeSelect();
     loadPickerFromBeliefSelect();
@@ -402,6 +374,34 @@
     }
     loadTrialToForm();
     renderTree();
+  }
+
+  function clearBeliefForSelectedNode() {
+    ensureIds();
+    const trial = getCurrentTrial();
+    const sel = document.getElementById("editor-belief-node");
+    const id = sel && sel.value;
+    if (!id) {
+      alert("请先在「选择节点」中选择要清空的节点。");
+      return;
+    }
+    if (!trial.nodes.some((n) => n.id === id)) {
+      alert("该节点已不存在。");
+      syncBeliefNodeSelect();
+      return;
+    }
+    if (!trial.initialBeliefs || !trial.initialBeliefs[id]) {
+      alert("该节点当前没有已应用的信念。");
+      return;
+    }
+    if (!confirm(`确定清空节点 ${id} 的信念？`)) return;
+    delete trial.initialBeliefs[id];
+    syncReportOrderFromUncolored(trial);
+    syncBeliefNodeSelect(id);
+    loadPickerFromBeliefSelect();
+    renderColoredPanel();
+    renderReportOrder();
+    drawEditorCanvas();
   }
 
   function readDragPayload(e) {
@@ -591,7 +591,7 @@
     const panel = document.getElementById("colored-nodes-panel");
     panel.innerHTML = "";
     const beliefs = trial.initialBeliefs || {};
-    const ids = Object.keys(beliefs);
+    const ids = trial.nodes.map((n) => n.id).filter((id) => beliefs[id]);
     if (ids.length === 0) {
       const p = document.createElement("p");
       p.className = "hint";
@@ -886,6 +886,7 @@
         edges: [],
         initialBeliefs: {},
         reportOrder: [],
+        beliefApplyOrder: [],
       };
       block.trials.push(nt);
       currentTrialIdx = block.trials.length - 1;
@@ -957,15 +958,17 @@
       const [r, g, b] = global._editorPicker.getBelief();
       const chosenId = id;
       trial.initialBeliefs[chosenId] = [r, g, b];
-      const idMap = renumberTrialNodesAfterApplyBelief(trial, chosenId);
-      const newChosen = idMap[chosenId] != null ? idMap[chosenId] : chosenId;
+      recordBeliefOperation(trial, chosenId);
       syncReportOrderFromUncolored(trial);
-      syncBeliefNodeSelect(newChosen);
+      syncBeliefNodeSelect(chosenId);
       syncAdjMatrixTextareaFromEdges();
       updateNodeOrderHint();
       renderColoredPanel();
       renderReportOrder();
       drawEditorCanvas();
+    });
+    document.getElementById("btn-clear-belief").addEventListener("click", () => {
+      clearBeliefForSelectedNode();
     });
 
     document.getElementById("btn-apply-adj-matrix").addEventListener("click", () => {
@@ -1042,6 +1045,9 @@
     if (!Array.isArray(data.blocks)) throw new Error("缺少 blocks");
     for (const block of data.blocks) {
       if (!Array.isArray(block.trials)) throw new Error("block 缺少 trials");
+      for (const trial of block.trials) {
+        if (!Array.isArray(trial.beliefApplyOrder)) trial.beliefApplyOrder = [];
+      }
     }
     stimulus = data;
     currentBlockIdx = 0;

@@ -613,6 +613,8 @@ button[type="button"] {
 
 .editor-belief-actions {
   margin: 0.65rem 0 1rem;
+  display: grid;
+  gap: 0.45rem;
 }
 
 .btn-primary-soft {

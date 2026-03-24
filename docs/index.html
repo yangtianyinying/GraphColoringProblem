@@ -73,7 +73,7 @@
               <option value="free">自由顺序 free</option>
             </select>
           </label>
-          <p class="hint">每幅图节点 ID 从 <strong>A</strong> 起、按 Trial 独立编号。每次<strong>应用初始信念</strong>后：刚着色的节点会变为 <strong>A</strong> 并排到列表最前，其余顺延为 <strong>B、C…</strong>。主实验画布：<strong>sequential</strong> 与 <strong>free</strong> 均<strong>不显示</strong> A/B…；仅显示 <strong>1、2、3…</strong>（sequential 为刺激里设定的报告顺序，free 为当场填色顺序）。</p>
+          <p class="hint">每幅图节点 ID 从 <strong>A</strong> 起、按 Trial 独立编号。已着色节点可反复修改；可对选中节点执行「清空信念」。导出会保留填色操作序列（同一节点重复填色也会逐次记录），但清空动作不进入该序列。</p>
           <p class="hint">已着色节点由下方选择节点 + 三角盘设定；被试仅报告未着色节点。</p>
           <h3>初始信念</h3>
           <label class="editor-belief-select-label">选择节点
@@ -94,6 +94,7 @@
           </div>
           <div class="editor-belief-actions">
             <button type="button" id="btn-apply-belief" class="btn-primary-soft">应用信念到选中节点</button>
+            <button type="button" id="btn-clear-belief" class="btn-danger-soft">清空选中节点信念</button>
           </div>
           <h3>已有着色节点</h3>
           <div id="colored-nodes-panel"></div>

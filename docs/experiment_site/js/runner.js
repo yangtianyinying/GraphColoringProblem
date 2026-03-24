@@ -77,6 +77,28 @@ function waitClick(el) {
   });
 }
 
+async function tryEnterFullscreen() {
+  try {
+    if (document.fullscreenElement) return;
+    if (document.documentElement.requestFullscreen) {
+      await document.documentElement.requestFullscreen();
+    }
+  } catch (e) {
+    console.warn("进入全屏失败:", e);
+  }
+}
+
+async function tryExitFullscreen() {
+  try {
+    if (!document.fullscreenElement) return;
+    if (document.exitFullscreen) {
+      await document.exitFullscreen();
+    }
+  } catch (e) {
+    console.warn("退出全屏失败:", e);
+  }
+}
+
 /**
  * 自由顺序：在画布上点未着色节点，或点「确认」。
  * 可多次点节点切换当前编辑对象；未确认则 beliefs 不会写入，节点保持空。
@@ -137,15 +159,6 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
 
   const rows = [];
   let focusedNode = null;
-  /** 固定顺序：节点上仅显示报告顺序 1、2、3…（来自 reportOrder，与节点 id 无关） */
-  const seqStepByNodeId = new Map();
-  (trial.reportOrder || []).forEach((nid, i) => {
-    seqStepByNodeId.set(nid, i + 1);
-  });
-  /** 自由顺序：已报告节点上显示 1、2、3…（当场填色顺序，非节点 id） */
-  const freeFillOrder = {};
-  let freeFillCounter = 0;
-
   function redraw(focused, liveBelief) {
     const ctx = graphCanvas.getContext("2d");
     ctx.fillStyle = rgb(THEME.background);
@@ -160,26 +173,6 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
       const isSel = remaining.has(n.id);
       const isFoc = n.id === focused;
       drawNode(ctx, pos, b, isSel, isFoc);
-      const labelPx = Math.max(10, Math.min(18, Math.round(14 * (THEME.nodeRadius / BASE_R))));
-      if (trial.orderMode === "sequential") {
-        const step = seqStepByNodeId.get(n.id);
-        if (step != null) {
-          ctx.font = `bold ${labelPx}px sans-serif`;
-          ctx.fillStyle = rgb(THEME.black);
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(String(step), pos[0], pos[1]);
-        }
-      } else if (trial.orderMode === "free") {
-        const ord = freeFillOrder[n.id];
-        if (ord != null) {
-          ctx.font = `bold ${labelPx}px sans-serif`;
-          ctx.fillStyle = rgb(THEME.black);
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(String(ord), pos[0], pos[1]);
-        }
-      }
     }
     const pctx = pickerCanvas.getContext("2d");
     pctx.fillStyle = rgb(THEME.background);
@@ -221,9 +214,8 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
       if (trial.orderMode === "sequential") {
         focusedNode = queue[0];
         picker.setBelief(1 / 3, 1 / 3, 1 / 3);
-        const stepNow = seqStepByNodeId.get(focusedNode) ?? queue.length;
         setMessage(
-          `请按顺序报告标号为 ${stepNow} 的节点。调节三角盘并点击确认。（图上数字为报告顺序，非节点名称）`
+          "请按顺序完成当前高亮节点的信念填色，调节三角盘后点击确认。"
         );
         redraw(focusedNode, picker.getBelief());
 
@@ -233,9 +225,7 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
         const [r, g, b] = picker.getBelief();
 
         if (focusedNode !== queue[0]) {
-          const should = queue[0];
-          const stepShould = seqStepByNodeId.get(should) ?? "?";
-          setMessage(`顺序错误，当前应报告标号为 ${stepShould} 的节点。`);
+          setMessage("顺序错误，请按当前高亮节点作答。");
           continue;
         }
 
@@ -286,8 +276,6 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
           const offsetMs = Math.round(performance.now());
 
           beliefs[focusedNode] = [r, g, b];
-          freeFillCounter += 1;
-          freeFillOrder[focusedNode] = freeFillCounter;
           rows.push({
             ...meta,
             step_index: rows.length + 1,
@@ -421,42 +409,47 @@ export async function startExperimentFromUi() {
     }
   }
 
-  const jsPsych = initJsPsych({
-    display_element: document.getElementById("jspsych-target"),
-    on_finish: function () {
-      try {
-        jsPsych.data.get().localSave("json", `graph_coloring_${pid}_jspsych.json`);
-      } catch (e) {
-        console.warn(e);
-      }
-    },
-  });
-
-  const timeline = [
-    {
-      type: htmlKeyboardResponse,
-      stimulus:
-        "<p>图着色信念任务：请按空格继续。</p><p>自定顺序图：按图上数字 1、2、3… 的顺序逐点报告（数字表示报告顺序，与节点后台 id 无关）。自由顺序图：点节点后调三角盘再确认；已报告节点显示当场填色顺序 1、2、3…；文字提示不暴露节点 id。</p>",
-      choices: [" "],
-    },
-    {
-      type: callFunction,
-      async: true,
-      func: async function () {
-        const rows = await runAllTrials(stimulus, pid);
-        downloadCsv(`graph_coloring_${pid}.csv`, rows);
-        downloadJson(`graph_coloring_${pid}.json`, { participant: pid, stimulus, rows });
+  await tryEnterFullscreen();
+  try {
+    const jsPsych = initJsPsych({
+      display_element: document.getElementById("jspsych-target"),
+      on_finish: function () {
+        try {
+          jsPsych.data.get().localSave("json", `graph_coloring_${pid}_jspsych.json`);
+        } catch (e) {
+          console.warn(e);
+        }
       },
-    },
-    {
-      type: htmlKeyboardResponse,
-      stimulus: "<p>实验结束。数据应已下载。按任意键关闭。</p>",
-      choices: "ALL_KEYS",
-      response_ends_trial: true,
-    },
-  ];
+    });
 
-  await jsPsych.run(timeline);
+    const timeline = [
+      {
+        type: htmlKeyboardResponse,
+        stimulus:
+          "<p>图着色信念任务：请按空格继续。</p><p>自定顺序图：按系统给出的当前高亮节点依次报告。自由顺序图：点击未着色节点后调三角盘并确认。</p>",
+        choices: [" "],
+      },
+      {
+        type: callFunction,
+        async: true,
+        func: async function () {
+          const rows = await runAllTrials(stimulus, pid);
+          downloadCsv(`graph_coloring_${pid}.csv`, rows);
+          downloadJson(`graph_coloring_${pid}.json`, { participant: pid, stimulus, rows });
+        },
+      },
+      {
+        type: htmlKeyboardResponse,
+        stimulus: "<p>实验结束。数据应已下载。按任意键关闭。</p>",
+        choices: "ALL_KEYS",
+        response_ends_trial: true,
+      },
+    ];
+
+    await jsPsych.run(timeline);
+  } finally {
+    await tryExitFullscreen();
+  }
 }
 
 document.getElementById("btn-start-exp").addEventListener("click", () => {
