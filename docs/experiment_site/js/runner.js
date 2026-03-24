@@ -45,7 +45,10 @@ function buildContainer() {
       </div>
       <div class="belief-picker-column">
         <canvas class="belief-picker-canvas" width="260" height="260"></canvas>
-        <button type="button" class="belief-confirm">确认</button>
+        <div class="belief-action-row">
+          <button type="button" class="belief-confirm">确认填色</button>
+          <button type="button" class="belief-clear">清空当前节点</button>
+        </div>
       </div>
     </div>
   `;
@@ -58,7 +61,9 @@ function buildContainer() {
     .belief-message { margin: 0; font-size: 15px; min-height: 2.5em; line-height: 1.45; }
     .belief-picker-column { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
     .belief-picker-canvas { cursor: pointer; border: 1px solid #ccc; display: block; border-radius: 8px; }
-    .belief-confirm { padding: 10px 24px; font-size: 16px; cursor: pointer; width: 100%; max-width: 260px; box-sizing: border-box; }
+    .belief-action-row { width: 100%; max-width: 260px; display: grid; gap: 8px; }
+    .belief-confirm { padding: 10px 24px; font-size: 16px; cursor: pointer; width: 100%; box-sizing: border-box; }
+    .belief-clear { padding: 9px 18px; font-size: 14px; cursor: pointer; width: 100%; box-sizing: border-box; }
     @media (max-width: 720px) {
       .belief-trial-inner { flex-direction: column; }
       .belief-picker-column { width: 100%; max-width: 100%; }
@@ -103,11 +108,12 @@ async function tryExitFullscreen() {
  * 自由顺序：在画布上点未着色节点，或点「确认」。
  * 可多次点节点切换当前编辑对象；未确认则 beliefs 不会写入，节点保持空。
  */
-function waitPickOrConfirm(graphCanvas, btn, layout, remainingSet) {
+function waitPickOrConfirm(graphCanvas, confirmBtn, clearBtn, layout, selectableSet) {
   return new Promise((resolve) => {
     function cleanup() {
       graphCanvas.removeEventListener("mousedown", onGraphDown);
-      btn.removeEventListener("click", onConfirm);
+      confirmBtn.removeEventListener("click", onConfirm);
+      clearBtn.removeEventListener("click", onClear);
     }
     function onGraphDown(e) {
       const rect = graphCanvas.getBoundingClientRect();
@@ -115,7 +121,7 @@ function waitPickOrConfirm(graphCanvas, btn, layout, remainingSet) {
       const sy = graphCanvas.height / rect.height;
       const mx = (e.clientX - rect.left) * sx;
       const my = (e.clientY - rect.top) * sy;
-      const hit = findNodeAt(layout, [...remainingSet], mx, my);
+      const hit = findNodeAt(layout, [...selectableSet], mx, my);
       if (hit) {
         cleanup();
         resolve({ type: "pick", node: hit });
@@ -125,8 +131,13 @@ function waitPickOrConfirm(graphCanvas, btn, layout, remainingSet) {
       cleanup();
       resolve({ type: "confirm" });
     }
+    function onClear() {
+      cleanup();
+      resolve({ type: "clear" });
+    }
     graphCanvas.addEventListener("mousedown", onGraphDown);
-    btn.addEventListener("click", onConfirm);
+    confirmBtn.addEventListener("click", onConfirm);
+    clearBtn.addEventListener("click", onClear);
   });
 }
 
@@ -139,6 +150,7 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
   const pickerCanvas = container.querySelector(".belief-picker-canvas");
   const msgEl = container.querySelector(".belief-message");
   const btn = container.querySelector(".belief-confirm");
+  const clearBtn = container.querySelector(".belief-clear");
   graphCanvas.width = cw;
   graphCanvas.height = ch;
 
@@ -248,27 +260,43 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
         focusedNode = null;
         picker.setBelief(1 / 3, 1 / 3, 1 / 3);
         setMessage(
-          "请点击未着色节点，调节三角盘后点确认。可直接点击另一未着色节点切换；未确认的节点保持为空。"
+          "请点击节点，调节三角盘后点确认。可重复修改已着色节点；清空按钮会清除当前节点且不记录动作。"
         );
         redraw(null, null);
         let selectionTime = Math.round(performance.now());
 
         for (;;) {
-          const ev = await waitPickOrConfirm(graphCanvas, btn, layout, remaining);
+          const ev = await waitPickOrConfirm(graphCanvas, btn, clearBtn, layout, new Set(nodeIds));
           if (ev.type === "pick") {
             focusedNode = ev.node;
-            picker.setBelief(1 / 3, 1 / 3, 1 / 3);
+            if (beliefs[focusedNode]) {
+              const [r, g, b] = beliefs[focusedNode];
+              picker.setBelief(r, g, b);
+            } else {
+              picker.setBelief(1 / 3, 1 / 3, 1 / 3);
+            }
             selectionTime = Math.round(performance.now());
             setMessage(
-              "已选节点。调节三角盘后点确认；或点击其他未着色节点切换（切换后前一节点仍为空）。"
+              "已选节点。可确认填色、改色，或清空当前节点。切换节点不会自动提交。"
             );
             redraw(focusedNode, picker.getBelief());
             continue;
           }
+          if (ev.type === "clear") {
+            if (!focusedNode) {
+              setMessage("请先点击一个节点，再执行清空。");
+              continue;
+            }
+            delete beliefs[focusedNode];
+            remaining.add(focusedNode);
+            setMessage("已清空当前节点信念。该操作不会计入动作序列。");
+            redraw(focusedNode, null);
+            continue;
+          }
 
           const [r, g, b] = picker.getBelief();
-          if (!focusedNode || !remaining.has(focusedNode)) {
-            setMessage("请先点击一个未着色节点，再点确认。");
+          if (!focusedNode) {
+            setMessage("请先点击一个节点，再点确认。");
             continue;
           }
 
@@ -371,7 +399,12 @@ function downloadCsv(filename, rows) {
 }
 
 export async function startExperimentFromUi() {
-  const pid = (document.getElementById("run-participant").value || "").trim() || "anonymous";
+  const pid = (document.getElementById("run-participant").value || "").trim();
+  if (!pid) {
+    alert("请先输入被试编号，再开始实验。");
+    document.getElementById("run-participant").focus();
+    return;
+  }
   const fileInput = document.getElementById("run-stimulus-file");
   const file = fileInput.files && fileInput.files[0];
   if (!file) {
