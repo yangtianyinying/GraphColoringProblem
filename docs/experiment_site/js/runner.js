@@ -14,7 +14,12 @@ const {
   layoutFromNodes,
   findNodeAt,
 } = window.GraphCanvasDraw;
-const DEFAULT_STIMULUS_URL = "experiment_site/js/StimulateConfig.json";
+const DEFAULT_STIMULUS_URLS = [
+  "experiment_site/js/StimulateConfig.json",
+  "./experiment_site/js/StimulateConfig.json",
+  "docs/experiment_site/js/StimulateConfig.json",
+  "./docs/experiment_site/js/StimulateConfig.json",
+];
 let defaultStimulus = null;
 
 function validateTrial(trial) {
@@ -402,17 +407,23 @@ function downloadCsv(filename, rows) {
 
 async function loadDefaultStimulus() {
   const st = document.getElementById("run-stimulus-status");
-  try {
-    const resp = await fetch(DEFAULT_STIMULUS_URL, { cache: "no-store" });
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const data = await resp.json();
-    if (!data || data.version !== 1) throw new Error("默认刺激集不是 version: 1");
-    defaultStimulus = data;
-    if (st) st.textContent = "默认刺激集已加载（StimulateConfig.json）；可直接开始，或手动选择文件覆盖。";
-  } catch (e) {
-    defaultStimulus = null;
-    if (st) st.textContent = `默认刺激集加载失败：${String(e.message || e)}；请手动选择刺激集 JSON。`;
+  let lastErr = null;
+  for (const url of DEFAULT_STIMULUS_URLS) {
+    try {
+      const resp = await fetch(url, { cache: "no-store" });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      if (!data || data.version !== 1) throw new Error("默认刺激集不是 version: 1");
+      defaultStimulus = data;
+      if (st) st.textContent = "默认刺激集已加载（StimulateConfig.json）；可直接开始，或手动选择文件覆盖。";
+      return true;
+    } catch (e) {
+      lastErr = e;
+    }
   }
+  defaultStimulus = null;
+  if (st) st.textContent = `默认刺激集加载失败：${String((lastErr && lastErr.message) || lastErr || "unknown error")}；请手动选择刺激集 JSON。`;
+  return false;
 }
 
 export async function startExperimentFromUi() {
@@ -437,11 +448,16 @@ export async function startExperimentFromUi() {
       alert("需要 version: 1 的刺激集");
       return;
     }
-  } else if (defaultStimulus) {
-    stimulus = defaultStimulus;
   } else {
-    alert("默认刺激集未就绪，请先选择刺激集 JSON 文件。");
-    return;
+    if (!defaultStimulus) {
+      await loadDefaultStimulus();
+    }
+    if (defaultStimulus) {
+      stimulus = defaultStimulus;
+    } else {
+      alert("默认刺激集未就绪，请先选择刺激集 JSON 文件。");
+      return;
+    }
   }
 
   if (typeof stimulus.nodeVisualScale === "number" && stimulus.nodeVisualScale > 0) {
