@@ -5,6 +5,17 @@
   "recordData": true,
   "canvasWidth": 960,
   "canvasHeight": 620,
+  "ui": {
+    "phaseIntro": "现在进入正式实验阶段。\n请根据图结构和给定节点信念完成作答，尽量保持专注。",
+    "phaseOutro": "正式实验结束。\n感谢你的作答，请按空格完成收尾。",
+    "trialTransitionMs": 450,
+    "blockBreak": {
+      "enabled": true,
+      "title": "可以短暂休息",
+      "body": "你已完成 {done}/{total} 个 block（{percent}%）。\n准备好后按空格继续下一部分。",
+      "tip": "按空格可跳过休息"
+    }
+  },
   "blocks": [
     {
       "blockId": "b1_RG003",

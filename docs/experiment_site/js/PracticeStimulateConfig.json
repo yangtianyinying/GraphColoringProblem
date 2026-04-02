@@ -6,6 +6,11 @@
   "canvasWidth": 960,
   "canvasHeight": 620,
   "nodeVisualScale": 0.88,
+  "ui": {
+    "phaseIntro": "现在进入练习阶段。\n每题会给出三个已知节点，请为剩余一个节点填写你的信念颜色。\n完成后按“确认下一个试次”。",
+    "phaseOutro": "练习阶段结束。\n请按空格进入正式实验。",
+    "trialTransitionMs": 450
+  },
   "blocks": [
     {
       "blockId": "practice_block_1",

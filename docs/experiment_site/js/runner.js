@@ -100,6 +100,87 @@ function waitClick(el) {
   });
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, Math.max(0, ms | 0)));
+}
+
+function escapeHtml(text) {
+  return String(text == null ? "" : text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function waitSpaceToContinue(html) {
+  return new Promise((resolve) => {
+    const mount = document.getElementById("jspsych-target");
+    if (!mount) {
+      resolve();
+      return;
+    }
+    mount.innerHTML = `
+      <div class="phase-message-wrap">
+        <style>
+          .phase-message-wrap {
+            min-height: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            font-family: "Segoe UI","Microsoft YaHei",sans-serif;
+          }
+          .phase-message-card {
+            max-width: 860px;
+            width: 100%;
+            background: #fff;
+            border: 1px solid #cfd8dc;
+            border-radius: 10px;
+            padding: 24px 28px;
+            line-height: 1.65;
+            font-size: 18px;
+            color: #1f2d3d;
+          }
+          .phase-message-tip {
+            margin-top: 14px;
+            font-size: 15px;
+            color: #546e7a;
+          }
+        </style>
+        <div class="phase-message-card">${html}</div>
+      </div>
+    `;
+    const onKeyDown = (e) => {
+      if (e.code !== "Space" && e.key !== " ") return;
+      e.preventDefault();
+      window.removeEventListener("keydown", onKeyDown, true);
+      resolve();
+    };
+    window.addEventListener("keydown", onKeyDown, true);
+  });
+}
+
+function getStimulusUi(stimulus) {
+  const ui = (stimulus && stimulus.ui) || {};
+  const blockBreak = ui.blockBreak || {};
+  return {
+    phaseIntro: ui.phaseIntro || "",
+    phaseOutro: ui.phaseOutro || "",
+    trialTransitionMs: Number.isFinite(Number(ui.trialTransitionMs))
+      ? Math.max(0, Number(ui.trialTransitionMs))
+      : 350,
+    blockBreak: {
+      enabled: blockBreak.enabled !== false,
+      title: blockBreak.title || "休息一下",
+      body:
+        blockBreak.body ||
+        "你已完成 {done}/{total} 个 block（{percent}%）。\n按空格继续下一部分。",
+      tip: blockBreak.tip || "按空格可立即跳过休息",
+    },
+  };
+}
+
 async function tryEnterFullscreen() {
   try {
     if (document.fullscreenElement) return;
@@ -459,7 +540,17 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
   return rows;
 }
 
-async function runAllTrials(stimulus, participantId) {
+async function runAllTrials(stimulus, participantId, opts = {}) {
+  const ui = getStimulusUi(stimulus);
+  const totalBlocks = Array.isArray(stimulus.blocks) ? stimulus.blocks.length : 0;
+  const enableBlockBreak = !!opts.enableBlockBreak;
+  const showPhaseMessages = opts.showPhaseMessages !== false;
+  if (showPhaseMessages && ui.phaseIntro) {
+    await waitSpaceToContinue(
+      `<div>${escapeHtml(ui.phaseIntro).replace(/\n/g, "<br>")}</div><div class="phase-message-tip">按空格开始</div>`
+    );
+  }
+
   const runScaleEl = document.getElementById("run-node-scale");
   let scale = runScaleEl && runScaleEl.value !== "" ? parseFloat(runScaleEl.value) : NaN;
   if (Number.isNaN(scale)) {
@@ -473,6 +564,19 @@ async function runAllTrials(stimulus, participantId) {
   const allRows = [];
   let trialGlobal = 0;
   for (let bi = 0; bi < stimulus.blocks.length; bi++) {
+    if (enableBlockBreak && bi > 0 && ui.blockBreak.enabled) {
+      const done = bi;
+      const total = Math.max(1, totalBlocks);
+      const percent = Math.round((done / total) * 100);
+      const blockMsg = escapeHtml(ui.blockBreak.body)
+        .replace(/\{done\}/g, String(done))
+        .replace(/\{total\}/g, String(total))
+        .replace(/\{percent\}/g, String(percent));
+      await waitSpaceToContinue(
+        `<h3>${escapeHtml(ui.blockBreak.title)}</h3><div>${blockMsg.replace(/\n/g, "<br>")}</div><div class="phase-message-tip">${escapeHtml(ui.blockBreak.tip)}</div>`
+      );
+    }
+
     const block = stimulus.blocks[bi];
     for (let ti = 0; ti < block.trials.length; ti++) {
       trialGlobal += 1;
@@ -493,7 +597,16 @@ async function runAllTrials(stimulus, participantId) {
       for (const r of rows) {
         allRows.push(r);
       }
+      if (ui.trialTransitionMs > 0) {
+        await sleep(ui.trialTransitionMs);
+      }
     }
+  }
+
+  if (showPhaseMessages && ui.phaseOutro) {
+    await waitSpaceToContinue(
+      `<div>${escapeHtml(ui.phaseOutro).replace(/\n/g, "<br>")}</div><div class="phase-message-tip">按空格继续</div>`
+    );
   }
   return allRows;
 }
@@ -705,9 +818,15 @@ export async function startExperimentFromUi() {
         async: true,
         func: async function () {
           if (practiceStimulus) {
-            await runAllTrials(practiceStimulus, pid);
+            await runAllTrials(practiceStimulus, pid, {
+              enableBlockBreak: false,
+              showPhaseMessages: true,
+            });
           }
-          const rows = await runAllTrials(formalStimulus, pid);
+          const rows = await runAllTrials(formalStimulus, pid, {
+            enableBlockBreak: true,
+            showPhaseMessages: true,
+          });
           rows.forEach((r) => {
             r.participant_name = participantName;
             r.participant_birthdate = birthdate;
