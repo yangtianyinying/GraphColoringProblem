@@ -1,0 +1,372 @@
+%% analysis-1.tex
+%% Pre-analysis report 1: numerical verification + stimulus screening + model recovery
+%% Merged from: research_plan_execution.tex + research_plan_screening_recovery.tex
+%% Script:  analysis-1/code/analysis-1.py
+%% Outputs: analysis-1/code/analysis-1_*.{json,csv}
+%% Figures: analysis-1/figures/
+
+\documentclass[11pt,a4paper]{ctexart}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{arrows.meta,positioning,fit}
+
+\geometry{left=2.4cm,right=2.4cm,top=2.4cm,bottom=2.4cm}
+
+\tikzset{
+    latent/.style={circle, draw, thick, minimum size=8mm, inner sep=0pt},
+    observed/.style={circle, draw, thick, fill=gray!25, minimum size=8mm, inner sep=0pt},
+    target/.style={circle, draw, very thick, double, minimum size=8mm, inner sep=0pt},
+    focus/.style={circle, draw=red!70!black, very thick, fill=red!10, minimum size=8mm, inner sep=0pt},
+    fillin/.style={draw=orange!85!black, dashed, very thick},
+    shellzero/.style={draw=blue!70!black, very thick},
+    shellone/.style={draw=teal!70!black, dashed, very thick},
+    box/.style={draw, rounded corners, thick, fill=gray!8, inner sep=6pt, align=center},
+    arr/.style={-{Latex[length=2.5mm]}, thick}
+}
+
+\title{Pre-Analysis 1\\[4pt]
+\large 数值验证 · 刺激筛选 · 模型可辨认性}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\bigskip
+
+% =============================================================
+\part{数值验证：最小图集与 $\rho$ 连续谱}
+% =============================================================
+
+\section{执行目标}
+
+这一部分不是正式行为数据分析，而是一次 \emph{pre-data numerical sanity check}。目标是回答两个核心问题：
+\begin{enumerate}
+    \item \textbf{"结构利用"是否能在最小图集上产生可分离的数值预测？}（对应科学问题 Q1）
+    \item \textbf{独立推断 $\rightarrow$ 有界近似推断 $\rightarrow$ 全局精确推断}能否被实现成一个可计算的连续谱？（对应科学问题 Q2）
+\end{enumerate}
+
+所有概率结果都来自\textbf{精确穷举}：对每张图显式求和全部 $3^{|V|}$ 个颜色赋值。
+
+\section{模型与实现}
+
+我们把地图填色写成软约束图模型
+\[
+p(x\mid G,\lambda_e)\propto
+\phi_e(x_e)\prod_{(u,v)\in E}\exp\!\left[-\beta_{\mathrm{edge}}\mathbf{1}(x_u=x_v)\right],
+\qquad \beta_{\mathrm{edge}}=4.
+\]
+其中证据节点使用 unary factor $\phi_e(x_e)=\lambda_e(x_e)$，分别采用
+\[
+(0.9,0.05,0.05),\quad (0.6,0.2,0.2),\quad (0.4,0.3,0.3)
+\]
+三档软证据。
+
+\paragraph{局部独立模型 $M_0$.}
+只使用目标节点的直接观测邻居：
+\[
+P_{\mathrm{ind}}(x_i\mid x_{O_i})
+\propto
+\phi_i(x_i)\prod_{j\in O_i}\psi_{ij}(x_i,x_j).
+\]
+在最小图例中，目标节点都没有直接观测邻居，因此 $M_0$ 统一给出均匀分布 $[1/3,1/3,1/3]$。
+
+\paragraph{连续 $\rho$ 近似谱（能量衰减实现）.}
+把整个因子乘上与状态无关的常数会被归一化抵消，\textbf{无法形成可识别的连续谱}。正确实现是对\textbf{边能量}做距离衰减：
+\[
+\psi^{(\rho,i)}_{uv}(x_u,x_v)
+=
+\exp\!\left[
+-\beta_{\mathrm{edge}}\rho^{s_i(u,v)}\mathbf{1}(x_u=x_v)
+\right],
+\qquad
+s_i(u,v)=\min\!\bigl(d(i,u),d(i,v)\bigr).
+\]
+$\rho=0$ 时仅保留目标节点相邻边（退化为 $M_0$），$\rho=1$ 时恢复全图精确模型。
+
+\paragraph{BP 更新.}
+按照 BRML 第 5 章的 sum-product 形式：
+\[
+m_{u\to v}(x_v)
+\propto
+\sum_{x_u}
+\phi_u(x_u)\psi_{uv}(x_u,x_v)
+\prod_{w\in N(u)\setminus v}m_{w\to u}(x_u).
+\]
+树图上与精确边缘一致；含环图上为近似。
+
+\paragraph{复杂度指标.}
+\[
+\mathrm{Fill}_t
+=
+\left|
+\left\{
+(a,b): a,b\in N_t(v_t),\ a\neq b,\ (a,b)\notin E_t
+\right\}
+\right|,
+\qquad
+\Omega_t = |N_t(v_t)|+1.
+\]
+
+\section{数值结果}
+
+\subsection{最小拓扑面板已经能分出 H0 与 H1}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[node distance=16mm and 16mm]
+    \begin{scope}
+        \node at (1.7,1.3) {\textbf{(A) 等局部链图}};
+        \node[observed] (c1) at (0,0) {$X_1$};
+        \node[latent]   (c2) at (1.7,0) {$X_2$};
+        \node[target]   (c3) at (3.4,0) {$X_3$};
+        \node[latent]   (c4) at (5.1,0) {$X_4$};
+        \draw (c1) -- (c2) -- (c3) -- (c4);
+    \end{scope}
+    \begin{scope}[shift={(8.2,0)}]
+        \node at (1.7,1.3) {\textbf{(B) 等局部环图}};
+        \node[observed] (y1) at (0,0) {$X_1$};
+        \node[latent]   (y2) at (1.7,0) {$X_2$};
+        \node[target]   (y3) at (3.4,0) {$X_3$};
+        \node[latent]   (y4) at (1.7,-1.7) {$X_4$};
+        \draw (y1) -- (y2) -- (y3) -- (y4) -- (y1);
+    \end{scope}
+\end{tikzpicture}
+\caption{用于检验"等局部、异远端"的最小图对。目标节点 $X_3$ 的直接邻居相同，$M_0$ 给出同样的均匀预测，但全局结构模型因远端闭环而分离。}
+\end{figure}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lcc}
+\toprule
+图结构 & 证据到目标的距离 & 精确 $p_R$ \\
+\midrule
+3-node chain & 2 & 0.4674 \\
+4-node chain & 3 & 0.2681 \\
+4-node tree  & 2 & 0.4674 \\
+4-node cycle & 2 & 0.6030 \\
+\bottomrule
+\end{tabular}
+\caption{高确定性证据 $\lambda_e=(0.9,0.05,0.05)$ 下的最小拓扑面板。$M_0$ 对所有情形给出 $p_R=1/3$；精确模型能区分距离、路径奇偶性与闭环结构。}
+\end{table}
+
+\subsection{等局部图对给出最干净的 H0/H1 对比}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lcccc}
+\toprule
+证据强度 & $M_0$ 的 $p_R$ & 链图 $p_R$ & 环图 $p_R$ & $D_{\mathrm{KL}}(\text{cycle}\|\text{chain})$ \\
+\midrule
+高 $(0.9,0.05,0.05)$ & 0.3333 & 0.4674 & 0.6030 & 0.03695 \\
+中 $(0.6,0.2,0.2)$   & 0.3333 & 0.3964 & 0.4602 & 0.00838 \\
+低 $(0.4,0.3,0.3)$   & 0.3333 & 0.3491 & 0.3651 & 0.00056 \\
+\bottomrule
+\end{tabular}
+\caption{等局部图对上的结构分离。$M_0$ 对两张图永远不变，而精确结构模型的差异随证据强度单调增大。}
+\end{table}
+
+\subsection{连续 $\rho$ 谱是可计算的，而且单调可解释}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[node distance=16mm and 16mm]
+    \node[observed] (x1) at (0,0) {$X_1$};
+    \node[latent]   (x2) at (2.0,0) {$X_2$};
+    \node[target]   (x3) at (4.0,0) {$X_3$};
+    \node[latent]   (x4) at (2.0,-2.0) {$X_4$};
+    \draw[shellone]  (x1) -- node[above] {$\beta\rho$} (x2);
+    \draw[shellzero] (x2) -- node[above] {$\beta$} (x3);
+    \draw[shellzero] (x3) -- node[right] {$\beta$} (x4);
+    \draw[shellone]  (x4) -- node[left] {$\beta\rho$} (x1);
+    \node[align=left, anchor=west] at (5.6,-0.1) {\textbf{shell 0}: 与目标相邻的边保留完整约束};
+    \node[align=left, anchor=west] at (5.6,-0.9) {\textbf{shell 1}: 远端边按 $\rho$ 衰减};
+    \node[align=left, anchor=west] at (5.6,-1.7) {$\rho=0$: 退回局部模型};
+    \node[align=left, anchor=west] at (5.6,-2.5) {$\rho=1$: 恢复全局精确推断};
+\end{tikzpicture}
+\caption{连续 $\rho$ 模型实现方式：对"同色惩罚"的强度按目标距离做衰减，不是对 factor 整体缩放。}
+\end{figure}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{ccc}
+\toprule
+$\rho$ & 环图上的 $p_R$ & 目标熵 $H(X_{\mathrm{target}})$ \\
+\midrule
+0.00 & 0.3333 & 1.0986 \\
+0.25 & 0.4849 & 1.0497 \\
+0.50 & 0.5609 & 0.9901 \\
+0.75 & 0.5914 & 0.9595 \\
+1.00 & 0.6030 & 0.9470 \\
+\bottomrule
+\end{tabular}
+\caption{在等局部环图、高确定性证据下，$\rho$ 平滑地把目标后验从局部均匀分布推向全局结构解。}
+\end{table}
+
+\subsection{树图上 BP 精确，含环图上 BP 只是一种近似}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lccc}
+\toprule
+图结构 & 精确后验 & BP 后验 & $D_{\mathrm{KL}}(\text{exact}\|\text{BP})$ \\
+\midrule
+4-node chain & $[0.4674,\,0.2663,\,0.2663]$ & $[0.4674,\,0.2663,\,0.2663]$ & 0.00000 \\
+4-node chorded cycle & $[0.8294,\,0.0853,\,0.0853]$ & $[0.5555,\,0.2223,\,0.2223]$ & 0.16916 \\
+\bottomrule
+\end{tabular}
+\caption{BP 与精确边缘的对比。树图上完全一致；含 chord 后 loopy BP 收敛但其固定点与精确后验明显不同。}
+\end{table}
+
+\section{对后续实验设计的直接含义}
+
+\begin{enumerate}
+    \item \textbf{Phase 1 应维持固定顺序且不允许回改。}
+    \item \textbf{最小 H0/H1 操作化可直接采用链图/环图对。}
+    \item \textbf{连续参数 $\rho$ 必须写成边能量衰减，不是因子整体缩放。}
+    \item \textbf{BP 可以作为近似模型，而非精确基线。}
+\end{enumerate}
+
+% =============================================================
+\part{刺激筛选与模型可辨认性}
+% =============================================================
+
+\section{目的}
+
+在已有最小数值验证的基础上，这一部分回答两个更接近实验实施的问题：
+\begin{enumerate}
+    \item 能否从 6--8 节点图里直接筛出适合 \textbf{Phase 1}（结构传播检验）的候选刺激？
+    \item 在这些候选刺激上，\textbf{M0 / $\rho$ / exact / BP} 四类模型在带噪声响应下是否可辨认？
+\end{enumerate}
+
+全部结果由 \texttt{codes/analysis-1.py} 自动生成，写出至 \texttt{codes/generated/}。
+
+\section{筛选流程}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[node distance=11mm and 13mm]
+    \node[box] (pool1) {Phase 1 图池\\n6: 300 sampled\\n7: 400 sampled\\n8: 400 sampled};
+    \node[box, right=of pool1] (sig) {按局部签名分组\\$(n, d(o,t), \deg(t), \text{neighbor-local-degrees})$};
+    \node[box, right=of sig] (pair) {每组取 $p_R$ 最低/最高两图\\要求 $\Delta p_R^{\mathrm{high}} \ge 0.08$\\每个节点规模保留 3 对};
+
+    \node[box, below=18mm of sig] (trial) {构造 24 个 recovery trials\\12 个 Phase 1 + 12 个 Phase 2};
+    \node[box, below=of trial] (recover) {Synthetic model recovery\\$\kappa=80$，每类 60 个数据集\\BIC 比较 M0 / $\rho$ / exact / BP};
+
+    \draw[arr] (pool1) -- (sig);
+    \draw[arr] (sig) -- (pair);
+    \draw[arr] (pair) |- (trial);
+    \draw[arr] (trial) -- (recover);
+\end{tikzpicture}
+\caption{筛选与 recovery 流程。6 节点在 Phase 1 中使用随机采样；recovery 统一在 24 个 trial 上进行。}
+\end{figure}
+
+\section{刺激筛选结果}
+
+\subsection{筛选规模与命中率}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{>{\centering\arraybackslash}p{0.9cm} >{\raggedright\arraybackslash}p{4.2cm} >{\centering\arraybackslash}p{2.0cm} >{\centering\arraybackslash}p{2.3cm} >{\centering\arraybackslash}p{1.8cm}}
+\toprule
+$|V|$ & 图池来源 & 筛过的图数 & 强候选数 & 最终保留 \\
+\midrule
+6 (Phase 1) & random 3-colorable sample & 300 & 17 个签名组全都可配对 & 3 对 \\
+7 (Phase 1) & random 3-colorable sample & 400 & 21 个签名组过阈值 & 3 对 \\
+8 (Phase 1) & random 3-colorable sample & 400 & 23 个签名组过阈值 & 3 对 \\
+\bottomrule
+\end{tabular}
+\caption{当前版本筛选器的命中概况。"强候选"指同局部签名组内达到 $\Delta p_R^{\mathrm{high}}\ge 0.08$ 的图对。}
+\end{table}
+
+\subsection{Phase 1：局部签名固定后，远端结构差异仍然很大}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{>{\centering\arraybackslash}p{0.9cm} >{\centering\arraybackslash}p{2.3cm} >{\centering\arraybackslash}p{2.1cm} >{\centering\arraybackslash}p{2.1cm} >{\centering\arraybackslash}p{2.1cm} >{\centering\arraybackslash}p{2.0cm}}
+\toprule
+$|V|$ & 最强 pair ID & $\Delta p_R^{\mathrm{high}}$ & $\Delta p_R^{\mathrm{medium}}$ & $\Delta p_R^{\mathrm{low}}$ & $D_{\mathrm{KL}}^{\mathrm{high}}$ \\
+\midrule
+6 & \texttt{phase1\_n6\_pair\_1} & 0.7880 & 0.3708 & 0.0927 & 1.8072 \\
+7 & \texttt{phase1\_n7\_pair\_1} & 0.8309 & 0.3910 & 0.0978 & 2.1070 \\
+8 & \texttt{phase1\_n8\_pair\_1} & 0.8478 & 0.3990 & 0.0997 & 2.3534 \\
+\bottomrule
+\end{tabular}
+\caption{每个节点规模里筛到的最强 Phase 1 图对。远端结构在高证据下能把 $p_R$ 拉开约 0.79--0.85，证据强度梯度单调。}
+\end{table}
+
+\section{Synthetic Model Recovery}
+
+\subsection{设置}
+
+从筛好的图中构造 24 个 recovery trials（12 Phase 1 + 12 Phase 2），观测响应使用：
+\[
+y_t \sim \mathrm{Dirichlet}(\kappa b_t),\qquad \kappa = 80.
+\]
+对每个生成模型模拟 60 个数据集；$\rho$ 类真实值在 $\{0.25,0.50,0.75\}$ 中均匀抽取。
+
+\subsection{恢复结果}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lcccc}
+\toprule
+生成模型 $\downarrow$ / 拟合模型 $\rightarrow$ & M0 & $\rho$ & exact & BP \\
+\midrule
+M0    & 60 &  0 &  0 &  0 \\
+$\rho$ &  0 & 60 &  0 &  0 \\
+exact  &  0 &  0 & 60 &  0 \\
+BP     &  0 &  0 &  0 & 60 \\
+\bottomrule
+\end{tabular}
+\caption{Synthetic recovery confusion matrix。四类模型达到完全对角恢复。}
+\end{table}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lcc}
+\toprule
+指标 & 数值 & 含义 \\
+\midrule
+Mean absolute error of $\hat\rho$ & 0.0167 & $\rho$ 家族内部的参数恢复误差 \\
+Median absolute error of $\hat\rho$ & 0.0000 & 一半以上数据集恢复到正确网格点 \\
+Max absolute error of $\hat\rho$ & 0.1000 & 最坏情况下偏离一个网格步长 \\
+\bottomrule
+\end{tabular}
+\caption{$\rho$ 家族内部的参数恢复精度。}
+\end{table}
+
+\section{Experiment-ready trial export 与 balancing}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lccc}
+\toprule
+对象 & 总数 & 结构 & 导出文件 \\
+\midrule
+Master trial pool & 90 & 54 个 Phase 1 + 36 个 Phase 2 & \texttt{codes/generated/research\_plan\_experiment\_trials.*} \\
+Balanced lists & 6 & 每份 15 trials & \texttt{codes/generated/research\_plan\_balanced\_lists.*} \\
+\bottomrule
+\end{tabular}
+\caption{Experiment-ready 导出，对 phase / 节点数 / 证据强度做了显式平衡。}
+\end{table}
+
+每份 list 满足：15 trials，其中 9 个 Phase 1、6 个 Phase 2；6/7/8 节点各 5 个；high/medium/low 证据各 5 个。
+
+\section{结论}
+
+\begin{enumerate}
+    \item \textbf{M0 / $\rho$ / exact / BP 在拟合层面是可辨认的。}
+    \item \textbf{$\rho$ 不仅能被正确识别，其内部参数也能被稳定恢复（MAE = 0.017）。}
+    \item \textbf{刺激库已可直接接入实验前端。}下一步目标见 \texttt{TODOs/TODO-2.md}。
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,1946 @@
+{
+  "graphs": [
+    {
+      "graph_id": "G01",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "edge_count": 4,
+      "is_tree": true,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 1
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "R",
+        "E3": "R",
+        "E4": "G"
+      },
+      "preferred_color_template": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0
+      ],
+      "monotone_all_levels": true,
+      "separable_high": false,
+      "all_pairwise_total": 0.0,
+      "adjacent_total": 0.0,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 4,
+        "shell_zero_preferred_colors": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.001635,
+          0.10895,
+          0.889415
+        ],
+        "medium": [
+          0.081296,
+          0.310852,
+          0.607852
+        ],
+        "low": [
+          0.255302,
+          0.344506,
+          0.400192
+        ]
+      }
+    },
+    {
+      "graph_id": "G02",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "edge_count": 5,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 1
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "R",
+        "E3": "G",
+        "E4": "B"
+      },
+      "preferred_color_template": [
+        0,
+        0,
+        1,
+        2
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 0.465013,
+      "adjacent_total": 0.040192,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 4,
+        "shell_zero_preferred_colors": [
+          0,
+          0,
+          1,
+          2
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.243181,
+          0.37841,
+          0.37841
+        ],
+        "medium": [
+          0.258461,
+          0.370769,
+          0.370769
+        ],
+        "low": [
+          0.306643,
+          0.346679,
+          0.346679
+        ]
+      }
+    },
+    {
+      "graph_id": "G03",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "edge_count": 6,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 1
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "R",
+        "E3": "B",
+        "E4": "G"
+      },
+      "preferred_color_template": [
+        0,
+        0,
+        2,
+        1
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 0.531064,
+      "adjacent_total": 0.050432,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 4,
+        "shell_zero_preferred_colors": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.25158,
+          0.373165,
+          0.375255
+        ],
+        "medium": [
+          0.261798,
+          0.367893,
+          0.370308
+        ],
+        "low": [
+          0.307623,
+          0.345691,
+          0.346685
+        ]
+      }
+    },
+    {
+      "graph_id": "G04",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "edge_count": 7,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 1
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "B",
+        "E4": "G"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        2,
+        1
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        1
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 0.560971,
+      "adjacent_total": 0.062061,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 4,
+        "shell_zero_preferred_colors": [
+          0,
+          2,
+          2,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.243215,
+          0.703937,
+          0.052848
+        ],
+        "medium": [
+          0.279778,
+          0.52132,
+          0.198902
+        ],
+        "low": [
+          0.341836,
+          0.358733,
+          0.299431
+        ]
+      }
+    },
+    {
+      "graph_id": "G05",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "edge_count": 7,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 1
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "R",
+        "E4": "G"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        0,
+        1
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 0.998706,
+      "adjacent_total": 0.100266,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 4,
+        "shell_zero_preferred_colors": [
+          0,
+          2,
+          0,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.34328,
+          0.32678,
+          0.32994
+        ],
+        "medium": [
+          0.299592,
+          0.348033,
+          0.352375
+        ],
+        "low": [
+          0.310467,
+          0.34382,
+          0.345713
+        ]
+      }
+    },
+    {
+      "graph_id": "G06",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "edge_count": 8,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 1
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "R",
+        "E3": "G",
+        "E4": "B"
+      },
+      "preferred_color_template": [
+        0,
+        0,
+        1,
+        2
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 1.025696,
+      "adjacent_total": 0.093828,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 4e-05,
+      "local_signature": {
+        "target_degree": 4,
+        "shell_zero_preferred_colors": [
+          0,
+          0,
+          1,
+          2
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.350203,
+          0.324899,
+          0.324899
+        ],
+        "medium": [
+          0.300444,
+          0.349778,
+          0.349778
+        ],
+        "low": [
+          0.310171,
+          0.344915,
+          0.344915
+        ]
+      }
+    },
+    {
+      "graph_id": "G07",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "edge_count": 6,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 1
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "R",
+        "E3": "B",
+        "E4": "G"
+      },
+      "preferred_color_template": [
+        0,
+        0,
+        2,
+        1
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 0.873488,
+      "adjacent_total": 0.078296,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 4,
+        "shell_zero_preferred_colors": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.3337,
+          0.33315,
+          0.33315
+        ],
+        "medium": [
+          0.296882,
+          0.351559,
+          0.351559
+        ],
+        "low": [
+          0.30983,
+          0.345085,
+          0.345085
+        ]
+      }
+    },
+    {
+      "graph_id": "G08",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "edge_count": 6,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "G",
+        "E4": "R"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        1,
+        0
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        1,
+        2
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 1.911964,
+      "adjacent_total": 0.161169,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 3,
+        "shell_zero_preferred_colors": [
+          0,
+          2,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.787994,
+          0.121877,
+          0.090128
+        ],
+        "medium": [
+          0.542871,
+          0.248116,
+          0.209013
+        ],
+        "low": [
+          0.38995,
+          0.307155,
+          0.302895
+        ]
+      }
+    },
+    {
+      "graph_id": "G09",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "edge_count": 7,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "G",
+        "E4": "G"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        1,
+        1
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 4.073424,
+      "adjacent_total": 0.40455,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 3,
+        "shell_zero_preferred_colors": [
+          0,
+          2,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.042405,
+          0.915191,
+          0.042405
+        ],
+        "medium": [
+          0.18375,
+          0.632499,
+          0.18375
+        ],
+        "low": [
+          0.30029,
+          0.399419,
+          0.30029
+        ]
+      }
+    },
+    {
+      "graph_id": "G10",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "edge_count": 5,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "G",
+        "E3": "B",
+        "E4": "R"
+      },
+      "preferred_color_template": [
+        0,
+        1,
+        2,
+        0
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        1,
+        2
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 0.926148,
+      "adjacent_total": 0.083446,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 3,
+        "shell_zero_preferred_colors": [
+          0,
+          1,
+          2
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.681077,
+          0.147254,
+          0.171669
+        ],
+        "medium": [
+          0.424455,
+          0.277102,
+          0.298444
+        ],
+        "low": [
+          0.350375,
+          0.323969,
+          0.325656
+        ]
+      }
+    },
+    {
+      "graph_id": "G11",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "edge_count": 6,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "G",
+        "E4": "G"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        1,
+        1
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 2.623813,
+      "adjacent_total": 0.270812,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 3,
+        "shell_zero_preferred_colors": [
+          0,
+          2,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.069909,
+          0.852652,
+          0.077439
+        ],
+        "medium": [
+          0.2287,
+          0.538686,
+          0.232614
+        ],
+        "low": [
+          0.314602,
+          0.369912,
+          0.315486
+        ]
+      }
+    },
+    {
+      "graph_id": "G12",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "edge_count": 5,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "G",
+        "E4": "G"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        1,
+        1
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        1
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 1.86738,
+      "adjacent_total": 0.182255,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 3,
+        "shell_zero_preferred_colors": [
+          0,
+          2,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.099457,
+          0.801086,
+          0.099457
+        ],
+        "medium": [
+          0.257587,
+          0.484826,
+          0.257587
+        ],
+        "low": [
+          0.322565,
+          0.35487,
+          0.322565
+        ]
+      }
+    },
+    {
+      "graph_id": "G13",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "edge_count": 4,
+      "is_tree": true,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "G",
+        "E4": "R"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        1,
+        0
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        1
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 1.161611,
+      "adjacent_total": 0.107641,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 3,
+        "shell_zero_preferred_colors": [
+          0,
+          2,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.720968,
+          0.139516,
+          0.139516
+        ],
+        "medium": [
+          0.437206,
+          0.281397,
+          0.281397
+        ],
+        "low": [
+          0.351456,
+          0.324272,
+          0.324272
+        ]
+      }
+    },
+    {
+      "graph_id": "G14",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "edge_count": 5,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "G",
+        "E3": "B",
+        "E4": "R"
+      },
+      "preferred_color_template": [
+        0,
+        1,
+        2,
+        0
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        2,
+        3
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 1.738417,
+      "adjacent_total": 0.167863,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 3,
+        "shell_zero_preferred_colors": [
+          0,
+          1,
+          2
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.784236,
+          0.104758,
+          0.111006
+        ],
+        "medium": [
+          0.49013,
+          0.253806,
+          0.256064
+        ],
+        "low": [
+          0.366554,
+          0.316493,
+          0.316953
+        ]
+      }
+    },
+    {
+      "graph_id": "G15",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "edge_count": 6,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 1,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "G",
+        "E4": "G"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        1,
+        1
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 2.277254,
+      "adjacent_total": 0.226406,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 3,
+        "shell_zero_preferred_colors": [
+          0,
+          2,
+          1
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.085274,
+          0.829451,
+          0.085274
+        ],
+        "medium": [
+          0.23586,
+          0.52828,
+          0.23586
+        ],
+        "low": [
+          0.310737,
+          0.378527,
+          0.310737
+        ]
+      }
+    },
+    {
+      "graph_id": "G16",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "edge_count": 4,
+      "is_tree": true,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 2,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "R",
+        "E4": "B"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        0,
+        2
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        2
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 1.026475,
+      "adjacent_total": 0.094896,
+      "max_p_R_violation": 0.0,
+      "max_entropy_violation": 0.0,
+      "local_signature": {
+        "target_degree": 2,
+        "shell_zero_preferred_colors": [
+          0,
+          2
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.279351,
+          0.441299,
+          0.279351
+        ],
+        "medium": [
+          0.306883,
+          0.386233,
+          0.306883
+        ],
+        "low": [
+          0.325543,
+          0.348914,
+          0.325543
+        ]
+      }
+    },
+    {
+      "graph_id": "G17",
+      "n_nodes": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "edge_count": 5,
+      "is_tree": false,
+      "distances_from_target": {
+        "E1": 1,
+        "E2": 1,
+        "E3": 2,
+        "E4": 2
+      },
+      "shell_zero_neighbors": [
+        "E1",
+        "E2"
+      ],
+      "preferred_colors": {
+        "E1": "R",
+        "E2": "B",
+        "E3": "R",
+        "E4": "B"
+      },
+      "preferred_color_template": [
+        0,
+        2,
+        0,
+        2
+      ],
+      "rooted_key": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "graph_centers_in_original_graph": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "monotone_all_levels": true,
+      "separable_high": true,
+      "all_pairwise_total": 1.063413,
+      "adjacent_total": 0.099451,
+      "max_p_R_violation": 0.000213,
+      "max_entropy_violation": 4.1e-05,
+      "local_signature": {
+        "target_degree": 2,
+        "shell_zero_preferred_colors": [
+          0,
+          2
+        ]
+      },
+      "A4_exact_by_level": {
+        "high": [
+          0.282279,
+          0.435441,
+          0.282279
+        ],
+        "medium": [
+          0.301582,
+          0.396836,
+          0.301582
+        ],
+        "low": [
+          0.322166,
+          0.355667,
+          0.322166
+        ]
+      }
+    }
+  ]
+}

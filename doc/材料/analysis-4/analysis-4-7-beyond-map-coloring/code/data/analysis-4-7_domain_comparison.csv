@@ -1,0 +1,6 @@
+domain,local_coupling,example_framing,theoretical_value,experimental_simplicity,continuity_with_current_paradigm,expected_family_discriminability,shell_parity_heuristics_relevance,notes,weighted_priority_score
+attractive_graph_labelling,attractive / smoothing,neighbouring locations tend to share the same hidden label,5,4,5,5,low,Best first extension: flips local semantics while keeping graph-based inference structure intact.,4.75
+map_colouring,repulsive / anti-coordination,adjacent regions prefer different colours,3,5,5,4,high,"Excellent first testbed, but strongly tied to exclusion dynamics.",4.1
+social_consensus,attractive / alignment,linked agents tend to share opinions or affiliations,4,4,4,4,low,Intuitive and psychologically rich; especially useful for cluster-style approximations.,4.0
+mixed_sign_coupling,heterogeneous attractive and repulsive edges,"some relations are cooperative, others competitive",5,2,2,5,very low,"Theoretically rich, but too complex as the immediate next step.",3.65
+diffusion_contagion,attractive / transmission,infection or information spreads through edges,4,3,3,4,very low,"Preserves propagation logic, but task semantics and interface demands are more complex.",3.55

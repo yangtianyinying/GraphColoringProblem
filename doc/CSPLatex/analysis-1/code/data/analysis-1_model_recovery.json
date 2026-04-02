@@ -1,0 +1,2368 @@
+{
+  "settings": {
+    "kappa": 80.0,
+    "datasets_per_class": 60,
+    "seed": 20260327,
+    "rho_grid": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "rho_generative_values": [
+      0.25,
+      0.5,
+      0.75
+    ]
+  },
+  "confusion_counts": {
+    "M0": {
+      "M0": 60,
+      "rho": 0,
+      "exact": 0,
+      "BP": 0
+    },
+    "rho": {
+      "M0": 0,
+      "rho": 60,
+      "exact": 0,
+      "BP": 0
+    },
+    "exact": {
+      "M0": 0,
+      "rho": 0,
+      "exact": 60,
+      "BP": 0
+    },
+    "BP": {
+      "M0": 0,
+      "rho": 0,
+      "exact": 0,
+      "BP": 60
+    }
+  },
+  "confusion_rates": {
+    "M0": {
+      "M0": 1.0,
+      "rho": 0.0,
+      "exact": 0.0,
+      "BP": 0.0
+    },
+    "rho": {
+      "M0": 0.0,
+      "rho": 1.0,
+      "exact": 0.0,
+      "BP": 0.0
+    },
+    "exact": {
+      "M0": 0.0,
+      "rho": 0.0,
+      "exact": 1.0,
+      "BP": 0.0
+    },
+    "BP": {
+      "M0": 0.0,
+      "rho": 0.0,
+      "exact": 0.0,
+      "BP": 1.0
+    }
+  },
+  "model_selection_accuracy": {
+    "M0": 1.0,
+    "rho": 1.0,
+    "exact": 1.0,
+    "BP": 1.0
+  },
+  "mean_bic_margin": {
+    "M0": 3.178054,
+    "rho": 160.391136,
+    "exact": 2.831992,
+    "BP": 12017.744666
+  },
+  "rho_estimation": {
+    "mean_abs_error": 0.016667,
+    "median_abs_error": 0.0,
+    "max_abs_error": 0.1,
+    "estimated_rho_histogram": {
+      "0.80": 4,
+      "0.25": 13,
+      "0.75": 10,
+      "0.50": 19,
+      "0.85": 2,
+      "0.70": 7,
+      "0.45": 1,
+      "0.20": 1,
+      "0.55": 2,
+      "0.30": 1
+    }
+  },
+  "selected_trials": [
+    {
+      "trial_id": "phase1_phase1_n8_381_D_F_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n8_pair_1::high",
+      "graph_id": "phase1_n8_381",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "H"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "B",
+          "H"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "F",
+          "H"
+        ],
+        [
+          "G",
+          "H"
+        ]
+      ],
+      "observed": "D",
+      "target": "F",
+      "evidence_name": "high",
+      "informativeness_score": 5.364295,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.859093,
+          0.070453,
+          0.070453
+        ],
+        "exact": [
+          0.898786,
+          0.050607,
+          0.050607
+        ],
+        "BP": [
+          0.468849,
+          0.531148,
+          3e-06
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n8_257_A_G_high",
+      "category": "phase2",
+      "subgroup_id": "phase2_n8_257",
+      "graph_id": "phase2_n8_257",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "H"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "C",
+          "H"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "H"
+        ]
+      ],
+      "observed": "A",
+      "target": "G",
+      "evidence_name": "high",
+      "informativeness_score": 5.363584,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.840398,
+          0.079801,
+          0.079801
+        ],
+        "exact": [
+          0.898227,
+          0.050887,
+          0.050887
+        ],
+        "BP": [
+          0.348137,
+          0.651823,
+          4e-05
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n7_321_D_G_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n7_pair_3::high",
+      "graph_id": "phase1_n7_321",
+      "n_nodes": 7,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "F",
+          "G"
+        ]
+      ],
+      "observed": "D",
+      "target": "G",
+      "evidence_name": "high",
+      "informativeness_score": 4.459255,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.842034,
+          0.078983,
+          0.078983
+        ],
+        "exact": [
+          0.897151,
+          0.051424,
+          0.051424
+        ],
+        "BP": [
+          0.441109,
+          0.558678,
+          0.000213
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n8_142_A_D_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n8_pair_1::low",
+      "graph_id": "phase1_n8_142",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "A",
+          "H"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "C",
+          "H"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "F",
+          "H"
+        ]
+      ],
+      "observed": "A",
+      "target": "D",
+      "evidence_name": "high",
+      "informativeness_score": 4.452478,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.190267,
+          0.404867,
+          0.404867
+        ],
+        "exact": [
+          0.050938,
+          0.474531,
+          0.474531
+        ],
+        "BP": [
+          0.881397,
+          0.059302,
+          0.059302
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n8_062_C_A_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n8_pair_2::low",
+      "graph_id": "phase1_n8_062",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "H"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "H"
+        ]
+      ],
+      "observed": "C",
+      "target": "A",
+      "evidence_name": "high",
+      "informativeness_score": 4.268778,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.190257,
+          0.404871,
+          0.404871
+        ],
+        "exact": [
+          0.051849,
+          0.474075,
+          0.474075
+        ],
+        "BP": [
+          0.870105,
+          0.064948,
+          0.064948
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n8_2648_B_H_high",
+      "category": "phase2",
+      "subgroup_id": "phase2_n8_2648",
+      "graph_id": "phase2_n8_2648",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "A",
+          "H"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "E",
+          "H"
+        ]
+      ],
+      "observed": "B",
+      "target": "H",
+      "evidence_name": "high",
+      "informativeness_score": 4.248049,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.128793,
+          0.435604,
+          0.435604
+        ],
+        "exact": [
+          0.058466,
+          0.470767,
+          0.470767
+        ],
+        "BP": [
+          0.443589,
+          0.553813,
+          0.002598
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n7_349_D_B_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n7_pair_1::low",
+      "graph_id": "phase1_n7_349",
+      "n_nodes": 7,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "F",
+          "G"
+        ]
+      ],
+      "observed": "D",
+      "target": "B",
+      "evidence_name": "high",
+      "informativeness_score": 3.853919,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.27331,
+          0.363345,
+          0.363345
+        ],
+        "exact": [
+          0.066697,
+          0.466652,
+          0.466652
+        ],
+        "BP": [
+          0.214673,
+          0.782559,
+          0.002767
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n7_2760_F_D_high",
+      "category": "phase2",
+      "subgroup_id": "phase2_n7_2760",
+      "graph_id": "phase2_n7_2760",
+      "n_nodes": 7,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ]
+      ],
+      "observed": "F",
+      "target": "D",
+      "evidence_name": "high",
+      "informativeness_score": 3.793797,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.664816,
+          0.167592,
+          0.167592
+        ],
+        "exact": [
+          0.822779,
+          0.088611,
+          0.088611
+        ],
+        "BP": [
+          0.279693,
+          0.717581,
+          0.002727
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n7_049_D_C_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n7_pair_2::high",
+      "graph_id": "phase1_n7_049",
+      "n_nodes": 7,
+      "edges": [
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "F",
+          "G"
+        ]
+      ],
+      "observed": "D",
+      "target": "C",
+      "evidence_name": "high",
+      "informativeness_score": 3.733506,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.77666,
+          0.11167,
+          0.11167
+        ],
+        "exact": [
+          0.882469,
+          0.058766,
+          0.058766
+        ],
+        "BP": [
+          0.452409,
+          0.546526,
+          0.001065
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n8_266_C_E_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n8_pair_3::low",
+      "graph_id": "phase1_n8_266",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "H"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "F",
+          "H"
+        ]
+      ],
+      "observed": "C",
+      "target": "E",
+      "evidence_name": "high",
+      "informativeness_score": 3.657012,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.192235,
+          0.403883,
+          0.403883
+        ],
+        "exact": [
+          0.051931,
+          0.474035,
+          0.474035
+        ],
+        "BP": [
+          0.12702,
+          0.866751,
+          0.006229
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n7_346_B_G_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n7_pair_3::low",
+      "graph_id": "phase1_n7_346",
+      "n_nodes": 7,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "F",
+          "G"
+        ]
+      ],
+      "observed": "B",
+      "target": "G",
+      "evidence_name": "high",
+      "informativeness_score": 3.507307,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.279924,
+          0.360038,
+          0.360038
+        ],
+        "exact": [
+          0.06813,
+          0.465935,
+          0.465935
+        ],
+        "BP": [
+          0.21738,
+          0.777834,
+          0.004785
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n6_011_A_D_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n6_pair_1::high",
+      "graph_id": "phase1_n6_011",
+      "n_nodes": 6,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "E",
+          "F"
+        ]
+      ],
+      "observed": "A",
+      "target": "D",
+      "evidence_name": "high",
+      "informativeness_score": 3.505707,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.760651,
+          0.119675,
+          0.119675
+        ],
+        "exact": [
+          0.86887,
+          0.065565,
+          0.065565
+        ],
+        "BP": [
+          0.487875,
+          0.51118,
+          0.000946
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n8_340_B_H_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n8_pair_3::high",
+      "graph_id": "phase1_n8_340",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "A",
+          "H"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "H"
+        ]
+      ],
+      "observed": "B",
+      "target": "H",
+      "evidence_name": "high",
+      "informativeness_score": 3.25504,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.819553,
+          0.090224,
+          0.090224
+        ],
+        "exact": [
+          0.89002,
+          0.05499,
+          0.05499
+        ],
+        "BP": [
+          0.56037,
+          0.437199,
+          0.002431
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n8_189_F_C_high",
+      "category": "phase2",
+      "subgroup_id": "phase2_n8_189",
+      "graph_id": "phase2_n8_189",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "B",
+          "H"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "H"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "H"
+        ]
+      ],
+      "observed": "F",
+      "target": "C",
+      "evidence_name": "high",
+      "informativeness_score": 3.20189,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.696111,
+          0.151945,
+          0.151945
+        ],
+        "exact": [
+          0.854567,
+          0.072717,
+          0.072717
+        ],
+        "BP": [
+          0.45929,
+          0.538397,
+          0.002313
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n7_248_B_G_high",
+      "category": "phase1",
+      "subgroup_id": "phase1_n7_pair_2::low",
+      "graph_id": "phase1_n7_248",
+      "n_nodes": 7,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "F",
+          "G"
+        ]
+      ],
+      "observed": "B",
+      "target": "G",
+      "evidence_name": "high",
+      "informativeness_score": 3.014637,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.195734,
+          0.402133,
+          0.402133
+        ],
+        "exact": [
+          0.052416,
+          0.473792,
+          0.473792
+        ],
+        "BP": [
+          0.220815,
+          0.766573,
+          0.012612
+        ]
+      }
+    },
+    {
+      "trial_id": "phase1_phase1_n8_142_A_D_medium",
+      "category": "phase1",
+      "subgroup_id": "phase1_n8_pair_1::low",
+      "graph_id": "phase1_n8_142",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "A",
+          "H"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "C",
+          "H"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "F",
+          "H"
+        ]
+      ],
+      "observed": "A",
+      "target": "D",
+      "evidence_name": "medium",
+      "informativeness_score": 2.89163,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.266008,
+          0.366996,
+          0.366996
+        ],
+        "exact": [
+          0.200442,
+          0.399779,
+          0.399779
+        ],
+        "BP": [
+          0.881385,
+          0.059307,
+          0.059307
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n8_1511_C_B_high",
+      "category": "phase2",
+      "subgroup_id": "phase2_n8_1511",
+      "graph_id": "phase2_n8_1511",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "C",
+          "H"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "H"
+        ],
+        [
+          "G",
+          "H"
+        ]
+      ],
+      "observed": "C",
+      "target": "B",
+      "evidence_name": "high",
+      "informativeness_score": 2.603115,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.244077,
+          0.377961,
+          0.377961
+        ],
+        "exact": [
+          0.069028,
+          0.465486,
+          0.465486
+        ],
+        "BP": [
+          0.179157,
+          0.799939,
+          0.020904
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n8_1511_C_B_medium",
+      "category": "phase2",
+      "subgroup_id": "phase2_n8_1511",
+      "graph_id": "phase2_n8_1511",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "C",
+          "H"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "H"
+        ],
+        [
+          "G",
+          "H"
+        ]
+      ],
+      "observed": "C",
+      "target": "B",
+      "evidence_name": "medium",
+      "informativeness_score": 2.372817,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.291331,
+          0.354335,
+          0.354335
+        ],
+        "exact": [
+          0.208954,
+          0.395523,
+          0.395523
+        ],
+        "BP": [
+          0.847021,
+          0.07649,
+          0.07649
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n8_257_A_G_medium",
+      "category": "phase2",
+      "subgroup_id": "phase2_n8_257",
+      "graph_id": "phase2_n8_257",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "H"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "C",
+          "H"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "H"
+        ],
+        [
+          "F",
+          "G"
+        ],
+        [
+          "G",
+          "H"
+        ]
+      ],
+      "observed": "A",
+      "target": "G",
+      "evidence_name": "medium",
+      "informativeness_score": 2.092475,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.571952,
+          0.214024,
+          0.214024
+        ],
+        "exact": [
+          0.599165,
+          0.200417,
+          0.200417
+        ],
+        "BP": [
+          0.935405,
+          0.032298,
+          0.032298
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n8_2648_B_H_medium",
+      "category": "phase2",
+      "subgroup_id": "phase2_n8_2648",
+      "graph_id": "phase2_n8_2648",
+      "n_nodes": 8,
+      "edges": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "A",
+          "H"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "D",
+          "F"
+        ],
+        [
+          "D",
+          "H"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ],
+        [
+          "E",
+          "H"
+        ]
+      ],
+      "observed": "B",
+      "target": "H",
+      "evidence_name": "medium",
+      "informativeness_score": 1.948216,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.237079,
+          0.381461,
+          0.381461
+        ],
+        "exact": [
+          0.203984,
+          0.398008,
+          0.398008
+        ],
+        "BP": [
+          0.782945,
+          0.108527,
+          0.108527
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n7_2921_A_E_high",
+      "category": "phase2",
+      "subgroup_id": "phase2_n7_2921",
+      "graph_id": "phase2_n7_2921",
+      "n_nodes": 7,
+      "edges": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ]
+      ],
+      "observed": "A",
+      "target": "E",
+      "evidence_name": "high",
+      "informativeness_score": 1.901486,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.789695,
+          0.105153,
+          0.105153
+        ],
+        "exact": [
+          0.875395,
+          0.062303,
+          0.062303
+        ],
+        "BP": [
+          0.864926,
+          0.067537,
+          0.067537
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n7_1490_A_B_high",
+      "category": "phase2",
+      "subgroup_id": "phase2_n7_1490",
+      "graph_id": "phase2_n7_1490",
+      "n_nodes": 7,
+      "edges": [
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "A",
+          "G"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "B",
+          "G"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "D",
+          "G"
+        ]
+      ],
+      "observed": "A",
+      "target": "B",
+      "evidence_name": "high",
+      "informativeness_score": 1.901486,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.789695,
+          0.105153,
+          0.105153
+        ],
+        "exact": [
+          0.875395,
+          0.062303,
+          0.062303
+        ],
+        "BP": [
+          0.864926,
+          0.067537,
+          0.067537
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n7_1886_C_E_high",
+      "category": "phase2",
+      "subgroup_id": "phase2_n7_1886",
+      "graph_id": "phase2_n7_1886",
+      "n_nodes": 7,
+      "edges": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "F"
+        ],
+        [
+          "C",
+          "G"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "G"
+        ],
+        [
+          "E",
+          "F"
+        ],
+        [
+          "E",
+          "G"
+        ]
+      ],
+      "observed": "C",
+      "target": "E",
+      "evidence_name": "high",
+      "informativeness_score": 1.901486,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.789695,
+          0.105153,
+          0.105153
+        ],
+        "exact": [
+          0.875395,
+          0.062303,
+          0.062303
+        ],
+        "BP": [
+          0.864926,
+          0.067537,
+          0.067537
+        ]
+      }
+    },
+    {
+      "trial_id": "phase2_phase2_n6_14812_C_D_high",
+      "category": "phase2",
+      "subgroup_id": "phase2_n6_14812",
+      "graph_id": "phase2_n6_14812",
+      "n_nodes": 6,
+      "edges": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "F"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "F"
+        ],
+        [
+          "C",
+          "E"
+        ],
+        [
+          "D",
+          "E"
+        ],
+        [
+          "E",
+          "F"
+        ]
+      ],
+      "observed": "C",
+      "target": "D",
+      "evidence_name": "high",
+      "informativeness_score": 1.468632,
+      "representative_model_posteriors": {
+        "M0": [
+          0.333333,
+          0.333333,
+          0.333333
+        ],
+        "rho_0.5": [
+          0.726603,
+          0.136698,
+          0.136698
+        ],
+        "exact": [
+          0.856298,
+          0.071851,
+          0.071851
+        ],
+        "BP": [
+          0.767192,
+          0.116404,
+          0.116404
+        ]
+      }
+    }
+  ],
+  "trial_library_summary": {
+    "candidate_trial_count": 60,
+    "selected_trial_count": 24,
+    "selected_by_category": {
+      "phase1": 12,
+      "phase2": 12
+    },
+    "max_trials_per_graph": 2,
+    "representative_rho_for_screening": 0.5
+  }
+}

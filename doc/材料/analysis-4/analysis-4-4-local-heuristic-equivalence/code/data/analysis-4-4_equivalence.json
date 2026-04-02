@@ -1,0 +1,66 @@
+{
+  "analysis": "4-4",
+  "formal_heuristic_definition": {
+    "inputs": "soft evidence on direct neighbours of the target only",
+    "score": "score(x_i=c) = sum_{j in N(i)} log sum_{x_j} lambda_j(x_j) exp[-beta_edge 1(c = x_j)]",
+    "readout": "posterior(x_i=c) = softmax(score(c))"
+  },
+  "equivalence_statement": "Under standard pairwise factor semantics with direct neighbours only and exponentiate-normalise readout, the heuristic is exactly M_0 written in log space.",
+  "max_abs_difference_between_M0_and_pure_heuristic": 0.0,
+  "library_summary": {
+    "mean_js_to_M0": {
+      "pure": 0.0,
+      "weighted": 0.0114248243,
+      "clipped": 0.014439751
+    },
+    "max_js_to_M0": {
+      "pure": 0.0,
+      "weighted": 0.1389445292,
+      "clipped": 0.1221699067
+    }
+  },
+  "distortion_taxonomy": [
+    {
+      "distortion": "neighbour-specific arbitrary weights",
+      "example_variant": "weighted",
+      "status": "distinct from M_0"
+    },
+    {
+      "distortion": "score clipping / saturation before normalisation",
+      "example_variant": "clipped",
+      "status": "distinct from M_0"
+    },
+    {
+      "distortion": "post-hoc response transform",
+      "example_variant": "not simulated here",
+      "status": "would be inference-plus-response model, not a new inference family"
+    }
+  ],
+  "taxonomy_recommendation": "Do not retain the pure local log-evidence rule as a separate family. Retain only response-distorted or otherwise non-factorisable local summary variants as optional heuristic baselines.",
+  "example_condition": {
+    "graph_id": "RG112",
+    "evidence_level": "high"
+  },
+  "example_posteriors": {
+    "M_0": [
+      0.333333,
+      0.333333,
+      0.333333
+    ],
+    "pure": [
+      0.333333,
+      0.333333,
+      0.333333
+    ],
+    "weighted": [
+      0.265046,
+      0.469909,
+      0.265046
+    ],
+    "clipped": [
+      0.333333,
+      0.333333,
+      0.333333
+    ]
+  }
+}

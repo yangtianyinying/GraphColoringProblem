@@ -1,0 +1,1013 @@
+{
+  "analysis": "4-1",
+  "minimal_family_set": [
+    "M_exact",
+    "M_0",
+    "M_rho",
+    "M_rho,beta",
+    "M_star",
+    "M_cluster"
+  ],
+  "family_specifications": [
+    {
+      "family": "M_exact",
+      "class": "normative benchmark",
+      "internal_graph_representation": "true graph G preserved exactly",
+      "factor_representation": "all original pairwise anti-coordination factors retained with strength beta_edge",
+      "free_parameters": "beta_edge",
+      "output_belief_object": "exact target posterior on the true graph",
+      "preserved_structure": "all nodes, edges, and relay paths",
+      "discarded_structure": "none",
+      "psychological_interpretation": "full graph-aware inference benchmark",
+      "canonical_downstream_setting": "beta=4.0",
+      "expected_D1_sensitivity": "high",
+      "expected_D2_sensitivity": "high",
+      "expected_D3_sensitivity": "high",
+      "computational_simplicity": "low"
+    },
+    {
+      "family": "M_0",
+      "class": "fixed-graph local baseline",
+      "internal_graph_representation": "true graph retained but only shell-0 edges remain active via rho=0 energy decay",
+      "factor_representation": "only edges incident to the target contribute to the target posterior",
+      "free_parameters": "beta_edge",
+      "output_belief_object": "nearest-neighbour-only target posterior",
+      "preserved_structure": "target and direct-neighbour constraints",
+      "discarded_structure": "all multi-step relay paths and distal closure",
+      "psychological_interpretation": "strictly local bounded inference",
+      "canonical_downstream_setting": "beta=4.0",
+      "expected_D1_sensitivity": "high",
+      "expected_D2_sensitivity": "moderate",
+      "expected_D3_sensitivity": "low",
+      "computational_simplicity": "very high"
+    },
+    {
+      "family": "M_rho",
+      "class": "fixed-graph attenuation family",
+      "internal_graph_representation": "true graph G preserved",
+      "factor_representation": "edge energy beta_edge is scaled by rho^s_i(u,v) where s_i is shell distance from the target",
+      "free_parameters": "rho, beta_edge",
+      "output_belief_object": "attenuated target posterior on the true graph",
+      "preserved_structure": "full graph topology and shell ordering",
+      "discarded_structure": "none; remote factors are only down-weighted",
+      "psychological_interpretation": "continuous bounded propagation on the correct graph",
+      "canonical_downstream_setting": "rho=0.35, beta=4.0",
+      "expected_D1_sensitivity": "high",
+      "expected_D2_sensitivity": "high",
+      "expected_D3_sensitivity": "high but graded",
+      "computational_simplicity": "moderate"
+    },
+    {
+      "family": "M_rho,beta",
+      "class": "fixed-graph attenuation with factor-strength uncertainty",
+      "internal_graph_representation": "true graph G preserved",
+      "factor_representation": "same energy-decay rule as M_rho, but beta_edge is explicitly free",
+      "free_parameters": "rho, beta_edge",
+      "output_belief_object": "attenuated target posterior with coupling-strength flexibility",
+      "preserved_structure": "full graph topology and shell ordering",
+      "discarded_structure": "none structurally; flexibility lives in beta",
+      "psychological_interpretation": "bounded propagation plus uncertainty about local constraint strength",
+      "canonical_downstream_setting": "rho=0.35, beta=2.5",
+      "expected_D1_sensitivity": "high",
+      "expected_D2_sensitivity": "high",
+      "expected_D3_sensitivity": "high but potentially confounded with beta",
+      "computational_simplicity": "moderate"
+    },
+    {
+      "family": "M_star",
+      "class": "structure-rewrite family",
+      "internal_graph_representation": "graph is internally collapsed to a target-centred star",
+      "factor_representation": "each non-target node connects directly to the target with effective strength beta_edge / d_G(i,j)",
+      "free_parameters": "beta_edge",
+      "output_belief_object": "exact posterior on the rewritten star graph",
+      "preserved_structure": "distance-to-target ordering only",
+      "discarded_structure": "non-target/non-target connectivity and relay structure",
+      "psychological_interpretation": "all distal influence is rewritten into direct target-centred pushes",
+      "canonical_downstream_setting": "beta=4.0",
+      "expected_D1_sensitivity": "high",
+      "expected_D2_sensitivity": "low",
+      "expected_D3_sensitivity": "moderate",
+      "computational_simplicity": "high"
+    },
+    {
+      "family": "M_cluster",
+      "class": "local cluster / junction-lite family",
+      "internal_graph_representation": "retain target, shell-1, shell-2 nodes and add shell-1 fill-in edges induced by shared shell-2 neighbours",
+      "factor_representation": "original local edges keep strength beta_edge; added shell-1 fill-in edges use beta_edge",
+      "free_parameters": "beta_edge",
+      "output_belief_object": "exact posterior on a local cluster graph",
+      "preserved_structure": "local cliques, neighbour-neighbour coupling, shell-2 mediated closure",
+      "discarded_structure": "farther-than-shell-2 structure",
+      "psychological_interpretation": "participants chunk local motifs into a compact cluster representation",
+      "canonical_downstream_setting": "beta=4.0",
+      "expected_D1_sensitivity": "high",
+      "expected_D2_sensitivity": "very high",
+      "expected_D3_sensitivity": "moderate",
+      "computational_simplicity": "moderate to high"
+    }
+  ],
+  "redundancy_assessment": {
+    "status": "exactly_equivalent_under_standard_assumptions",
+    "equivalent_to": "M_0",
+    "statement": "If the proposed local heuristic sums direct-neighbour log evidence and then exponentiates/normalises, it is exactly the shell-0 factor-graph posterior and therefore equivalent to M_0. It only becomes distinct once an extra response distortion, arbitrary neighbour weighting, clipping, or another non-factorisable transform is added.",
+    "distinct_only_if": [
+      "neighbour-specific weights not representable as local log-potentials",
+      "state-wise clipping or saturation",
+      "non-normalised score readout",
+      "post-hoc response transform applied after local posterior computation"
+    ],
+    "recommendation": "Carry the pure heuristic forward only as a verbal restatement of M_0; reserve separate family status for response-distorted variants only."
+  },
+  "simulation_ready_check": {
+    "selected_panel_size": 8,
+    "canonical_family_settings": {
+      "M_exact": {
+        "family": "M_exact",
+        "beta": 4.0
+      },
+      "M_0": {
+        "family": "M_0",
+        "beta": 4.0
+      },
+      "M_rho": {
+        "family": "M_rho",
+        "rho": 0.35,
+        "beta": 4.0
+      },
+      "M_rho,beta": {
+        "family": "M_rho,beta",
+        "rho": 0.35,
+        "beta": 2.5
+      },
+      "M_star": {
+        "family": "M_star",
+        "beta": 4.0
+      },
+      "M_cluster": {
+        "family": "M_cluster",
+        "beta": 4.0
+      }
+    },
+    "pair_rows": [
+      {
+        "graph_id": "RG003",
+        "left_family": "M_exact",
+        "right_family": "M_0",
+        "js_divergence": 0.038339
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_exact",
+        "right_family": "M_rho",
+        "js_divergence": 0.019372
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_exact",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.013487
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_exact",
+        "right_family": "M_star",
+        "js_divergence": 0.038339
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_exact",
+        "right_family": "M_cluster",
+        "js_divergence": 0.0
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_0",
+        "right_family": "M_rho",
+        "js_divergence": 0.005751
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_0",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.007285
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_0",
+        "right_family": "M_star",
+        "js_divergence": 0.0
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_0",
+        "right_family": "M_cluster",
+        "js_divergence": 0.038339
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_rho",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.000895
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_rho",
+        "right_family": "M_star",
+        "js_divergence": 0.005751
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_rho",
+        "right_family": "M_cluster",
+        "js_divergence": 0.019372
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_rho,beta",
+        "right_family": "M_star",
+        "js_divergence": 0.007285
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_rho,beta",
+        "right_family": "M_cluster",
+        "js_divergence": 0.013487
+      },
+      {
+        "graph_id": "RG003",
+        "left_family": "M_star",
+        "right_family": "M_cluster",
+        "js_divergence": 0.038339
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_exact",
+        "right_family": "M_0",
+        "js_divergence": 0.062037
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_exact",
+        "right_family": "M_rho",
+        "js_divergence": 0.022749
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_exact",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.021601
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_exact",
+        "right_family": "M_star",
+        "js_divergence": 0.153924
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_exact",
+        "right_family": "M_cluster",
+        "js_divergence": 0.0
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_0",
+        "right_family": "M_rho",
+        "js_divergence": 0.010109
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_0",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.010903
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_0",
+        "right_family": "M_star",
+        "js_divergence": 0.02463
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_0",
+        "right_family": "M_cluster",
+        "js_divergence": 0.062037
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_rho",
+        "right_family": "M_rho,beta",
+        "js_divergence": 1.5e-05
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_rho",
+        "right_family": "M_star",
+        "js_divergence": 0.063836
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_rho",
+        "right_family": "M_cluster",
+        "js_divergence": 0.022749
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_rho,beta",
+        "right_family": "M_star",
+        "js_divergence": 0.065699
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_rho,beta",
+        "right_family": "M_cluster",
+        "js_divergence": 0.021601
+      },
+      {
+        "graph_id": "RG018",
+        "left_family": "M_star",
+        "right_family": "M_cluster",
+        "js_divergence": 0.153924
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_exact",
+        "right_family": "M_0",
+        "js_divergence": 0.166831
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_exact",
+        "right_family": "M_rho",
+        "js_divergence": 0.023718
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_exact",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.097096
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_exact",
+        "right_family": "M_star",
+        "js_divergence": 0.370851
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_exact",
+        "right_family": "M_cluster",
+        "js_divergence": 0.030387
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_0",
+        "right_family": "M_rho",
+        "js_divergence": 0.073598
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_0",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.012561
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_0",
+        "right_family": "M_star",
+        "js_divergence": 0.053128
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_0",
+        "right_family": "M_cluster",
+        "js_divergence": 0.063163
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_rho",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.028337
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_rho",
+        "right_family": "M_star",
+        "js_divergence": 0.236542
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_rho",
+        "right_family": "M_cluster",
+        "js_divergence": 0.000556
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_rho,beta",
+        "right_family": "M_star",
+        "js_divergence": 0.111925
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_rho,beta",
+        "right_family": "M_cluster",
+        "js_divergence": 0.022532
+      },
+      {
+        "graph_id": "RG058",
+        "left_family": "M_star",
+        "right_family": "M_cluster",
+        "js_divergence": 0.219151
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_exact",
+        "right_family": "M_0",
+        "js_divergence": 0.263361
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_exact",
+        "right_family": "M_rho",
+        "js_divergence": 0.017247
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_exact",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.110856
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_exact",
+        "right_family": "M_star",
+        "js_divergence": 0.567934
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_exact",
+        "right_family": "M_cluster",
+        "js_divergence": 0.003112
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_0",
+        "right_family": "M_rho",
+        "js_divergence": 0.16764
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_0",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.04126
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_0",
+        "right_family": "M_star",
+        "js_divergence": 0.092179
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_0",
+        "right_family": "M_cluster",
+        "js_divergence": 0.230437
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_rho",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.046929
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_rho",
+        "right_family": "M_star",
+        "js_divergence": 0.443411
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_rho",
+        "right_family": "M_cluster",
+        "js_divergence": 0.007357
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_rho,beta",
+        "right_family": "M_star",
+        "js_divergence": 0.235374
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_rho,beta",
+        "right_family": "M_cluster",
+        "js_divergence": 0.086944
+      },
+      {
+        "graph_id": "RG088",
+        "left_family": "M_star",
+        "right_family": "M_cluster",
+        "js_divergence": 0.527304
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_exact",
+        "right_family": "M_0",
+        "js_divergence": 0.270837
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_exact",
+        "right_family": "M_rho",
+        "js_divergence": 0.011103
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_exact",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.092905
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_exact",
+        "right_family": "M_star",
+        "js_divergence": 0.577396
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_exact",
+        "right_family": "M_cluster",
+        "js_divergence": 0.000459
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_0",
+        "right_family": "M_rho",
+        "js_divergence": 0.193725
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_0",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.058691
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_0",
+        "right_family": "M_star",
+        "js_divergence": 0.092179
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_0",
+        "right_family": "M_cluster",
+        "js_divergence": 0.256248
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_rho",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.044822
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_rho",
+        "right_family": "M_star",
+        "js_divergence": 0.479272
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_rho",
+        "right_family": "M_cluster",
+        "js_divergence": 0.007216
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_rho,beta",
+        "right_family": "M_star",
+        "js_divergence": 0.270286
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_rho,beta",
+        "right_family": "M_cluster",
+        "js_divergence": 0.082827
+      },
+      {
+        "graph_id": "RG112",
+        "left_family": "M_star",
+        "right_family": "M_cluster",
+        "js_divergence": 0.559631
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_exact",
+        "right_family": "M_0",
+        "js_divergence": 0.264505
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_exact",
+        "right_family": "M_rho",
+        "js_divergence": 0.013837
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_exact",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.096546
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_exact",
+        "right_family": "M_star",
+        "js_divergence": 0.569727
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_exact",
+        "right_family": "M_cluster",
+        "js_divergence": 0.002283
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_0",
+        "right_family": "M_rho",
+        "js_divergence": 0.177983
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_0",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.052104
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_0",
+        "right_family": "M_star",
+        "js_divergence": 0.092179
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_0",
+        "right_family": "M_cluster",
+        "js_divergence": 0.230437
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_rho",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.042174
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_rho",
+        "right_family": "M_star",
+        "js_divergence": 0.457767
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_rho",
+        "right_family": "M_cluster",
+        "js_divergence": 0.005164
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_rho,beta",
+        "right_family": "M_star",
+        "js_divergence": 0.257483
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_rho,beta",
+        "right_family": "M_cluster",
+        "js_divergence": 0.073363
+      },
+      {
+        "graph_id": "RG114",
+        "left_family": "M_star",
+        "right_family": "M_cluster",
+        "js_divergence": 0.527304
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_exact",
+        "right_family": "M_0",
+        "js_divergence": 0.192142
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_exact",
+        "right_family": "M_rho",
+        "js_divergence": 0.0141
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_exact",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.076928
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_exact",
+        "right_family": "M_star",
+        "js_divergence": 0.477142
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_exact",
+        "right_family": "M_cluster",
+        "js_divergence": 0.0
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_0",
+        "right_family": "M_rho",
+        "js_divergence": 0.109924
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_0",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.029895
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_0",
+        "right_family": "M_star",
+        "js_divergence": 0.092179
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_0",
+        "right_family": "M_cluster",
+        "js_divergence": 0.192142
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_rho",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.026744
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_rho",
+        "right_family": "M_star",
+        "js_divergence": 0.358025
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_rho",
+        "right_family": "M_cluster",
+        "js_divergence": 0.0141
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_rho,beta",
+        "right_family": "M_star",
+        "js_divergence": 0.210182
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_rho,beta",
+        "right_family": "M_cluster",
+        "js_divergence": 0.076928
+      },
+      {
+        "graph_id": "RG139",
+        "left_family": "M_star",
+        "right_family": "M_cluster",
+        "js_divergence": 0.477142
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_exact",
+        "right_family": "M_0",
+        "js_divergence": 0.20519
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_exact",
+        "right_family": "M_rho",
+        "js_divergence": 0.011141
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_exact",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.071492
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_exact",
+        "right_family": "M_star",
+        "js_divergence": 0.494545
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_exact",
+        "right_family": "M_cluster",
+        "js_divergence": 0.001171
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_0",
+        "right_family": "M_rho",
+        "js_divergence": 0.12999
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_0",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.040058
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_0",
+        "right_family": "M_star",
+        "js_divergence": 0.092179
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_0",
+        "right_family": "M_cluster",
+        "js_divergence": 0.230437
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_rho",
+        "right_family": "M_rho,beta",
+        "js_divergence": 0.027883
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_rho",
+        "right_family": "M_star",
+        "js_divergence": 0.388862
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_rho",
+        "right_family": "M_cluster",
+        "js_divergence": 0.019187
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_rho,beta",
+        "right_family": "M_star",
+        "js_divergence": 0.232854
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_rho,beta",
+        "right_family": "M_cluster",
+        "js_divergence": 0.088562
+      },
+      {
+        "graph_id": "RG144",
+        "left_family": "M_star",
+        "right_family": "M_cluster",
+        "js_divergence": 0.527304
+      }
+    ],
+    "pair_summary": [
+      {
+        "left_family": "M_0",
+        "right_family": "M_cluster",
+        "mean_js_on_selected_panel": 0.162905,
+        "min_js_on_selected_panel": 0.038339,
+        "max_js_on_selected_panel": 0.256248
+      },
+      {
+        "left_family": "M_0",
+        "right_family": "M_rho",
+        "mean_js_on_selected_panel": 0.10859,
+        "min_js_on_selected_panel": 0.005751,
+        "max_js_on_selected_panel": 0.193725
+      },
+      {
+        "left_family": "M_0",
+        "right_family": "M_rho,beta",
+        "mean_js_on_selected_panel": 0.031595,
+        "min_js_on_selected_panel": 0.007285,
+        "max_js_on_selected_panel": 0.058691
+      },
+      {
+        "left_family": "M_0",
+        "right_family": "M_star",
+        "mean_js_on_selected_panel": 0.067332,
+        "min_js_on_selected_panel": 0.0,
+        "max_js_on_selected_panel": 0.092179
+      },
+      {
+        "left_family": "M_exact",
+        "right_family": "M_0",
+        "mean_js_on_selected_panel": 0.182905,
+        "min_js_on_selected_panel": 0.038339,
+        "max_js_on_selected_panel": 0.270837
+      },
+      {
+        "left_family": "M_exact",
+        "right_family": "M_cluster",
+        "mean_js_on_selected_panel": 0.004677,
+        "min_js_on_selected_panel": 0.0,
+        "max_js_on_selected_panel": 0.030387
+      },
+      {
+        "left_family": "M_exact",
+        "right_family": "M_rho",
+        "mean_js_on_selected_panel": 0.016658,
+        "min_js_on_selected_panel": 0.011103,
+        "max_js_on_selected_panel": 0.023718
+      },
+      {
+        "left_family": "M_exact",
+        "right_family": "M_rho,beta",
+        "mean_js_on_selected_panel": 0.072614,
+        "min_js_on_selected_panel": 0.013487,
+        "max_js_on_selected_panel": 0.110856
+      },
+      {
+        "left_family": "M_exact",
+        "right_family": "M_star",
+        "mean_js_on_selected_panel": 0.406232,
+        "min_js_on_selected_panel": 0.038339,
+        "max_js_on_selected_panel": 0.577396
+      },
+      {
+        "left_family": "M_rho",
+        "right_family": "M_cluster",
+        "mean_js_on_selected_panel": 0.011963,
+        "min_js_on_selected_panel": 0.000556,
+        "max_js_on_selected_panel": 0.022749
+      },
+      {
+        "left_family": "M_rho",
+        "right_family": "M_rho,beta",
+        "mean_js_on_selected_panel": 0.027225,
+        "min_js_on_selected_panel": 1.5e-05,
+        "max_js_on_selected_panel": 0.046929
+      },
+      {
+        "left_family": "M_rho",
+        "right_family": "M_star",
+        "mean_js_on_selected_panel": 0.304183,
+        "min_js_on_selected_panel": 0.005751,
+        "max_js_on_selected_panel": 0.479272
+      },
+      {
+        "left_family": "M_rho,beta",
+        "right_family": "M_cluster",
+        "mean_js_on_selected_panel": 0.05828,
+        "min_js_on_selected_panel": 0.013487,
+        "max_js_on_selected_panel": 0.088562
+      },
+      {
+        "left_family": "M_rho,beta",
+        "right_family": "M_star",
+        "mean_js_on_selected_panel": 0.173886,
+        "min_js_on_selected_panel": 0.007285,
+        "max_js_on_selected_panel": 0.270286
+      },
+      {
+        "left_family": "M_star",
+        "right_family": "M_cluster",
+        "mean_js_on_selected_panel": 0.378763,
+        "min_js_on_selected_panel": 0.038339,
+        "max_js_on_selected_panel": 0.559631
+      }
+    ]
+  },
+  "recommendation_for_analysis_4_2": [
+    "M_exact",
+    "M_0",
+    "M_rho",
+    "M_rho,beta",
+    "M_star",
+    "M_cluster"
+  ],
+  "schematic_meta": {
+    "exemplar_graph_id": "RG049",
+    "descriptor": {
+      "shell1_nodes": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "shell2_nodes": [
+        5
+      ],
+      "shell3_nodes": [],
+      "D1_target_degree": 4,
+      "D2_neighbor_coupling": 4,
+      "S2_count": 1,
+      "e12": 4,
+      "e22": 0,
+      "radius": 2,
+      "tree_like": false,
+      "closure_density": 0.666667,
+      "D3_remote_class": "D3-2:strong-remote"
+    }
+  }
+}

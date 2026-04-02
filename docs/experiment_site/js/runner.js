@@ -148,6 +148,63 @@ function waitPickOrConfirm(graphCanvas, confirmBtn, clearBtn, layout, selectable
   });
 }
 
+function rotateArray(arr, shift) {
+  if (!Array.isArray(arr) || arr.length <= 1) return Array.isArray(arr) ? [...arr] : [];
+  const n = arr.length;
+  const s = ((shift % n) + n) % n;
+  if (s === 0) return [...arr];
+  return arr.slice(s).concat(arr.slice(0, s));
+}
+
+function getCounterbalanceGroup(participantId) {
+  const m = String(participantId || "").trim().match(/^\d{3}$/);
+  if (!m) return 0;
+  const num = parseInt(m[0], 10);
+  if (!Number.isFinite(num) || num <= 0) return 0;
+  return (num - 1) % 3;
+}
+
+function applyParticipantCounterbalance(stimulus, participantId) {
+  const copied = JSON.parse(JSON.stringify(stimulus));
+  const group = getCounterbalanceGroup(participantId);
+  const evidenceOrders = [
+    ["high", "medium", "low"],
+    ["medium", "low", "high"],
+    ["low", "high", "medium"],
+  ];
+  const targetEvidenceOrder = evidenceOrders[group];
+
+  copied.counterbalanceGroup = group + 1;
+  copied.counterbalanceParticipantId = String(participantId || "");
+
+  if (!Array.isArray(copied.blocks) || copied.blocks.length === 0) {
+    return copied;
+  }
+
+  copied.blocks = rotateArray(copied.blocks, group).map((block) => {
+    const trials = Array.isArray(block.trials) ? block.trials : [];
+    if (!trials.length) return block;
+
+    const byLevel = new Map();
+    const fallback = [];
+    for (const tr of trials) {
+      const lv = String((tr && tr.evidenceLevel) || "").toLowerCase();
+      if (targetEvidenceOrder.includes(lv) && !byLevel.has(lv)) byLevel.set(lv, tr);
+      else fallback.push(tr);
+    }
+
+    let reordered = null;
+    if (targetEvidenceOrder.every((lv) => byLevel.has(lv))) {
+      reordered = targetEvidenceOrder.map((lv) => byLevel.get(lv)).concat(fallback);
+    } else {
+      reordered = rotateArray(trials, group);
+    }
+    return { ...block, trials: reordered };
+  });
+
+  return copied;
+}
+
 async function runSingleTrial(stimulusDoc, trial, meta) {
   validateTrial(trial);
   const cw = stimulusDoc.canvasWidth || 960;
@@ -178,6 +235,8 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
 
   const rows = [];
   let focusedNode = null;
+  const confirmLabelFill = "确认填色";
+  const confirmLabelNext = "确认下一个试次";
   function redraw(focused, liveBelief) {
     const ctx = graphCanvas.getContext("2d");
     ctx.fillStyle = rgb(THEME.background);
@@ -229,6 +288,7 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
   mount.appendChild(container);
 
   try {
+    btn.textContent = confirmLabelFill;
     while (remaining.size > 0) {
       if (trial.orderMode === "sequential") {
         focusedNode = queue[0];
@@ -328,7 +388,60 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
         }
       }
     }
+
+    // 所有节点完成后，不自动跳转；允许最后调整，需手动确认进入下一试次。
+    focusedNode = null;
+    let finalSelectionOnset = Math.round(performance.now());
+    btn.textContent = confirmLabelNext;
+    clearBtn.style.display = "none";
+    setMessage("本试次已完成。可点击任意节点做最后调整；完成后点击“确认下一个试次”。");
+    redraw(null, null);
+    for (;;) {
+      const ev = await waitPickOrConfirm(graphCanvas, btn, clearBtn, layout, new Set(nodeIds));
+      if (ev.type === "pick") {
+        focusedNode = ev.node;
+        if (beliefs[focusedNode]) {
+          const [r, g, b] = beliefs[focusedNode];
+          picker.setBelief(r, g, b);
+        } else {
+          picker.setBelief(1 / 3, 1 / 3, 1 / 3);
+        }
+        finalSelectionOnset = Math.round(performance.now());
+        btn.textContent = confirmLabelFill;
+        setMessage("已选节点。点击“确认填色”保存本次调整；或重新点其它节点继续调整。");
+        redraw(focusedNode, picker.getBelief());
+        continue;
+      }
+      if (ev.type === "clear") {
+        setMessage("最后调整阶段不支持清空节点；如需修改可直接覆盖填色。");
+        continue;
+      }
+      if (!focusedNode) {
+        break;
+      }
+      const [r, g, b] = picker.getBelief();
+      const offsetMs = Math.round(performance.now());
+      beliefs[focusedNode] = [r, g, b];
+      rows.push({
+        ...meta,
+        step_index: rows.length + 1,
+        chosen_node: focusedNode,
+        belief_red: r,
+        belief_green: g,
+        belief_blue: b,
+        onset_ms: finalSelectionOnset,
+        offset_ms: offsetMs,
+        RT_ms: offsetMs - finalSelectionOnset,
+        is_final_adjustment: true,
+      });
+      focusedNode = null;
+      btn.textContent = confirmLabelNext;
+      setMessage("已保存最终调整。可继续调整，或点击“确认下一个试次”进入下一试次。");
+      redraw(null, null);
+    }
   } finally {
+    btn.textContent = confirmLabelFill;
+    clearBtn.style.display = "";
     mount.innerHTML = "";
   }
 
@@ -356,6 +469,7 @@ async function runAllTrials(stimulus, participantId) {
       validateTrial(trial);
       const meta = {
         participant: participantId,
+        counterbalance_group: stimulus.counterbalanceGroup || "",
         stimulus_name: stimulus.name || "",
         block_index: bi + 1,
         block_id: block.blockId,
@@ -466,6 +580,11 @@ export async function startExperimentFromUi() {
     document.getElementById("run-participant").focus();
     return;
   }
+  if (!/^\d{3}$/.test(pid)) {
+    alert("被试编号需为三位数字（如 001 / 002 / 003）。");
+    document.getElementById("run-participant").focus();
+    return;
+  }
   const fileInput = document.getElementById("run-stimulus-file");
   const file = fileInput.files && fileInput.files[0];
   let stimulus = null;
@@ -510,6 +629,8 @@ export async function startExperimentFromUi() {
       window.EditorApp.refreshEditorView();
     }
   }
+
+  stimulus = applyParticipantCounterbalance(stimulus, pid);
 
   await tryEnterFullscreen();
   try {

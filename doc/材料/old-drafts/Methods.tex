@@ -1,0 +1,765 @@
+% 方法部分：经典搜索与贝叶斯推断两种求解器的数学描述
+% 风格参考：数学描述风格参考.md（小节标题 + 正文 + 公式 + where 说明）
+\section{方法（Methods）}
+
+\subsection*{5.1 概述}
+
+我们将实验任务形式化为图约束着色空间上的序列概率推断问题。每个trial向被试呈现一个部分展开的图$G=(V,E)$，其中节点$V$表示离散随机变量，边$E$编码局部约束。被试在图结构逐步揭示的过程中，序列化地估计节点颜色的边缘后验分布。我们采用变量消元（variable elimination, VE）算法对这一过程建模。VE是一种经典的精确推断算法，能够自然刻画序列信念更新的计算几何特征。该框架生成定量预测，将局部拓扑复杂度——通过诱导团大小和填充边数度量——与行为指标（包括反应时、不确定性和推断准确性）建立联系。
+
+\subsection*{5.2 图着色的概率表示}
+
+\subsubsection*{5.2.1 任务形式化}
+
+每个trial由四元组$T=(G, e, \lambda_e, o)$定义，其中$G=(V,E)$为图结构，$e \in V$为证据节点，$\lambda_e$为该节点的软证据，$o=(v_1,\ldots,v_T)$为查询序列。每个节点$i \in V$对应一个离散随机变量$X_i$，取值来自颜色集合$C=\{R,G,B\}$。边施加硬约束，要求相邻节点颜色不同：
+
+\begin{equation*}
+(i,j)\in E \Rightarrow X_i \neq X_j.
+\end{equation*}
+
+证据节点$e$在trial开始时以软概率分布$\lambda_e=(\lambda_e(R), \lambda_e(G), \lambda_e(B))$的形式呈现，界面上显示为概率环。被试随后按预定顺序$o$依次报告对每个节点$v_t$的信念，其中$t$为查询步骤索引。每个响应$y_t=(y_{t,R}, y_{t,G}, y_{t,B})$表示颜色上的概率分布，约束于2-单纯形$\Delta^2$。
+
+\subsubsection*{5.2.2 因子图表示}
+
+我们将着色约束满足问题表示为带硬约束和软证据的因子图。设$x=(x_i)_{i\in V}$为完整的颜色赋值。对每条边$(i,j)\in E$,定义二元约束因子：
+
+\begin{equation*}
+\psi_{ij}(x_i,x_j)=\mathbf{1}[x_i\neq x_j],
+\end{equation*}
+
+其中$\mathbf{1}[\cdot]$为指示函数。节点$e$上的软证据编码为一元因子$\phi_e(x_e)=\lambda_e(x_e)$。对所有非证据节点$i\neq e$，设$\phi_i(x_i)=1$。联合分布因子化为：
+
+\begin{equation*}
+p(x\mid G,\lambda_e)=\frac{1}{Z(G,\lambda_e)}\left[\prod_{i\in V}\phi_i(x_i)\right]\left[\prod_{(i,j)\in E}\psi_{ij}(x_i,x_j)\right],
+\end{equation*}
+
+其中$Z(G,\lambda_e)$为配分函数。该形式化将着色任务统一于概率图模型框架，边因子编码拓扑约束，一元因子编码证据。
+
+\subsection*{5.3 变量消元推断模型}
+
+\subsubsection*{5.3.1 序列推断机制}
+
+在第$t$步，被试需估计查询节点$v_t$的边缘后验分布。在静态贝叶斯解释下，规范目标为：
+
+\begin{equation*}
+b_t(c)=P(X_{v_t}=c\mid G,\lambda_e),\quad c\in C.
+\end{equation*}
+
+然而，我们假设人类推断通过序列化机制运作，在节点被处理的过程中维护并更新内部表征。变量消元为这一假设提供了自然的形式化：认知系统并非每步从头计算边缘分布，而是增量式地边缘化已处理节点，将其影响压缩为约束剩余变量的中间因子。
+
+\subsubsection*{5.3.2 活跃因子表示}
+
+我们定义一个VE代理，按任务指定的查询顺序$o$处理节点。在trial开始时，代理初始化活跃因子集：
+
+\begin{equation*}
+\mathcal{F}^{(1)}=\{\phi_i(x_i):i\in V\}\cup\{\psi_{ij}(x_i,x_j):(i,j)\in E\}.
+\end{equation*}
+
+在第$t$步，设$P_t=\{v_1,\ldots,v_{t-1}\}$为已处理节点集，$A_t=V\setminus P_t$为活跃变量集。因子集$\mathcal{F}^{(t)}$表示代理消去$P_t$中所有节点后的内部状态。
+
+\subsubsection*{5.3.3 边缘计算}
+
+为响应查询$v_t$，代理在当前活跃因子下计算精确边缘分布：
+
+\begin{equation*}
+b_t(x_{v_t})\propto\sum_{x_{A_t\setminus\{v_t\}}}\prod_{f\in\mathcal{F}^{(t)}}f.
+\end{equation*}
+
+归一化后得到$b_t=(b_t(R),b_t(G),b_t(B))\in\Delta^2$，表示具有完整结构感知能力的规范贝叶斯后验。
+
+\subsubsection*{5.3.4 通过消元更新因子}
+
+计算$b_t$后，代理通过边缘化$v_t$来消去该节点。设$\mathcal{B}_t=\{f\in\mathcal{F}^{(t)}:v_t\in\text{scope}(f)\}$为涉及$v_t$的因子集。消元操作产生新的中间因子：
+
+\begin{equation*}
+m_t(x_{S_t})=\sum_{x_{v_t}}\prod_{f\in\mathcal{B}_t}f,
+\end{equation*}
+
+其中作用域$S_t=\left(\bigcup_{f\in\mathcal{B}_t}\text{scope}(f)\right)\setminus\{v_t\}$包含$v_t$的所有原本不相邻的邻居。因子集随后更新为：
+
+\begin{equation*}
+\mathcal{F}^{(t+1)}=\left(\mathcal{F}^{(t)}\setminus\mathcal{B}_t\right)\cup\{m_t\}.
+\end{equation*}
+
+该更新机制刻画了序列推断的计算几何：中间因子$m_t$耦合$S_t$中原本不相邻的节点，在内部表征中生成诱导边（fill-ins）。这些诱导依赖关系虽然在任务界面中不可见，但构成了后续推断步骤的结构负荷。
+
+\subsection*{5.4 复杂度度量}
+
+VE框架自然定义了量化每步推断计算代价的局部复杂度指标。设$G^{(t)}=(A_t,E^{(t)})$为第$t$步的活跃图，$\mathcal{N}_t(v_t)$为$v_t$在该图中的邻居集。当$v_t$被消去时，其邻居将全连接形成团。我们定义两个关键指标：
+
+\textbf{诱导填充边数（$\text{Fill}_t$）：}
+
+\begin{equation*}
+\text{Fill}_t=|\{(i,j):i,j\in\mathcal{N}_t(v_t),\,i\neq j,\,(i,j)\notin E^{(t)}\}|.
+\end{equation*}
+
+该指标量化消去$v_t$时必须表征的新条件依赖数量，刻画结构更新的代价。
+
+\textbf{诱导团大小（$\Omega_t$）：}
+
+\begin{equation*}
+\Omega_t=|\mathcal{N}_t(v_t)|+1.
+\end{equation*}
+
+该指标决定中间因子$m_t$的维度（状态空间大小为$3^{\Omega_t-1}$），直接对应工作记忆负荷和表征容量约束。
+
+\subsection*{5.5 行为观测模型}
+
+为将代理的内部推断映射到可观测行为，我们引入两阶段转换。首先，响应温度参数$\beta>0$刻画概率报告中的系统性偏差：
+
+\begin{equation*}
+\tilde{b}_t(c)=\frac{b_t(c)^\beta}{\sum_{c'\in C}b_t(c')^\beta}.
+\end{equation*}
+
+当$\beta>1$时，响应表现为概率锐化；当$\beta<1$时，响应向均匀分布退化。其次，为吸收运动和决策噪声，我们将观测响应建模为Dirichlet分布的抽样：
+
+\begin{equation*}
+y_t\sim\text{Dirichlet}(\kappa\tilde{b}_t),
+\end{equation*}
+
+其中浓度参数$\kappa>0$控制响应精度。较高的$\kappa$表示内部信念与外显响应的紧密耦合；较低的$\kappa$反映更强的行为噪声。
+
+\subsection*{5.6 模型预测}
+
+若人类序列推断受类VE的图重构约束，而非无结构启发式，则行为指标应系统性地受局部拓扑几何（$\Omega_t$和$\text{Fill}_t$）支配，而非全局图属性。该框架生成三个定量预测：
+
+\textbf{预测1：计算代价与反应时。} 结构更新和记忆维持消耗时间资源。反应时应随拓扑复杂度增加：
+
+\begin{equation*}
+\log RT_t=\alpha_0+\alpha_1\text{Fill}_t+\alpha_2\Omega_t+\epsilon_t.
+\end{equation*}
+
+\textbf{预测2：推断不确定性。} 高复杂度的拓扑重构稀释主观确定感，增加报告信念的香农熵：
+
+\begin{equation*}
+H(y_t)=-\sum_c y_t(c)\log y_t(c)=\gamma_0+\gamma_1\text{Fill}_t+\gamma_2\Omega_t+\eta_t.
+\end{equation*}
+
+\textbf{预测3：计算坍塌与推断误差。} 当瞬时工作记忆负荷$\Omega_t$超出容量限制时，系统无法维持高维诱导联合分布，退化为粗糙近似。观测响应$y_t$与规范后验$b_t$之间的Kullback-Leibler散度应随诱导团增大而急剧上升：
+
+\begin{equation*}
+D_{\mathrm{KL}}(y_t\,\|\,b_t)=\sum_c y_t(c)\log\frac{y_t(c)}{b_t(c)}=\theta_0+\theta_1\Omega_t+\nu_t.
+\end{equation*}
+
+这些预测操作化了如下假设：人类在图上的概率推理从根本上受序列变量消元的计算几何约束。
+
+
+% \subsection{实验范式与任务}
+% \label{sec:paradigm_task}
+
+% 本研究采用基于地图填色的序列信念报告任务,考察被试如何在图结构逐步展开时,根据已有证据更新对当前节点颜色的主观信念。与经典地图填色任务不同,本实验不要求被试自由选择节点并完成整图赋值,也不以获得最终确定解为唯一目标。实验通过预设的信息揭示顺序,将每个trial组织为一系列受控的局部判断步骤。每一步中,被试只需针对当前节点报告一个三维概率分布,反映该节点属于红、绿、蓝三种颜色的信念。因此,本研究关注的核心是序列信念更新的时间过程,而非完整求解轨迹。
+
+% \subsubsection{约束图结构}
+
+% 形式上,每个trial对应一张约束图
+% \begin{equation}
+%   G=(V,E),
+% \end{equation}
+% 其中 $V$ 表示节点集合,$E$ 表示边集合。每个节点对应地图中的一个位置,每条边表示两个位置在空间上相邻,因此相邻节点不能被赋予相同颜色。所有节点的潜在颜色均来自同一个三元素集合
+% \begin{equation}
+%   C=\{R,G,B\},
+% \end{equation}
+% 并满足局部约束
+% \begin{equation}
+%   (i,j)\in E \Rightarrow x_i\neq x_j.
+% \end{equation}
+% 当前实验版本中,刺激主要由五节点图构成。为保持三色地图填色任务的语义一致性,运行时仅使用可三色着色的五节点拓扑。实验刺激来自事先筛选过的静态拓扑集合,而非在线随机生成。
+
+% \subsubsection{信念报告机制}
+
+% 当前范式将被试的基本行为单位定义为对当前节点的一次信念报告,而非对某节点执行赋色、重涂或撤销等显式动作。在任意时刻 $t$,被试需要对当前节点 $v_t$ 给出一个三维主观概率向量
+% \begin{equation}
+%   \hat{b}_{v_t}=(p_R,p_G,p_B),\qquad p_R+p_G+p_B=1,
+% \end{equation}
+% 其中 $p_R,p_G,p_B$ 分别表示被试认为该节点为红、绿、蓝的主观概率。这个表示使实验数据能够直接刻画被试在局部约束网络中的概率性判断。
+
+% \subsubsection{证据节点与软证据}
+
+% 每个trial从一个证据节点开始。该节点以软证据形式提供初始信念,例如
+% \begin{equation}
+%   \phi_s=(0.8,0.1,0.1),
+% \end{equation}
+% 表示该节点有较高概率属于某一颜色,但并非确定观测值。证据节点由预计算调度指定,作为整个trial的信息起点自动呈现。被试无需对这一节点作答,只需阅读后继续进入后续步骤。当前实现中,证据节点的初始软信念由可复现的随机种子生成,因此在相同参与者和相同调度配置下,起始证据保持稳定和可复现。
+
+% \subsubsection{节点揭示顺序}
+
+% trial的核心结构由一条预计算的完整节点顺序决定。对包含 $N$ 个节点的图,系统为每个trial指定一个完整填充顺序
+% \begin{equation}
+%   o=(v_1,v_2,\dots,v_N),
+% \end{equation}
+% 其中 $v_1$ 为证据节点,且每个节点仅出现一次。该顺序还满足局部连通性条件:对于任一步 $t>1$,新出现的节点至少与某个先前已揭示的节点相邻,从而保证信息沿图结构逐步外扩而非任意跳转。最终,整条顺序覆盖图中的全部节点。节点展开顺序由实验者预先生成并固定,而非被试在线探索的结果。这样处理将图结构本身与信息暴露顺序明确解耦,使后续分析能够把被试的信念变化归因于受控的信息流,而非在线路径生成带来的额外噪声。
+
+% 这些揭示顺序由离线的路径编译与调度过程生成。在给定图 $G$、证据节点 $s$ 与允许长度集合的条件下,系统首先全量枚举合法路径空间,保证候选顺序的完备性;随后根据路径长度、首跳类型、终点类型与节点度数轮廓等拓扑特征进行分层,避免某些结构模式在试次中被过度采样;最后在平衡后的候选池中进行受控抽样,并记录block与随机种子等字段,确保整个刺激序列可复现。因此,节点顺序本质上属于实验控制变量,而不是认知模型需要在线解释的行为输出。
+
+% \subsubsection{试次流程}
+
+% 单个trial的运行流程如下。系统首先呈现证据节点及其对应的软证据,作为整条推断链条的公共起点。从顺序中的第二个节点开始,系统依次高亮当前节点,并向被试开放与当前判断相关的局部信息:当前节点的位置、当前节点与其他节点的相邻关系、此前已经出现过的相邻节点及其信念分布,以及用于报告 $(p_R,p_G,p_B)$ 的颜色选择界面。被试完成当前节点的信念报告后点击确认,系统记录该节点的回答并推进到下一个节点。整条顺序结束后,系统展示该trial的全图状态,供被试进行统一回顾,然后进入下一trial。
+
+% 这一任务流程受到两项关键约束。第一,顺序固定:每个trial的节点展开顺序由预计算调度决定,被试不能自由选择下一步要判断的节点。第二,不可回退:一旦被试确认某一步的回答,该节点的信念即被写入试次记录,且不能返回修改。从计算结构上看,本实验模拟的是严格的在线推断过程:被试在每一步都必须基于当前已揭示的信息状态做出即时的概率判断。
+
+% 对被试而言,这一范式并非传统意义上隐藏答案的静态图题,而是受限、局部且逐步展开的信息揭示任务。在任意时刻 $t$,被试面对的不是整张图的完整求解要求,而是在给定局部结构、历史信念状态以及当前证据条件下,对当前节点进行一次条件化的概率估计。因此,本研究的方法学重点不在于记录人是否找到某个最终合法着色,而在于刻画人在受控图结构中如何进行逐步推断,以及这种逐步推断在多大程度上符合后续将要比较的BP类、局部更新类或其他规范模型。
+
+
+% \subsection{统一问题框架}
+% \label{sec:problem}
+
+% 本研究将地图填色任务形式化为约束图上的序列决策过程，记为
+% \begin{equation}
+%   M = \langle G_{\mathrm{csp}}, S, A, f, \Pi \rangle .
+% \end{equation}
+% 其中 $G_{\mathrm{csp}}$ 描述地图作为约束满足问题的结构，$S$ 为所有可能的部分着色状态集合，$A$ 为基本动作集合，$f \colon S \times A \to S$ 为由界面规则确定的状态转移函数，$\Pi$ 为一族候选过程模型（BP传播型、搜索型等），用于在给定内部推断状态的前提下生成动作序列。
+
+% \subsubsection{约束图 $G_{\mathrm{csp}}$}
+% 地图填色被表示为图着色型约束满足问题。将平面图建模为马尔可夫网络
+% \begin{equation}
+%   G_{\mathrm{csp}} = (V, E, C),
+% \end{equation}
+% 其中 $V = \{1,\ldots,N\}$ 为区域集合，$E \subseteq V \times V$ 为相邻区域对，$C = \{1,\ldots,K\}$ 为颜色集合。每个区域 $i \in V$ 对应一个离散变量 $x_i \in C$。目标是找到一个赋值
+% \begin{equation}
+%   x = (x_1,\ldots,x_N),
+% \end{equation}
+% 满足所有相邻约束
+% \begin{equation}
+%   \forall (i,j) \in E,\; x_i \neq x_j .
+% \end{equation}
+
+% 为对接信念传播模型，将该约束问题写成无向图模型。定义每条边 $(i,j) \in E$ 上的二元势函数 $\psi_{ij}$：
+% \begin{equation}
+%   \psi_{ij}(x_i, x_j) =
+%   \begin{cases}
+%     \exp(-\beta), & x_i = x_j, \\
+%     1,            & x_i \neq x_j,
+%   \end{cases}
+% \end{equation}
+% 其中 $\beta \ge 0$ 控制违反约束的惩罚强度。对应的能量函数为
+% \begin{equation}
+%   E(x) = - \sum_{(i,j)\in E} \log \psi_{ij}(x_i, x_j),
+% \end{equation}
+% 联合分布为
+% \begin{equation}
+%   P(x) \propto \prod_{(i,j)\in E} \psi_{ij}(x_i, x_j).
+% \end{equation}
+% 在信念传播型模型中，这一无向图进一步被转写为因子图：变量节点对应 $x_i$，因子节点对应 $\psi_{ij}$，用于定义内部信念传播的消息更新规则。
+
+% \subsubsection{状态空间、动作空间与状态转移}
+% 虽然形式上只显式写出约束图 $G_{\mathrm{csp}}$，但求解过程本质上是在部分着色状态空间上的序列决策。用 $S$ 表示所有可能的部分赋值状态集合：每个 $s \in S$ 可以理解为长度为 $N$ 的向量，允许某些位置为未填色，也允许暂时存在局部冲突。
+
+% 基本动作集合 $A$ 至少包含以下几类操作：
+% \begin{itemize}
+%   \item 对某一区域 $i$ 赋予某一颜色 $c$（首次着色或重涂）；
+%   \item 撤销上一步操作；
+%   \item 其他简单编辑操作（如清空某一格）。
+% \end{itemize}
+
+% 状态转移函数 $f \colon S \times A \to S$ 由实验界面与任务规则决定：在状态 $s_t$ 下执行动作 $a_t$ 后，界面进入唯一确定的下一状态
+% \begin{equation}
+%   s_{t+1} = f(s_t, a_t).
+% \end{equation}
+% 因此，无论是人类还是算法，在给定地图上的求解过程都可以表示为一条状态--动作轨迹
+% \begin{equation}
+%   D = \{(s_0,a_0),(s_1,a_1),\ldots,(s_T,a_T)\},
+% \end{equation}
+% 其中 $s_0$ 为初始空白着色，$s_T$ 为首次达到的合法解状态或试次终止状态。
+
+% 在候选过程模型族 $\Pi$ 中，信念传播型与搜索型模型共享同一个显式状态空间 $(S,A,f)$，但在内部隐状态和策略上有所不同：信念传播型模型的隐状态包括因子图上的消息场、当前提交集等，动作概率 $\pi(a_t \mid s_t, z_t)$ 由信念分布和启发式决策规则共同决定；搜索型模型的隐状态包括当前部分赋值、变量可行域和搜索栈等，动作概率由变量选择和取值选择的启发式策略决定。
+
+% \subsubsection{难度与目标距离}
+% 为了在算法层面刻画任务难度，并为后续过程分析提供统一坐标，引入目标距离 $d_{\mathrm{goal}}(s)$。给定一个部分赋值状态 $s \in S$，设 $S_{\mathrm{sol}}$ 为所有合法着色的集合。从 $s$ 到任一 $x^\star \in S_{\mathrm{sol}}$ 的最小重涂步数定义为该状态的目标距离：
+% \begin{equation}
+%   d_{\mathrm{goal}}(s) = \min_{x^\star \in S_{\mathrm{sol}}} d_{\mathrm{edit}}(s, x^\star),
+% \end{equation}
+% 其中 $d_{\mathrm{edit}}(s, x^\star)$ 是在只允许每一步对单个区域更改一次颜色的前提下，从当前部分着色 $s$ 变换到完整合法着色 $x^\star$ 所需的最少步数。等价地，可以将 $d_{\mathrm{edit}}$ 视为在隐含状态图上的最短路径长度。
+
+% 在后续分析中，$d_{\mathrm{goal}}(s_t)$ 将作为统一的进展指标，用于绘制冲突频率随目标距离变化、回退深度分布在不同距离区间的差异、信念传播状态更新幅度随接近解的变化等过程级汇总曲线，从而在统一坐标系下比较信念传播型与搜索型模型的行为特征以及人类被试数据。
+
+% ---------------------------------------------------------------------------
+\subsection{信念传播类代理（BP-like Agents）}
+\label{sec:bp-agents}
+
+\subsubsection{公共表征：约束图与马尔可夫随机场}
+两类代理共享相同的任务表征。地图填色问题定义在约束图
+\begin{equation}
+  G_{\mathrm{csp}} = (V, E, C),
+\end{equation}
+其中 $V$ 为节点集合（对应待着色区域），$E$ 为边集合（编码相邻互斥约束），$C$ 为有限颜色集合。在该图上建立仅含成对势的马尔可夫随机场（MRF），其联合分布为
+\begin{equation}
+  P(x) \propto \prod_{(i,j)\in E} \psi_{ij}(x_i, x_j),
+\end{equation}
+其中 $x = (x_i)_{i\in V}$ 为全局着色赋值，成对势函数 $\psi_{ij}$ 编码相邻节点的颜色兼容性：对于标准着色问题，$\psi_{ij}(x_i, x_j) > 0$（当 $x_i \neq x_j$ 时）而 $\psi_{ij}(x_i, x_j) = 0$（当 $x_i = x_j$ 时，硬约束），或取较大负对数惩罚值（软约束）。注意，本模型不包含显式的一元势（unary potential）；节点的先验偏好或已提交颜色信息均通过变量条件化（clamping）实现，而非引入额外节点势。
+
+为便于后续算法描述，同时定义对数成对势：
+\begin{equation}
+  J_{ij}(x_i, x_j) = \ln \psi_{ij}(x_i, x_j).
+\end{equation}
+
+
+\subsubsection{Max-Product BP 代理（无显式决策层）}
+\paragraph{模型定位}
+Max-product BP 代理作为规范性基线（normative baseline），与下一节的 BP-like 代理形成对照。该代理不包含逐步提交变量的决策层，也不显式建模外层时间步 $t$。它将地图着色视为上述 MRF 上的 MAP 推断问题，即寻找使全局联合对数概率最大化的赋值：
+\begin{equation}
+  x^{*} = \arg\max_{x}\; \sum_{(i,j)\in E} J_{ij}(x_i, x_j).
+\end{equation}
+代理在整张约束图上并行运行消息传递，其输出不是逐步填充的动作序列，而是随 BP 迭代演化的一条赋值轨迹及最终收敛解。
+
+\paragraph{内部推断：Max-Sum 消息更新}
+代理的内部状态由一组沿有向边传递的对数消息构成：
+\begin{equation}
+  \lambda_{i\to j}^{(\tau)}(c_j),\qquad
+  i\in V,\; j\in N(i),\; c_j\in C,
+\end{equation}
+其中 $\tau=0,1,\ldots$ 为迭代轮数，$N(i)$ 为节点 $i$ 的邻居集合。初始化时，所有消息设为 $0$（对应概率域的均匀分布）。
+
+在每轮迭代 $\tau\to \tau+1$ 中，对每条有向边 $i\to j$ 及颜色 $c_j$，首先计算未阻尼的 max-sum 更新：
+\begin{equation}
+  \hat{\lambda}_{i\to j}^{(\tau+1)}(c_j)
+  =
+  \max_{c_i\in C}
+  \Bigl[
+    J_{ij}(c_i, c_j)
+    +
+    \sum_{k\in N(i)\setminus\{j\}}
+    \lambda_{k\to i}^{(\tau)}(c_i)
+  \Bigr].
+\end{equation}
+
+
+为抑制有环图上的数值振荡，引入阻尼系数 $\alpha\in(0,1]$，实际更新采用线性插值：
+\begin{equation}
+  \lambda_{i\to j}^{(\tau+1)}(c_j)
+  =
+  (1-\alpha)\,\lambda_{i\to j}^{(\tau)}(c_j)
+  +
+  \alpha\,\hat{\lambda}_{i\to j}^{(\tau+1)}(c_j).
+\end{equation}
+此外，为防止消息值无限漂移，每步对消息进行归一化处理（如减去该条消息在所有颜色上的均值或最大值）。迭代持续进行，直至满足以下任一终止条件：相邻两轮消息差的 $L_1$ 范数小于阈值 $\epsilon$（判定为收敛），或达到最大迭代次数 $T_{\max}$。
+
+\paragraph{赋值轨迹与解的读出}
+在无显式决策层的设定下，max-product 代理的“当前状态”定义为各节点的最大边缘（max-marginal）估计。在第 $\tau$ 轮迭代，每个节点 $i$ 的对数局部信念（log-belief）计算为
+\begin{equation}
+  b_i^{(\tau)}(c)
+  =
+  \sum_{k\in N(i)} \lambda_{k\to i}^{(\tau)}(c),
+  \qquad c\in C.
+\end{equation}
+$b_i^{(\tau)}(c)$ 近似了 $\ln P(x_i=c,\, x_{V\setminus i}^{*})$，即假设节点 $i$ 取颜色 $c$ 时，其余变量取最优配置下的全局对数得分。
+
+代理在第 $\tau$ 步的赋值：
+\begin{equation}
+  x_i^{(\tau)}
+  =
+  \arg\max_{c\in C}\; b_i^{(\tau)}(c),
+  \qquad \forall\, i\in V.
+\end{equation}
+由此得到该代理的赋值轨迹：
+\begin{equation}
+  \mathcal{T} = \bigl\{ x^{(0)},\, x^{(1)},\, \ldots,\, x^{(T_{\max})} \bigr\}.
+\end{equation}
+随着消息传递的推进，赋值 $x^{(\tau)}$ 逐步演化。当消息收敛或赋值在连续 $K_{\mathrm{stab}}$ 轮迭代中保持不变时，最终的 $x^{(\tau)}$ 即被视为该代理给出的近似 MAP 解。
+
+% ---------------------------------------------------------------------------
+\subsubsection{Sum-Product BP + 决策层}
+
+\paragraph{模型架构}
+与 max-product 代理的全局并行一致化策略不同，BP-like 代理被构造为一个推断--决策两层过程模型，在每个外层时间步 $t$ 交替执行两个阶段：
+\begin{itemize}
+  \item \textbf{推断层}：在当前已提交部分赋值的条件下，运行 sum-product BP，输出每个未提交节点的近似边缘分布；
+  \item \textbf{决策层}：基于推断层输出的边缘分布，通过熵排序与温度调节的 softmax 机制，生成“下一步在哪个节点填什么颜色”的动作。
+\end{itemize}
+该模型的核心区别在于：它显式建模逐步填色的时间过程，每步提交一个变量赋值并将其条件化到后续推断中，从而生成一条与人类操作序列直接可比的动作轨迹。
+
+\paragraph{状态表示}
+记第 $t$ 个外层时间步的已提交节点集合为 $A_t \subseteq V$，对应的部分赋值为映射
+\begin{equation}
+  y_t \colon A_t \to C, \qquad y_t(i)=\text{节点 $i$ 已提交的颜色}.
+\end{equation}
+未提交节点集合记为
+\begin{equation}
+  F_t = V \setminus A_t.
+\end{equation}
+初始时 $A_0=\emptyset$。
+
+\paragraph{推断层：条件 MRF 上的 Sum-Product BP}
+推断层的任务是：给定当前部分赋值 $(A_t, y_t)$，计算剩余未提交节点上的近似边缘分布。
+
+\textbf{条件化的马尔可夫随机场。}
+在给定部分赋值 $(A_t, y_t)$ 的条件下，原始 MRF 的联合分布化为条件分布
+\begin{equation}
+  P_t(x_{F_t}\mid x_{A_t}=y_t)
+  \propto
+  \prod_{(i,j)\in E} \psi_{ij}(x_i, x_j),
+\end{equation}
+其中 $i\in A_t$ 的变量 $x_i$ 已被固定为 $y_t(i)$，而 $i\in F_t$ 的变量仍在颜色集合 $C$ 上自由取值。
+
+\textbf{消息传递。}
+为图上每条有向边 $i\to j$ 维护一条消息函数
+\begin{equation}
+  m_{i\to j}^{(t,\tau)}(c_j),\qquad
+  i\in V,\; j\in N(i),\; c_j\in C,\; \tau=0,\ldots,T_{\mathrm{bp}},
+\end{equation}
+其中 $\tau$ 为本时间步内部 BP 的迭代索引，$T_{\mathrm{bp}}$ 为每一外层时间步的内部 BP 迭代轮数。对每条有向边 $i\to j$，内部第 $\tau+1$ 轮迭代的未阻尼消息 $\hat{m}_{i\to j}^{(t,\tau+1)}$ 根据节点 $i$ 的状态分两种情形更新：
+
+\textbf{(1) 未提交节点（$i\in F_t$）}：$x_i$ 为需要求和的随机变量，
+\begin{equation}
+  \hat{m}_{i\to j}^{(t,\tau+1)}(c_j)
+  \propto
+  \sum_{c_i\in C}
+  \psi_{ij}(c_i,c_j)
+  \prod_{k\in N(i)\setminus\{j\}}
+  m_{k\to i}^{(t,\tau)}(c_i),
+  \qquad c_j\in C.
+\end{equation}
+
+\textbf{(2) 已提交节点（$i\in A_t$）}：$x_i$ 被固定为 $y_t(i)$，不再对 $c_i$ 求和，
+\begin{equation}
+  \hat{m}_{i\to j}^{(t,\tau+1)}(c_j)
+  \propto
+  \psi_{ij}\bigl(y_t(i),c_j\bigr),
+  \qquad c_j\in C.
+\end{equation}
+已提交节点仅向邻居传播一个由自身固定颜色与边势决定的静态消息，不受其他传入消息的影响。
+
+与 max-product 代理类似，引入阻尼系数 $\alpha\in(0,1]$ 以提高数值稳定性：
+\begin{equation}
+  m_{i\to j}^{(t,\tau+1)}(c_j)
+  =
+  (1-\alpha)\,m_{i\to j}^{(t,\tau)}(c_j)
+  +
+  \alpha\,\hat{m}_{i\to j}^{(t,\tau+1)}(c_j),
+  \qquad c_j\in C.
+\end{equation}
+在本外层时间步内完成 $T_{\mathrm{bp}}$ 轮迭代后，得到最终消息集合
+\begin{equation}
+  \bigl\{ m_{i\to j}^{(t,T_{\mathrm{bp}})} \bigr\}.
+\end{equation}
+
+\textbf{信念计算。}
+由最终消息为每个未提交节点 $i\in F_t$ 计算近似边缘分布：
+\begin{equation}
+  b_i^{(t)}(c)
+  \propto
+  \prod_{k\in N(i)} m_{k\to i}^{(t,T_{\mathrm{bp}})}(c),
+  \qquad c\in C,
+\end{equation}
+再对 $c$ 归一化使 $\sum_{c} b_i^{(t)}(c)=1$。对于已提交节点 $i\in A_t$，其边缘分布为退化分布：
+\begin{equation}
+  b_i^{(t)}(c)=
+  \begin{cases}
+    1, & c=y_t(i),\\
+    0, & c\neq y_t(i).
+  \end{cases}
+\end{equation}
+
+\textbf{推断层输出。}
+在外层时间步 $t$ 结束时，推断层输出定义在整张图上的信念场
+\begin{equation}
+  b^{(t)}=\bigl\{ b_i^{(t)}(c): i\in V,\; c\in C \bigr\},
+\end{equation}
+表示在当前已提交条件下各节点对各颜色的局部支持程度，作为决策层的输入。
+
+\paragraph{决策层：基于熵的节点--颜色选择}
+决策层的任务是：给定推断层输出的信念场 $b^{(t)}$，生成本时间步的动作
+\begin{equation}
+  a_t=(i_t,c_t).
+\end{equation}
+决策过程分为节点选择与颜色选择两个阶段。
+
+\textbf{节点选择：熵驱动的 softmax。}
+对每个未提交节点 $i\in F_t$，计算其当前边缘分布的熵：
+\begin{equation}
+  H_i^{(t)} = -\sum_{c\in C} b_i^{(t)}(c)\,\log b_i^{(t)}(c).
+\end{equation}
+熵 $H_i^{(t)}$ 越小，表明该节点的颜色分布越尖锐，代理对其颜色选择越有把握；熵越大，则多种颜色可能性相当，内部尚未形成明确偏好。为偏好优先填色那些内部已较为确定的节点，将节点优先级定义为负熵：
+\begin{equation}
+  u_i^{(t)} = -H_i^{(t)},
+\end{equation}
+并利用逆温度参数 $\beta_{\mathrm{node}}\ge 0$ 构造节点选择的 softmax 分布：
+\begin{equation}
+  \pi_{\mathrm{node}}\bigl(i\mid b^{(t)}\bigr)
+  =
+  \frac{\exp\!\bigl(\beta_{\mathrm{node}}\,u_i^{(t)}\bigr)}
+       {\sum_{k\in F_t}\exp\!\bigl(\beta_{\mathrm{node}}\,u_k^{(t)}\bigr)},
+  \qquad i\in F_t.
+\end{equation}
+当 $\beta_{\mathrm{node}}\to 0$ 时，$\pi_{\mathrm{node}}$ 趋近于未提交节点上的均匀分布；当 $\beta_{\mathrm{node}}$ 较大时，节点选择高度集中于熵最小的少数节点，近似“总是先填最确定节点”的贪心策略。代理从 $\pi_{\mathrm{node}}(\cdot\mid b^{(t)})$ 中抽样得到操作节点 $i_t$。
+
+\textbf{颜色选择：边缘驱动的 softmax。}
+在节点 $i_t$ 被选定后，根据其边缘分布 $b_{i_t}^{(t)}(c)$ 生成填色动作。基础颜色选择分布定义为对边缘分布的幂变换：
+\begin{equation}
+  \tilde{\pi}_{\mathrm{color}}\bigl(c\mid b_{i_t}^{(t)}\bigr)
+  =
+  \frac{\bigl(b_{i_t}^{(t)}(c)\bigr)^{1/\tau_{\mathrm{act}}}}
+       {\sum_{c'\in C}\bigl(b_{i_t}^{(t)}(c')\bigr)^{1/\tau_{\mathrm{act}}}},
+  \qquad c\in C,
+\end{equation}
+其中 $\tau_{\mathrm{act}}>0$ 为动作层温度参数。当 $\tau_{\mathrm{act}}\to 0$ 时，该分布趋近于对 $\arg\max_{c}\, b_{i_t}^{(t)}(c)$ 的确定性选择；当 $\tau_{\mathrm{act}}$ 较大时，更接近按边缘分布进行概率匹配。
+
+为捕捉偶发失误或注意力波动，引入失误概率（lapse probability）$p_{\mathrm{lapse}}\in[0,1)$：在该概率下，代理不参考 $b_{i_t}^{(t)}$，而是在颜色集合 $C$ 上均匀随机选择。综合两部分，实际颜色选择概率为
+\begin{equation}
+  \pi_{\mathrm{color}}\bigl(c\mid b_{i_t}^{(t)}\bigr)
+  =
+  (1-p_{\mathrm{lapse}})\,\tilde{\pi}_{\mathrm{color}}\bigl(c\mid b_{i_t}^{(t)}\bigr)
+  +
+  p_{\mathrm{lapse}}\,\frac{1}{|C|},
+  \qquad c\in C.
+\end{equation}
+
+\textbf{决策层输出。}
+本时间步的完整动作概率由节点选择与颜色选择的联合概率给出：
+\begin{equation}
+  P\bigl(a_t=(i_t,c_t)\mid \text{历史},\Theta\bigr)
+  =
+  \pi_{\mathrm{node}}\bigl(i_t\mid b^{(t)}\bigr)\cdot
+  \pi_{\mathrm{color}}\bigl(c_t\mid b_{i_t}^{(t)}\bigr),
+\end{equation}
+其中参数集 $\Theta$ 汇总了推断层参数 $(\alpha,T_{\mathrm{bp}})$ 与决策层参数 $(\beta_{\mathrm{node}},\tau_{\mathrm{act}},p_{\mathrm{lapse}})$。
+
+\paragraph{状态更新与迭代循环}
+一旦动作 $a_t=(i_t,c_t)$ 被采样并执行，部分赋值从 $(A_t,y_t)$ 更新为
+\begin{equation}
+  A_{t+1}=A_t\cup\{i_t\},\qquad
+  y_{t+1}(i)=
+  \begin{cases}
+    y_t(i), & i\in A_t,\\
+    c_t,    & i=i_t.
+  \end{cases}
+\end{equation}
+在概率图模型层面，该步骤等价于对变量 $x_{i_t}$ 做条件化：令 $x_{i_t}=c_t$，并在后续 sum-product BP 更新中将 $i_t$ 始终视为观测变量。形式上，这通过在消息更新时对 $i\in A_{t+1}$ 使用
+\begin{equation}
+  \hat{m}_{i\to j}(c_j)\propto \psi_{ij}\bigl(y_{t+1}(i),c_j\bigr)
+\end{equation}
+来实现，无需显式引入新的节点势。
+
+随后进入下一外层时间步 $t+1$：推断层在新的条件 MRF $P_{t+1}(x_{F_{t+1}}\mid x_{A_{t+1}}=y_{t+1})$ 上运行 $T_{\mathrm{bp}}$ 轮 sum-product BP，输出更新后的信念场 $b^{(t+1)}$；决策层再据此生成下一步动作。以此循环，直至所有节点均已提交（得到完整着色方案）或达到预设的外层步数上限。
+% ---------------------------------------------------------------------------
+% ---------------------------------------------------------------------------
+\subsection{经典搜索代理（CSP 求解器）}
+\label{sec:csp-agent}
+
+我们构建一个基于约束满足问题（Constraint Satisfaction Problem, CSP）框架的经典搜索代理。该代理采用深度优先搜索（DFS）与回溯策略，并辅以变量排序、值排序与前向检查等启发式技术。
+
+与前述 BP 类代理不同，CSP 求解器不维护概率分布或消息场，而是通过系统性枚举与剪枝来寻找满足所有约束的完整赋值。
+
+\subsubsection{CSP 形式化}
+在约束图 $G_{\mathrm{csp}}=(V,E,C)$ 上，地图着色问题被形式化为如下 CSP：
+\begin{itemize}
+  \item \textbf{变量集合}：$X=\{X_i: i\in V\}$，每个变量 $X_i$ 对应图中的一个节点。
+  \item \textbf{值域}：每个变量 $X_i$ 的初始值域为 $D_i=C$，即所有可用颜色的集合。
+  \item \textbf{约束集合}：对每条边 $(i,j)\in E$，存在二元不等约束 $X_i\neq X_j$。
+\end{itemize}
+
+赋值记为映射 $\sigma\colon A\to C$，其中 $A\subseteq V$ 为已赋值节点集合。若 $\sigma(i)=c$，表示变量 $X_i$ 被赋予颜色 $c$。
+
+赋值 $\sigma$ 称为一致的（consistent），当且仅当对每条边 $(i,j)\in E$，若 $i,j\in A$，则 $\sigma(i)\neq \sigma(j)$。解定义为一个定义在全体 $V$ 上且一致的完整赋值，即 $A=V$ 且满足所有约束。
+
+\subsubsection{变量排序策略}
+设当前赋值为 $\sigma$，已赋值节点集合为 $A=\mathrm{dom}(\sigma)$，未赋值节点集合为 $U=V\setminus A$。若启用前向检查，记 $D_i$ 为节点 $i$ 在约束传播后的当前剩余值域。
+
+下一待赋值节点由以下策略之一选取：
+\begin{enumerate}
+  \item \textbf{静态顺序（Static）}：按预先给定的节点编号顺序，选取 $U$ 中索引最小的节点。
+  \item \textbf{最小剩余值（MRV）}：选取剩余合法颜色数最少的节点：
+  \begin{equation}
+    i^{*}\in \arg\min_{i\in U} |D_i|.
+  \end{equation}
+  若未启用前向检查，则 $D_i\equiv C$，该策略退化为静态顺序。
+  \item \textbf{度启发式（Degree）}：选取与未赋值节点相邻数量最多的节点：
+  \begin{equation}
+    i^{*}\in \arg\max_{i\in U}\Bigl|\{j\in N(i): j\in U\}\Bigr|,
+  \end{equation}
+  其中 $N(i)$ 为节点 $i$ 的邻居集合。
+  \item \textbf{MRV + 度（MRV + Degree）}：先按 MRV 策略得到候选集
+  \begin{equation}
+    U_{\mathrm{mrv}}=\arg\min_{i\in U}|D_i|;
+  \end{equation}
+  若 $|U_{\mathrm{mrv}}|=1$ 则直接选取该节点，否则在 $U_{\mathrm{mrv}}$ 上按度启发式进一步筛选。
+  \item \textbf{随机（Random）}：从 $U$ 中均匀随机选取。
+\end{enumerate}
+当存在多个并列候选时，可配置随机打平（random tie-breaking）。
+
+\subsubsection{值排序策略}
+对已选定的节点 $i$，其当前可用颜色集合记为 $D_i^{\mathrm{avail}}$（若启用前向检查则为当前剩余值域 $D_i$，否则为完整颜色集合 $C$）。为节点 $i$ 尝试颜色的顺序由以下策略之一决定：
+\begin{enumerate}
+  \item \textbf{静态顺序（Static）}：按预先给定的颜色编号顺序。
+  \item \textbf{随机（Random）}：将 $D_i^{\mathrm{avail}}$ 均匀随机打乱。
+  \item \textbf{最少约束值（LCV）}：对每种颜色 $c\in D_i^{\mathrm{avail}}$，计算若将节点 $i$ 赋为 $c$，会从多少未赋值邻居的值域中排除该颜色：
+  \begin{equation}
+    \mathrm{count}(c)=\sum_{j\in N(i),\, j\in U}\mathbb{1}[c\in D_j],
+  \end{equation}
+  按 $\mathrm{count}(c)$ 升序排列，优先尝试对邻居限制更少的颜色。
+\end{enumerate}
+
+\subsubsection{一致性检查与前向检查}
+\textbf{一致性检查：}
+对当前赋值 $\sigma$ 与候选赋值 $(i,c)$，若存在邻居 $j\in N(i)$ 满足 $j\in A$ 且 $\sigma(j)=c$，则 $(i,c)$ 与 $\sigma$ 不一致，该赋值被拒绝。
+
+\textbf{前向检查（Forward Checking）：}
+在执行赋值 $X_i=c$ 后，更新所有未赋值邻居的值域：对每个 $j\in N(i)\cap U$，令
+\begin{equation}
+  D_j' = D_j\setminus\{c\}.
+\end{equation}
+若存在某 $j$ 满足 $D_j'=\emptyset$，则前向检查失败，当前赋值分支被剪枝，搜索回溯。
+
+\subsubsection{搜索过程与输出}
+CSP 求解器通过深度优先搜索遍历赋值空间。在每一步，代理根据变量排序策略选取下一个待赋值节点 $i^{*}$，再根据值排序策略依次尝试 $D_{i^{*}}^{\mathrm{avail}}$ 中的颜色。对每个候选颜色 $c$：
+\begin{itemize}
+  \item 执行一致性检查；若不一致则跳过；
+  \item 若启用前向检查，执行值域传播；若失败则跳过；
+  \item 若通过，则将 $(i^{*},c)$ 加入赋值 $\sigma$，递归搜索；
+  \item 若递归返回失败，则回溯，撤销赋值并尝试下一颜色。
+\end{itemize}
+当 $A=V$ 时，搜索成功，输出完整赋值 $\sigma$ 作为解。若所有分支均被剪枝，则报告无解。
+
+% ---------------------------------------------------------------------------
+% \section{贝叶斯推断方法（信念传播与消减）}
+% \label{sec:bayesian}
+
+% 本方法将地图着色建模为马尔可夫网络，用信念传播（Belief Propagation, BP）估计边际或 MAP，再通过消减（Decimation）逐变量固定颜色，得到一种赋值。
+
+% \subsection{马尔可夫网络构建}
+% \label{sec:mn}
+
+% 将图 $G = (V, E)$ 与颜色数 $K$ 对应为马尔可夫网络：每个区域 $v \in V$ 对应离散变量 $X_v$，取值于 $\mathcal{C} = \{0,1,\ldots,K-1\}$；每条边 $(u,v) \in E$ 对应一个二元势函数 $\psi_{uv}(x_u, x_v)$。势函数采用「同色惩罚、异色奖励」形式：设 $r_{\mathrm{diff}} > 0$（异色奖励），$r_{\mathrm{same}} \in (0, r_{\mathrm{diff}})$（同色惩罚），则
+% \begin{equation}
+%   \psi_{uv}(c_u, c_v) = \begin{cases}
+%     r_{\mathrm{same}},  & c_u = c_v, \\
+%     r_{\mathrm{diff}},  & c_u \neq c_v.
+%   \end{cases}
+%   \tag{1}
+% \end{equation}
+% 即邻接节点取不同颜色时势高，取相同颜色时势低，从而在概率上抑制违反约束的赋值。
+
+% 联合分布（未归一化）为
+% \begin{equation}
+%   \tilde{P}(x) \propto \prod_{(u,v) \in E} \psi_{uv}(x_u, x_v),
+% \end{equation}
+% 给定证据（部分节点已固定颜色）时，对剩余变量做条件推断。
+
+% \subsection{信念传播（BP）}
+% \label{sec:bp}
+
+% 在因子图上运行 BP：变量节点为 $V$，每条边 $(u,v) \in E$ 对应势 $\psi_{uv}$。记 $m_{u \to v}(x_v)$ 为从 $u$ 指向 $v$ 的消息（在标准因子图消息传递中，经过因子 $\psi_{uv}$ 的传递可等价为变量到变量的消息）。BP 在每轮迭代中更新所有消息直至收敛或达到最大迭代次数；支持同步更新、异步更新或随机边更新。可选阻尼：若本轮得到的新消息为 $\tilde{m}$，则实际更新为 $m \leftarrow (1 - \lambda)\,\tilde{m} + \lambda\, m$，$\lambda \in [0,1)$ 为阻尼系数。
+
+% \textbf{Sum-Product BP}：用于估计边际分布。变量 $v$ 的信念（belief）为
+% \begin{equation}
+%   b_v(c) \propto \prod_{w \in N(v)} m_{w \to v}(c), \quad c \in \mathcal{C},
+% \end{equation}
+% 归一化后得到 $v$ 取各颜色的概率估计。
+
+% \textbf{Max-Product BP}：用于估计 MAP（最大后验赋值）。消息与信念在「积」上取 max 而非求和，信念给出每个变量最大后验对应的取值；解码时对每个变量取 $\arg\max_c b_v(c)$ 得到 MAP 赋值。
+
+% 收敛判据：若所有消息在上一轮与当前轮的最大变化（残差）小于给定容差 $\tau$，或迭代次数达到上限，则停止。实现中每轮迭代后可得到全局信念快照，用于后续消减与度量。
+
+% \subsection{消减（Decimation）规则}
+% \label{sec:decimation}
+
+% 在每轮 BP 得到信念 $\{b_v\}_{v \in V}$ 后，对未固定节点（不在证据集 $V_{\mathrm{fix}}$ 中的节点）计算「最大概率」与「概率间隙」：
+% \begin{equation}
+%   p_v^* = \max_{c \in \mathcal{C}} b_v(c), \qquad
+%   g_v = p_v^* - \max_{c \neq c_v^*} b_v(c), \quad c_v^* = \arg\max_c b_v(c).
+%   \tag{2}
+% \end{equation}
+
+% 设定阈值 $\theta$ 与信念间隙 $\Delta$（例如 $\theta = 1/K + \theta_{\mathrm{margin}}$，$\Delta = \mathrm{confidence\_gap}$）。若存在某未固定节点 $v$ 满足 $p_v^* \geq \theta$ 且 $g_v \geq \Delta$，则选其中 $p_v^*$ 最大的节点（若有并列可随机打平），将其固定为 $c_v^*$，称为\textbf{自信（Confident）}步。否则称为\textbf{不确定}步：从未固定节点中随机选一节点 $v$，再按当前信念 $b_v$ 的概率分布对颜色采样，即以概率 $b_v(c)$ 取 $c$，并将该节点固定为采样得到的颜色。固定后将该节点加入证据，重新运行 BP，重复直至所有节点被固定。
+
+% 因此，消减将「高信念时贪心取 MAP」与「低信念时按信念随机采样」结合，以在保持可行性的同时避免过早错误固定。
+
+% \subsection{期望冲突与 MAP 冲突}
+% \label{sec:metrics}
+
+% \textbf{期望冲突数}：在给定信念 $\{b_v\}$（已归一化为概率）下，每条边 $(u,v)$ 上两端同色的概率为 $\sum_{c \in \mathcal{C}} b_u(c)\, b_v(c)$，故总期望冲突数为
+% \begin{equation}
+%   \mathcal{E}_{\mathrm{viol}} = \sum_{(u,v) \in E} \sum_{c \in \mathcal{C}} b_u(c)\, b_v(c).
+%   \tag{3}
+% \end{equation}
+
+% \textbf{MAP 冲突数}：在证据（已固定节点）基础上，对未固定节点按信念取 MAP 赋值 $\hat{x}_v = \arg\max_c b_v(c)$，得到全图赋值后统计邻接同色边数：
+% \begin{equation}
+%   C_{\mathrm{MAP}} = \bigl| \bigl\{ (u,v) \in E : \hat{x}_u = \hat{x}_v \bigr\} \bigr|.
+%   \tag{4}
+% \end{equation}
+
+% 期望冲突反映信念的「软」违反程度；MAP 冲突反映当前 MAP 解码下的「硬」违反条数，用于评估消减每步后的解质量。
+
+% ---------------------------------------------------------------------------
+\subsection{局部搜索方法（Min-Conflicts）}
+\label{sec:local-search}
+
+本方法在\textbf{完整赋值}空间上进行迭代修复，不进行树搜索也不使用概率推断：每次选取一个当前存在冲突的变量，将其颜色改为使该变量上冲突数最小的颜色（Min-Conflicts 启发式），直到无冲突或达到步数上限。
+
+\subsubsection{状态与目标}
+\label{sec:mc-state}
+
+状态表示为全局完整赋值 $x = (x_i)_{i\in V}$，其中每个节点 $x_i \in C$。定义冲突边集与全局冲突数：
+\begin{equation}
+  E_{\mathrm{viol}}(x) = \bigl\{ (i,j) \in E : x_i = x_j \bigr\},
+\end{equation}
+\begin{equation}
+  E(x) = \bigl| E_{\mathrm{viol}}(x) \bigr|.
+\end{equation}
+目标为最小化 $E(x)$，合法解满足 $E(x) = 0$。
+
+\subsubsection{初始赋值}
+\label{sec:mc-init}
+
+可选两种初始化方式：
+\begin{enumerate}
+  \item \textbf{随机}：对每个节点 $i \in V$ 独立、均匀随机地从颜色集 $C$ 中抽取初始颜色 $x_i$。
+  \item \textbf{贪心}：按某一给定顺序（如随机打乱后的节点序）依次为节点赋色；对当前节点 $i$，在 $C$ 中选取使「与已赋值邻居同色次数」最少的颜色，若有多解则随机打平；若无合法颜色则随机取一色。
+\end{enumerate}
+
+\subsubsection{邻域与 Min-Conflicts 步}
+\label{sec:mc-step}
+
+\textbf{冲突节点集}：在当前赋值 $x$ 下，至少与一名邻居同色的节点集合定义为
+\begin{equation}
+  V_{\mathrm{conf}}(x) = \bigl\{ i \in V : \exists j \in N(i),\; x_i = x_j \bigr\}.
+\end{equation}
+
+\textbf{单步更新}：从 $V_{\mathrm{conf}}(x)$ 中任选一节点 $i^{*}$（实现中可均匀随机选取）。对 $i^{*}$ 的 \textbf{Min-Conflicts} 更新规则为：在颜色集 $C$ 中选择使 $i^{*}$ 上局部冲突数最小的颜色，即
+\begin{equation}
+  c^* \in \arg\min_{c \in C} \; \bigl| \bigl\{ j \in N(i^{*}) : x_j = c \bigr\} \bigr|,
+\end{equation}
+其中 $x_j$（$j \neq i^{*}$）为当前赋值，节点 $i^{*}$ 此时被视为尝试赋值为 $c$。若有多个颜色 $c$ 达到最小冲突数，可随机选取其一（random tie-breaking）。随后执行状态更新 $x_{i^{*}} \leftarrow c^*$，得到新状态，并重复此过程直至 $E(x) = 0$ 或达到最大步数上限。
+
+该算法不完备：可能陷入局部最优（存在冲突但每个冲突节点的任意改色都会使冲突数不变或增加）；但在许多实例上收敛较快，适合作为快速启发式策略。
+
+% ---------------------------------------------------------------------------
+\subsection{模拟退火方法（Simulated Annealing）}
+\label{sec:simulated-annealing}
+
+本方法同样在完整赋值空间上搜索，以全局冲突数为目标函数（能量函数），通过引入\textbf{温度}控制的概率接受准则来允许「变差」的状态转移，从而帮助代理逃离局部最优。
+
+\subsubsection{状态、目标与邻域}
+\label{sec:sa-state}
+
+状态表示为全局完整赋值 $x = (x_i)_{i\in V}$，其中 $x_i \in C$。目标函数（能量）取为全图的冲突边数：
+\begin{equation}
+  E(x) = \bigl| \bigl\{ (i,j) \in E : x_i = x_j \bigr\} \bigr|.
+\end{equation}
+\textbf{邻域定义}：任选一节点 $i \in V$ 与一颜色 $c \in C$，将 $x_i$ 的取值更改为 $c$，得到邻域提议状态 $x'$（仅节点 $i$ 的取值发生变化）。
+
+\subsubsection{接受准则与降温}
+\label{sec:sa-accept}
+
+设当前状态为 $x$，能量为 $E(x)$；提议状态为 $x'$，能量为 $E(x')$。记能量变化量为 $\Delta E = E(x') - E(x)$。提议状态 $x'$ 的转移接受概率定义为：
+\begin{equation}
+  P(\text{接受 } x') =
+  \begin{cases}
+    1, & \Delta E \le 0, \\
+    \exp\!\left(-\frac{\Delta E}{T}\right), & \Delta E > 0,
+  \end{cases}
+\end{equation}
+其中 $T > 0$ 为当前温度参数。具体而言：
+\begin{itemize}
+  \item 若 $\Delta E \le 0$，代理必然接受 $x'$（冲突数减少或不变）。
+  \item 若 $\Delta E > 0$，代理以概率 $\exp(-\Delta E / T)$ 接受 $x'$，否则拒绝转移并保持原状态 $x$。
+\end{itemize}
+
+温度 $T$ 随迭代步数动态更新：每步按几何降温机制更新 $T \leftarrow \alpha T$，其中 $\alpha \in (0,1)$ 为降温系数。实现中可设置温度下限 $T_{\min}$，当 $T < T_{\min}$ 时算法终止或转为仅接受不退化的贪心移动。
+
+理论上在适当的降温进度下（如对数降温），模拟退火可渐近收敛到全局最优；实践中常用上述几何降温，并通过初始温度 $T_0$、降温系数 $\alpha$、最大步数等超参数控制计算开销。该算法虽不完备，但能在有限步内以较高概率找到合法解或低冲突赋值。
+
+% ---------------------------------------------------------------------------
+\subsection{小结}
+\label{sec:summary}
+
+经典搜索方法将问题形式化为 CSP，通过变量/值排序与前向检查在 DFS 回溯框架下求精确解，具有完备性；贝叶斯方法将问题建模为马尔可夫网络，用 BP 得到信念后通过消减逐变量固定，得到单一赋值，并可用期望冲突与 MAP 冲突监控求解过程。局部搜索（Min-Conflicts）在完整赋值上迭代修复，每步对一冲突节点做最小冲突改色，实现简单、收敛快但不完备；模拟退火同样在完整赋值上搜索，以冲突数为能量、以温度控制接受变差移动，便于逃离局部最优。四种方法在实现上可共用同一图与颜色集，便于对比与可视化。
