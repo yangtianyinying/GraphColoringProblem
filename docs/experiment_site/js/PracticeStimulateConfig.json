@@ -1,0 +1,272 @@
+{
+  "version": 1,
+  "name": "practice-stimulus-custom-v1",
+  "__comment": "练习试次集：随机四节点图；每题给三个已知节点，填写一个未知节点。练习阶段不导出作答数据。",
+  "recordData": false,
+  "canvasWidth": 960,
+  "canvasHeight": 620,
+  "nodeVisualScale": 0.88,
+  "blocks": [
+    {
+      "blockId": "practice_block_1",
+      "trials": [
+        {
+          "trialId": "p1",
+          "graphId": "P4G01_high",
+          "mainGraphId": "P4G01",
+          "evidenceLevel": "high",
+          "comparisonGraphIds": {
+            "D1": "P4G02",
+            "D2": "P4G03",
+            "D3": "P4G04"
+          },
+          "descriptor": {
+            "D1": 2,
+            "D2": 1,
+            "D3": "practice",
+            "highKL": 0.75,
+            "reason": "practice_custom"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 120,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 700,
+              "y": 300,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 480,
+              "y": 500,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 260,
+              "y": 300,
+              "label": "D"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "C",
+              "D"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.85,
+              0.1,
+              0.05
+            ],
+            "C": [
+              0.1,
+              0.8,
+              0.1
+            ],
+            "D": [
+              0.05,
+              0.1,
+              0.85
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        },
+        {
+          "trialId": "p2",
+          "graphId": "P4G02_medium",
+          "mainGraphId": "P4G02",
+          "evidenceLevel": "medium",
+          "comparisonGraphIds": {
+            "D1": "P4G01",
+            "D2": "P4G03",
+            "D3": "P4G04"
+          },
+          "descriptor": {
+            "D1": 3,
+            "D2": 2,
+            "D3": "practice",
+            "highKL": 0.46,
+            "reason": "practice_custom"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 680,
+              "y": 220,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 620,
+              "y": 470,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 280,
+              "y": 360,
+              "label": "D"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "B",
+              "D"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.6,
+              0.25,
+              0.15
+            ],
+            "C": [
+              0.2,
+              0.55,
+              0.25
+            ],
+            "D": [
+              0.15,
+              0.3,
+              0.55
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        },
+        {
+          "trialId": "p3",
+          "graphId": "P4G03_low",
+          "mainGraphId": "P4G03",
+          "evidenceLevel": "low",
+          "comparisonGraphIds": {
+            "D1": "P4G01",
+            "D2": "P4G02",
+            "D3": "P4G04"
+          },
+          "descriptor": {
+            "D1": 2,
+            "D2": 0,
+            "D3": "practice",
+            "highKL": 0.22,
+            "reason": "practice_custom"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 470,
+              "y": 120,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 710,
+              "y": 280,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 520,
+              "y": 500,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 250,
+              "y": 360,
+              "label": "D"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "D"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.45,
+              0.3,
+              0.25
+            ],
+            "C": [
+              0.3,
+              0.4,
+              0.3
+            ],
+            "D": [
+              0.25,
+              0.3,
+              0.45
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    }
+  ]
+}

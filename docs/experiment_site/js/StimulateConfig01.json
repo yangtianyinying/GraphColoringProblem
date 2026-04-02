@@ -1,7 +1,8 @@
 {
   "version": 1,
   "name": "stimulus-set-analysis3-v1",
-  "__comment": "analysis-3 8个主图 x 3证据水平（24 trials）；暂未做顺序平衡。",
+  "__comment": "analysis-3 正式刺激集：8个主图 x 3证据水平（24 trials）；默认在练习之后运行并记录数据。",
+  "recordData": true,
   "canvasWidth": 960,
   "canvasHeight": 620,
   "blocks": [

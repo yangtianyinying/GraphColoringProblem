@@ -14,13 +14,24 @@ const {
   layoutFromNodes,
   findNodeAt,
 } = window.GraphCanvasDraw;
-const DEFAULT_STIMULUS_URLS = [
+const DEFAULT_PRACTICE_URLS = [
+  "experiment_site/js/PracticeStimulateConfig.json",
+  "./experiment_site/js/PracticeStimulateConfig.json",
+  "docs/experiment_site/js/PracticeStimulateConfig.json",
+  "./docs/experiment_site/js/PracticeStimulateConfig.json",
+];
+const DEFAULT_FORMAL_URLS = [
+  "experiment_site/js/StimulateConfig01.json",
+  "./experiment_site/js/StimulateConfig01.json",
+  "docs/experiment_site/js/StimulateConfig01.json",
+  "./docs/experiment_site/js/StimulateConfig01.json",
   "experiment_site/js/StimulateConfig.json",
   "./experiment_site/js/StimulateConfig.json",
   "docs/experiment_site/js/StimulateConfig.json",
   "./docs/experiment_site/js/StimulateConfig.json",
 ];
-let defaultStimulus = null;
+let defaultPracticeStimulus = null;
+let defaultFormalStimulus = null;
 
 function validateTrial(trial) {
   const ids = new Set(trial.nodes.map((n) => n.id));
@@ -528,25 +539,48 @@ function calcAgeMonthsFromBirthdate(yyyyMmDd) {
   return months >= 0 ? months : null;
 }
 
-async function loadDefaultStimulus() {
-  const st = document.getElementById("run-stimulus-status");
+async function loadJsonByCandidateUrls(urls, label) {
   let lastErr = null;
-  for (const url of DEFAULT_STIMULUS_URLS) {
+  for (const url of urls) {
     try {
       const resp = await fetch(url, { cache: "no-store" });
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
-      if (!data || data.version !== 1) throw new Error("默认刺激集不是 version: 1");
-      defaultStimulus = data;
-      if (st) st.textContent = "默认刺激集已加载（StimulateConfig.json）；可直接开始，或手动选择文件覆盖。";
-      return true;
+      if (!data || data.version !== 1) throw new Error(`${label} 不是 version: 1`);
+      return data;
     } catch (e) {
       lastErr = e;
     }
   }
-  defaultStimulus = null;
-  if (st) st.textContent = `默认刺激集加载失败：${String((lastErr && lastErr.message) || lastErr || "unknown error")}；请手动选择刺激集 JSON。`;
-  return false;
+  throw lastErr || new Error(`${label} 加载失败`);
+}
+
+async function loadDefaultStimulus() {
+  const st = document.getElementById("run-stimulus-status");
+  try {
+    defaultPracticeStimulus = await loadJsonByCandidateUrls(
+      DEFAULT_PRACTICE_URLS,
+      "默认练习刺激集"
+    );
+    defaultFormalStimulus = await loadJsonByCandidateUrls(
+      DEFAULT_FORMAL_URLS,
+      "默认正式刺激集"
+    );
+    if (st) {
+      st.textContent =
+        "默认刺激集已加载（PracticeStimulateConfig.json + StimulateConfig01.json）；将先练习后正式。";
+    }
+    return true;
+  } catch (e) {
+    defaultPracticeStimulus = null;
+    defaultFormalStimulus = null;
+    if (st) {
+      st.textContent = `默认刺激集加载失败：${String(
+        (e && e.message) || e || "unknown error"
+      )}；请手动选择刺激集 JSON。`;
+    }
+    return false;
+  }
 }
 
 export async function startExperimentFromUi() {
@@ -587,40 +621,49 @@ export async function startExperimentFromUi() {
   }
   const fileInput = document.getElementById("run-stimulus-file");
   const file = fileInput.files && fileInput.files[0];
-  let stimulus = null;
+  let practiceStimulus = null;
+  let formalStimulus = null;
+  let exportStimulus = null;
+  let shouldRunPracticeFirst = false;
   if (file) {
     const text = await file.text();
+    let singleStimulus = null;
     try {
-      stimulus = JSON.parse(text);
+      singleStimulus = JSON.parse(text);
     } catch (e) {
       alert("JSON 解析失败: " + e);
       return;
     }
-    if (!stimulus || stimulus.version !== 1) {
+    if (!singleStimulus || singleStimulus.version !== 1) {
       alert("需要 version: 1 的刺激集");
       return;
     }
+    formalStimulus = singleStimulus;
+    exportStimulus = formalStimulus;
   } else {
-    if (!defaultStimulus) {
+    if (!defaultPracticeStimulus || !defaultFormalStimulus) {
       await loadDefaultStimulus();
     }
-    if (defaultStimulus) {
-      stimulus = defaultStimulus;
+    if (defaultPracticeStimulus && defaultFormalStimulus) {
+      practiceStimulus = defaultPracticeStimulus;
+      formalStimulus = defaultFormalStimulus;
+      exportStimulus = formalStimulus;
+      shouldRunPracticeFirst = true;
     } else {
       alert("默认刺激集未就绪，请先选择刺激集 JSON 文件。");
       return;
     }
   }
 
-  if (typeof stimulus.nodeVisualScale === "number" && stimulus.nodeVisualScale > 0) {
-    const s = String(stimulus.nodeVisualScale);
+  if (typeof formalStimulus.nodeVisualScale === "number" && formalStimulus.nodeVisualScale > 0) {
+    const s = String(formalStimulus.nodeVisualScale);
     const rs = document.getElementById("run-node-scale");
     const es = document.getElementById("editor-node-scale");
     if (rs) rs.value = s;
     if (es) es.value = s;
     localStorage.setItem("graphNodeVisualScale", s);
-    window.GraphExperimentTheme.setNodeVisualScale(stimulus.nodeVisualScale);
-    const pct = Math.round(stimulus.nodeVisualScale * 100);
+    window.GraphExperimentTheme.setNodeVisualScale(formalStimulus.nodeVisualScale);
+    const pct = Math.round(formalStimulus.nodeVisualScale * 100);
     const v1 = document.getElementById("editor-node-scale-val");
     const v2 = document.getElementById("run-node-scale-val");
     if (v1) v1.textContent = `${pct}%`;
@@ -630,7 +673,10 @@ export async function startExperimentFromUi() {
     }
   }
 
-  stimulus = applyParticipantCounterbalance(stimulus, pid);
+  if (practiceStimulus) {
+    practiceStimulus = applyParticipantCounterbalance(practiceStimulus, pid);
+  }
+  formalStimulus = applyParticipantCounterbalance(formalStimulus, pid);
 
   await tryEnterFullscreen();
   try {
@@ -649,14 +695,19 @@ export async function startExperimentFromUi() {
       {
         type: htmlKeyboardResponse,
         stimulus:
-          "<p>图着色信念任务：请按空格继续。</p><p>自定顺序图：按系统给出的当前高亮节点依次报告。自由顺序图：点击未着色节点后调三角盘并确认。</p>",
+          shouldRunPracticeFirst
+            ? "<p>图着色信念任务：请按空格继续。</p><p>将先进行练习试次，再进入正式实验。练习数据不会导出。</p>"
+            : "<p>图着色信念任务：请按空格继续。</p><p>请按系统给出的当前高亮节点依次报告。</p>",
         choices: [" "],
       },
       {
         type: callFunction,
         async: true,
         func: async function () {
-          const rows = await runAllTrials(stimulus, pid);
+          if (practiceStimulus) {
+            await runAllTrials(practiceStimulus, pid);
+          }
+          const rows = await runAllTrials(formalStimulus, pid);
           rows.forEach((r) => {
             r.participant_name = participantName;
             r.participant_birthdate = birthdate;
@@ -672,7 +723,8 @@ export async function startExperimentFromUi() {
               age_months: ageMonths,
               gender,
             },
-            stimulus,
+            stimulus: exportStimulus,
+            practice_not_recorded: shouldRunPracticeFirst,
             rows,
           });
         },
@@ -702,7 +754,9 @@ document.getElementById("run-stimulus-file").addEventListener("change", (e) => {
   const f = e.target.files && e.target.files[0];
   const st = document.getElementById("run-stimulus-status");
   if (f) st.textContent = `已选择: ${f.name}（将覆盖默认刺激集）`;
-  else if (defaultStimulus) st.textContent = "已恢复使用默认刺激集（StimulateConfig.json）";
+  else if (defaultPracticeStimulus && defaultFormalStimulus)
+    st.textContent =
+      "已恢复使用默认刺激集（PracticeStimulateConfig.json + StimulateConfig01.json）";
   else st.textContent = "请先选择刺激集 JSON 文件";
 });
 
