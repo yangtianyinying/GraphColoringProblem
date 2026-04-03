@@ -313,6 +313,8 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
   const layout = layoutFromNodes(trial.nodes);
   const beliefs = { ...(trial.initialBeliefs || {}) };
   const nodeIds = trial.nodes.map((n) => n.id);
+  const lockedIds = new Set(Object.keys(trial.initialBeliefs || {}));
+  const editableNodeIds = nodeIds.filter((id) => !lockedIds.has(id));
   const colored = new Set(Object.keys(trial.initialBeliefs || {}));
   const uncolored = nodeIds.filter((id) => !colored.has(id));
   let remaining = new Set(uncolored);
@@ -419,13 +421,19 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
         focusedNode = null;
         picker.setBelief(1 / 3, 1 / 3, 1 / 3);
         setMessage(
-          "请点击节点，调节三角盘后点确认。可重复修改已着色节点；清空按钮会清除当前节点且不记录动作。"
+          "请点击节点，调节三角盘后点确认。可重复修改你填写的节点；题目给定的节点不可修改。清空仅作用于你填写的节点且不记录动作。"
         );
         redraw(null, null);
         let selectionTime = Math.round(performance.now());
 
         for (;;) {
-          const ev = await waitPickOrConfirm(graphCanvas, btn, clearBtn, layout, new Set(nodeIds));
+          const ev = await waitPickOrConfirm(
+            graphCanvas,
+            btn,
+            clearBtn,
+            layout,
+            new Set(editableNodeIds)
+          );
           if (ev.type === "pick") {
             focusedNode = ev.node;
             if (beliefs[focusedNode]) {
@@ -481,15 +489,25 @@ async function runSingleTrial(stimulusDoc, trial, meta) {
       }
     }
 
-    // 所有节点完成后，不自动跳转；允许最后调整，需手动确认进入下一试次。
+    // 所有节点完成后，不自动跳转；仅允许调整被试自己填写的节点；题目给定的节点不可改。
     focusedNode = null;
     let finalSelectionOnset = Math.round(performance.now());
     btn.textContent = confirmLabelNext;
     clearBtn.style.display = "none";
-    setMessage("本试次已完成。可点击任意节点做最后调整；完成后点击“确认下一个试次”。");
+    setMessage(
+      editableNodeIds.length
+        ? "本试次已完成。可点击你填写的节点做最后调整；题目给定的节点不可修改。完成后点击“确认下一个试次”。"
+        : "本试次已完成。请点击“确认下一个试次”。"
+    );
     redraw(null, null);
     for (;;) {
-      const ev = await waitPickOrConfirm(graphCanvas, btn, clearBtn, layout, new Set(nodeIds));
+      const ev = await waitPickOrConfirm(
+        graphCanvas,
+        btn,
+        clearBtn,
+        layout,
+        new Set(editableNodeIds)
+      );
       if (ev.type === "pick") {
         focusedNode = ev.node;
         if (beliefs[focusedNode]) {
