@@ -1,0 +1,83 @@
+\section{执行结果报告}
+
+\subsection{任务与方法概述}
+本节对应 \texttt{analysis01/TODO.md} 的筛选目标：在大规模候选条件中选出 30 个用于后续实验的高诊断性图条件。具体实现流程如下：
+\begin{enumerate}
+    \item 枚举 $n=5,6$ 的连通、三色可解、非同构结构，并进行 rooted 去重；
+    \item 对每个候选条件计算六模型家族 posterior；
+    \item 计算三类评分 $S_{\mathrm{sep}},S_{\mathrm{arg}},S_{\mathrm{bal}}$，经 z-score 归一后组合为总分 $W$；
+    \item 采用 mild diversity 贪心重加权，按 $W_{\mathrm{adj}}$ 逐步选入 Top-30。
+\end{enumerate}
+
+\subsection{本次运行的关键统计}
+根据 \texttt{output/analysis-5\_summary.json} 与终端执行日志：
+\begin{itemize}
+    \item 枚举规模：$n\in\{5,6\}$；
+    \item rooted 图总数：354；
+    \item 过滤后条件总数：78084；
+    \item 最终选取：Top-30 条件；
+    \item 多样性权重：template=0.35, occupancy=0.20, graph=0.15。
+\end{itemize}
+
+\noindent
+其中，$n=5$ 的无根结构数为 17、$n=6$ 为 81，均与当前 TODO 口径一致。候选空间公式更新为
+\[
+17\times 5\times 4^4 + 81\times 6\times 5^4 = 325510.
+\]
+本版脚本仅使用 high/medium/low 三档初始化（不再包含 none 档），这也是过滤后条件总数由旧版显著下降到 78084 的主要原因。
+
+\subsection{评分结果与 Top-30 特征}
+从 \texttt{output/analysis-5\_top30.csv} 可见，Top 条件主要具有以下特征：
+\begin{itemize}
+    \item 头部条件的 $S_{\mathrm{sep}}$ 约在 $2.0\sim 2.7$，说明六模型在同一条件下产生了显著分布差异；
+    \item $S_{\mathrm{arg}}$ 多为 2 或 3，表明模型在“最可能颜色”判断上存在可观分歧；
+    \item mild diversity 调整后，部分原始高分条件被轻微降权，有助于抑制同模板重复占据面板。
+\end{itemize}
+
+\noindent
+从 Top-30 前几项可见，典型高分条件包含：
+\begin{itemize}
+    \item \texttt{n6\_g003}（$W_{\mathrm{adj}}=5.927$）；
+    \item \texttt{n6\_g005}（$W_{\mathrm{adj}}=5.886$）；
+    \item \texttt{n6\_g008}（$W_{\mathrm{adj}}=5.777$）。
+\end{itemize}
+
+\subsection{可视化结果}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{fig_top30_overview.pdf}
+    \caption{Top-30 条件中 $W$ 与 $W_{\mathrm{adj}}$ 的排序对比。}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{fig_score_components.pdf}
+    \caption{$S_{\mathrm{sep}}$、$S_{\mathrm{arg}}$、$S_{\mathrm{bal}}$ 三项分数的总体分布。}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth]{fig_family_separation_heatmap.pdf}
+    \caption{Top-30 上六模型家族两两平均 JS 散度热图。}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{fig_top30_graphs.pdf}
+    \caption{Top-30 图条件面板（红色节点为目标节点）。}
+\end{figure}
+
+\subsection{结论}
+本次分析已完成 Top-30 条件筛选与图形化诊断输出，形成可直接用于实验材料挑选的候选池。结果支持以下判断：
+\begin{enumerate}
+    \item 六模型家族在筛选出的条件上具有良好的行为可分离性；
+    \item 评分函数与 mild diversity 机制能够兼顾“区分度”与“结构覆盖度”；
+    \item 目前输出足以支撑下一步的人类实验刺激面板定稿。
+\end{enumerate}
+
+\subsection{复现实验命令}
+在 \texttt{analysis01} 目录执行：
+\begin{verbatim}
+python script/top30_pipeline.py
+\end{verbatim}
+输出文件位于 \texttt{output/}，图位于 \texttt{output/figures/}。

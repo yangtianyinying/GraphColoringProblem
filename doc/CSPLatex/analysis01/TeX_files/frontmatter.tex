@@ -1,0 +1,20 @@
+% 生成封面
+\title{Analysis-5：三十幅高诊断性图条件的筛选与可视化报告}
+\author{GraphColoringProblem 项目组}
+\date{2026-04-08}
+\maketitle
+
+\begin{abstract}
+本报告基于 analysis-5 的执行结果，对候选图条件进行系统筛选。流程包括：
+（1）在 $n\in\{5,6\}$ 的连通三色可解图空间中进行结构枚举与 rooted 去重；
+（2）在六个模型家族
+$\{M_{\mathrm{exact}},M_0,M_{\rho},M_{\rho,\beta},M_{\mathrm{star}},M_{\mathrm{cluster}}\}$
+下计算目标节点后验；
+（3）依据 family separation、argmax disagreement 与 balance 三项指标构造总分；
+（4）通过 mild diversity 贪心机制选取 30 个条件。
+
+本次运行得到：rooted 图总数 354；过滤后条件数 78084；最终输出 Top-30 条件并生成四幅诊断图。
+\end{abstract}
+
+\noindent\textbf{关键词：}
+图着色，模型可分离性，后验推断，试次筛选，多样性约束

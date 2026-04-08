@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "name": "stimulus-set-analysis3-v1",
-  "__comment": "analysis-3 正式刺激集：8个主图 x 3证据水平（24 trials）；默认在练习之后运行并记录数据。",
+  "name": "stimulus-set-analysis5-top30-v1",
+  "__comment": "由 analysis-5_top30.csv 自动转换得到，共30个 trial。",
   "recordData": true,
   "canvasWidth": 960,
   "canvasHeight": 620,
@@ -18,56 +18,62 @@
   },
   "blocks": [
     {
-      "blockId": "b1_RG003",
+      "blockId": "b1_n6_g005",
       "trials": [
         {
           "trialId": "t1",
-          "graphId": "RG003_high",
-          "mainGraphId": "RG003",
-          "evidenceLevel": "high",
+          "graphId": "n6_g005_top01",
+          "mainGraphId": "n6_g005",
+          "evidenceLevel": "mixed",
           "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG058"
+            "D1": "",
+            "D2": "",
+            "D3": ""
           },
           "descriptor": {
-            "D1": 4,
-            "D2": 2,
-            "D3": "no-remote",
-            "highKL": 0.132,
-            "reason": "matched_D3"
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.650172,
+            "reason": "analysis5_top30"
           },
           "orderMode": "sequential",
           "nodes": [
             {
               "id": "A",
               "x": 480,
-              "y": 120,
+              "y": 100,
               "label": "A"
             },
             {
               "id": "B",
-              "x": 680,
-              "y": 250,
+              "x": 515,
+              "y": 391,
               "label": "B"
             },
             {
               "id": "C",
-              "x": 605,
-              "y": 480,
+              "x": 282,
+              "y": 238,
               "label": "C"
             },
             {
               "id": "D",
-              "x": 355,
-              "y": 480,
+              "x": 315,
+              "y": 530,
               "label": "D"
             },
             {
               "id": "E",
-              "x": 280,
-              "y": 250,
+              "x": 211,
+              "y": 495,
               "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 582,
+              "y": 136,
+              "label": "F"
             }
           ],
           "edges": [
@@ -80,32 +86,44 @@
               "C"
             ],
             [
-              "A",
-              "D"
-            ],
-            [
-              "A",
-              "E"
-            ],
-            [
               "B",
               "C"
             ],
             [
               "B",
               "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "C",
+              "F"
             ]
           ],
           "initialBeliefs": {
             "B": [
-              0.9,
-              0.05,
-              0.05
+              0.333333,
+              0.333333,
+              0.333333
             ],
             "C": [
-              0.9,
-              0.05,
-              0.05
+              0.333333,
+              0.333333,
+              0.333333
             ],
             "D": [
               0.05,
@@ -113,215 +131,14 @@
               0.9
             ],
             "E": [
+              0.15,
+              0.15,
+              0.7
+            ],
+            "F": [
               0.05,
-              0.9,
-              0.05
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t2",
-          "graphId": "RG003_medium",
-          "mainGraphId": "RG003",
-          "evidenceLevel": "medium",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG058"
-          },
-          "descriptor": {
-            "D1": 4,
-            "D2": 2,
-            "D3": "no-remote",
-            "highKL": 0.132,
-            "reason": "matched_D3"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 120,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 250,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 605,
-              "y": 480,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 355,
-              "y": 480,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 250,
-              "label": "E"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "A",
-              "E"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "D"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.6,
-              0.2,
-              0.2
-            ],
-            "C": [
-              0.6,
-              0.2,
-              0.2
-            ],
-            "D": [
-              0.2,
-              0.2,
-              0.6
-            ],
-            "E": [
-              0.2,
-              0.6,
-              0.2
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t3",
-          "graphId": "RG003_low",
-          "mainGraphId": "RG003",
-          "evidenceLevel": "low",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG058"
-          },
-          "descriptor": {
-            "D1": 4,
-            "D2": 2,
-            "D3": "no-remote",
-            "highKL": 0.132,
-            "reason": "matched_D3"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 120,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 250,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 605,
-              "y": 480,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 355,
-              "y": 480,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 250,
-              "label": "E"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "A",
-              "E"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "D"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "C": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "D": [
-              0.3,
-              0.3,
-              0.4
-            ],
-            "E": [
-              0.3,
-              0.4,
-              0.3
+              0.05,
+              0.9
             ]
           },
           "reportOrder": [
@@ -332,66 +149,338 @@
       ]
     },
     {
-      "blockId": "b2_RG018",
+      "blockId": "b2_n6_g008",
+      "trials": [
+        {
+          "trialId": "t2",
+          "graphId": "n6_g008_top02",
+          "mainGraphId": "n6_g008",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.91015,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 489,
+              "y": 244,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 566,
+              "y": 375,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 275,
+              "y": 152,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 345,
+              "y": 414,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 331,
+              "y": 310,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "C",
+              "F"
+            ],
+            [
+              "D",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "F": [
+              0.05,
+              0.05,
+              0.9
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b3_n6_g015",
+      "trials": [
+        {
+          "trialId": "t3",
+          "graphId": "n6_g015_top03",
+          "mainGraphId": "n6_g015",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.476692,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 781,
+              "y": 195,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 555,
+              "y": 447,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 863,
+              "y": 529,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 397,
+              "y": 177,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 483,
+              "y": 530,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ],
+            [
+              "E",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "F": [
+              0.9,
+              0.05,
+              0.05
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b4_n6_g010",
       "trials": [
         {
           "trialId": "t4",
-          "graphId": "RG018_high",
-          "mainGraphId": "RG018",
-          "evidenceLevel": "high",
+          "graphId": "n6_g010_top04",
+          "mainGraphId": "n6_g010",
+          "evidenceLevel": "mixed",
           "comparisonGraphIds": {
-            "D1": "RG139",
-            "D2": "RG088",
-            "D3": "RG003"
+            "D1": "",
+            "D2": "",
+            "D3": ""
           },
           "descriptor": {
-            "D1": 2,
-            "D2": 1,
-            "D3": "tree-like",
-            "highKL": 0.237,
-            "reason": "matched_D1"
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.25473,
+            "reason": "analysis5_top30"
           },
           "orderMode": "sequential",
           "nodes": [
             {
               "id": "A",
               "x": 480,
-              "y": 120,
+              "y": 100,
               "label": "A"
             },
             {
               "id": "B",
-              "x": 680,
-              "y": 250,
+              "x": 486,
+              "y": 296,
               "label": "B"
             },
             {
               "id": "C",
-              "x": 605,
-              "y": 480,
+              "x": 323,
+              "y": 383,
               "label": "C"
             },
             {
               "id": "D",
-              "x": 355,
-              "y": 480,
+              "x": 636,
+              "y": 401,
               "label": "D"
             },
             {
               "id": "E",
-              "x": 280,
-              "y": 250,
+              "x": 352,
+              "y": 92,
               "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 633,
+              "y": 109,
+              "label": "F"
             }
           ],
           "edges": [
             [
               "A",
               "B"
-            ],
-            [
-              "A",
-              "C"
             ],
             [
               "B",
@@ -402,228 +491,55 @@
               "D"
             ],
             [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
               "C",
               "E"
+            ],
+            [
+              "D",
+              "F"
+            ],
+            [
+              "E",
+              "F"
             ]
           ],
           "initialBeliefs": {
             "B": [
-              0.9,
-              0.05,
-              0.05
+              0.333333,
+              0.333333,
+              0.333333
             ],
             "C": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "D": [
               0.05,
               0.05,
               0.9
             ],
-            "D": [
-              0.9,
-              0.05,
-              0.05
-            ],
             "E": [
               0.05,
               0.05,
               0.9
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t5",
-          "graphId": "RG018_medium",
-          "mainGraphId": "RG018",
-          "evidenceLevel": "medium",
-          "comparisonGraphIds": {
-            "D1": "RG139",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 2,
-            "D2": 1,
-            "D3": "tree-like",
-            "highKL": 0.237,
-            "reason": "matched_D1"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 120,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 250,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 605,
-              "y": 480,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 355,
-              "y": 480,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 250,
-              "label": "E"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
             ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "D"
-            ],
-            [
-              "C",
-              "E"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.6,
-              0.2,
-              0.2
-            ],
-            "C": [
-              0.2,
-              0.2,
-              0.6
-            ],
-            "D": [
-              0.6,
-              0.2,
-              0.2
-            ],
-            "E": [
-              0.2,
-              0.2,
-              0.6
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t6",
-          "graphId": "RG018_low",
-          "mainGraphId": "RG018",
-          "evidenceLevel": "low",
-          "comparisonGraphIds": {
-            "D1": "RG139",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 2,
-            "D2": 1,
-            "D3": "tree-like",
-            "highKL": 0.237,
-            "reason": "matched_D1"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 120,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 250,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 605,
-              "y": 480,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 355,
-              "y": 480,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 250,
-              "label": "E"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "D"
-            ],
-            [
-              "C",
-              "E"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "C": [
-              0.3,
-              0.3,
-              0.4
-            ],
-            "D": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "E": [
-              0.3,
-              0.3,
-              0.4
+            "F": [
+              0.05,
+              0.9,
+              0.05
             ]
           },
           "reportOrder": [
@@ -634,61 +550,327 @@
       ]
     },
     {
-      "blockId": "b3_RG058",
+      "blockId": "b5_n6_g011",
+      "trials": [
+        {
+          "trialId": "t5",
+          "graphId": "n6_g011_top05",
+          "mainGraphId": "n6_g011",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.28912,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 334,
+              "y": 311,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 594,
+              "y": 333,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 229,
+              "y": 78,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 451,
+              "y": 542,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 77,
+              "y": 287,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "E": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "F": [
+              0.15,
+              0.7,
+              0.15
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b6_n6_g016",
+      "trials": [
+        {
+          "trialId": "t6",
+          "graphId": "n6_g016_top06",
+          "mainGraphId": "n6_g016",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.741232,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 867,
+              "y": 90,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 788,
+              "y": 466,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 90,
+              "y": 132,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 459,
+              "y": 305,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 492,
+              "y": 206,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "C",
+              "F"
+            ],
+            [
+              "D",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "F": [
+              0.05,
+              0.05,
+              0.9
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b7_n6_g014",
       "trials": [
         {
           "trialId": "t7",
-          "graphId": "RG058_high",
-          "mainGraphId": "RG058",
-          "evidenceLevel": "high",
+          "graphId": "n6_g014_top07",
+          "mainGraphId": "n6_g014",
+          "evidenceLevel": "mixed",
           "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
+            "D1": "",
+            "D2": "",
+            "D3": ""
           },
           "descriptor": {
-            "D1": 4,
-            "D2": 2,
-            "D3": "strong",
-            "highKL": 1.03,
-            "reason": "matched_D3"
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.196914,
+            "reason": "analysis5_top30"
           },
           "orderMode": "sequential",
           "nodes": [
             {
               "id": "A",
               "x": 480,
-              "y": 90,
+              "y": 100,
               "label": "A"
             },
             {
               "id": "B",
-              "x": 680,
-              "y": 200,
+              "x": 530,
+              "y": 336,
               "label": "B"
             },
             {
               "id": "C",
-              "x": 680,
-              "y": 420,
+              "x": 264,
+              "y": 296,
               "label": "C"
             },
             {
               "id": "D",
-              "x": 480,
+              "x": 359,
               "y": 530,
               "label": "D"
             },
             {
               "id": "E",
-              "x": 280,
-              "y": 420,
+              "x": 375,
+              "y": 90,
               "label": "E"
             },
             {
               "id": "F",
-              "x": 280,
-              "y": 200,
+              "x": 90,
+              "y": 530,
               "label": "F"
             }
           ],
@@ -702,14 +884,6 @@
               "C"
             ],
             [
-              "A",
-              "D"
-            ],
-            [
-              "A",
-              "E"
-            ],
-            [
               "B",
               "C"
             ],
@@ -719,11 +893,15 @@
             ],
             [
               "B",
-              "F"
+              "E"
             ],
             [
               "C",
-              "F"
+              "D"
+            ],
+            [
+              "C",
+              "E"
             ],
             [
               "D",
@@ -732,14 +910,14 @@
           ],
           "initialBeliefs": {
             "B": [
-              0.9,
-              0.05,
-              0.05
+              0.333333,
+              0.333333,
+              0.333333
             ],
             "C": [
-              0.05,
-              0.9,
-              0.05
+              0.15,
+              0.7,
+              0.15
             ],
             "D": [
               0.05,
@@ -752,261 +930,9 @@
               0.9
             ],
             "F": [
-              0.05,
               0.9,
+              0.05,
               0.05
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t8",
-          "graphId": "RG058_medium",
-          "mainGraphId": "RG058",
-          "evidenceLevel": "medium",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 4,
-            "D2": 2,
-            "D3": "strong",
-            "highKL": 1.03,
-            "reason": "matched_D3"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "A",
-              "E"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "D"
-            ],
-            [
-              "B",
-              "F"
-            ],
-            [
-              "C",
-              "F"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.6,
-              0.2,
-              0.2
-            ],
-            "C": [
-              0.2,
-              0.6,
-              0.2
-            ],
-            "D": [
-              0.2,
-              0.2,
-              0.6
-            ],
-            "E": [
-              0.2,
-              0.2,
-              0.6
-            ],
-            "F": [
-              0.2,
-              0.6,
-              0.2
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t9",
-          "graphId": "RG058_low",
-          "mainGraphId": "RG058",
-          "evidenceLevel": "low",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 4,
-            "D2": 2,
-            "D3": "strong",
-            "highKL": 1.03,
-            "reason": "matched_D3"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "A",
-              "E"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "D"
-            ],
-            [
-              "B",
-              "F"
-            ],
-            [
-              "C",
-              "F"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "C": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "D": [
-              0.3,
-              0.3,
-              0.4
-            ],
-            "E": [
-              0.3,
-              0.3,
-              0.4
-            ],
-            "F": [
-              0.3,
-              0.4,
-              0.3
             ]
           },
           "reportOrder": [
@@ -1017,61 +943,319 @@
       ]
     },
     {
-      "blockId": "b4_RG088",
+      "blockId": "b8_n6_g003",
+      "trials": [
+        {
+          "trialId": "t8",
+          "graphId": "n6_g003_top08",
+          "mainGraphId": "n6_g003",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.074291,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 596,
+              "y": 361,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 353,
+              "y": 530,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 287,
+              "y": 244,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 385,
+              "y": 281,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 870,
+              "y": 300,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "C": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "D": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "F": [
+              0.05,
+              0.9,
+              0.05
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b9_n6_g007",
+      "trials": [
+        {
+          "trialId": "t9",
+          "graphId": "n6_g007_top09",
+          "mainGraphId": "n6_g007",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.608593,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 561,
+              "y": 246,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 621,
+              "y": 353,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 330,
+              "y": 315,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 420,
+              "y": 186,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 789,
+              "y": 230,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "C",
+              "F"
+            ],
+            [
+              "D",
+              "E"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.25,
+              0.5,
+              0.25
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "F": [
+              0.05,
+              0.05,
+              0.9
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b10_n6_g033",
       "trials": [
         {
           "trialId": "t10",
-          "graphId": "RG088_high",
-          "mainGraphId": "RG088",
-          "evidenceLevel": "high",
+          "graphId": "n6_g033_top10",
+          "mainGraphId": "n6_g033",
+          "evidenceLevel": "mixed",
           "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG144",
-            "D3": "RG003"
+            "D1": "",
+            "D2": "",
+            "D3": ""
           },
           "descriptor": {
-            "D1": 3,
-            "D2": 2,
-            "D3": "strong",
-            "highKL": 1.823,
-            "reason": "matched_D2"
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.163949,
+            "reason": "analysis5_top30"
           },
           "orderMode": "sequential",
           "nodes": [
             {
               "id": "A",
               "x": 480,
-              "y": 90,
+              "y": 100,
               "label": "A"
             },
             {
               "id": "B",
-              "x": 680,
-              "y": 200,
+              "x": 614,
+              "y": 301,
               "label": "B"
             },
             {
               "id": "C",
-              "x": 680,
-              "y": 420,
+              "x": 674,
+              "y": 387,
               "label": "C"
             },
             {
               "id": "D",
-              "x": 480,
-              "y": 530,
+              "x": 390,
+              "y": 508,
               "label": "D"
             },
             {
               "id": "E",
-              "x": 280,
-              "y": 420,
+              "x": 370,
+              "y": 404,
               "label": "E"
             },
             {
               "id": "F",
-              "x": 280,
-              "y": 200,
+              "x": 320,
+              "y": 166,
               "label": "F"
             }
           ],
@@ -1085,14 +1269,6 @@
               "C"
             ],
             [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
               "B",
               "D"
             ],
@@ -1101,307 +1277,51 @@
               "E"
             ],
             [
-              "C",
-              "E"
-            ],
-            [
-              "C",
+              "B",
               "F"
             ],
             [
-              "D",
+              "C",
+              "D"
+            ],
+            [
+              "C",
               "E"
             ],
             [
               "D",
+              "F"
+            ],
+            [
+              "E",
               "F"
             ]
           ],
           "initialBeliefs": {
             "B": [
-              0.9,
-              0.05,
-              0.05
+              0.5,
+              0.25,
+              0.25
             ],
             "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
               0.05,
               0.9,
               0.05
             ],
-            "D": [
+            "E": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "F": [
               0.05,
               0.05,
               0.9
-            ],
-            "E": [
-              0.05,
-              0.9,
-              0.05
-            ],
-            "F": [
-              0.05,
-              0.9,
-              0.05
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t11",
-          "graphId": "RG088_medium",
-          "mainGraphId": "RG088",
-          "evidenceLevel": "medium",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG144",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 2,
-            "D3": "strong",
-            "highKL": 1.823,
-            "reason": "matched_D2"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "D"
-            ],
-            [
-              "B",
-              "E"
-            ],
-            [
-              "C",
-              "E"
-            ],
-            [
-              "C",
-              "F"
-            ],
-            [
-              "D",
-              "E"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.6,
-              0.2,
-              0.2
-            ],
-            "C": [
-              0.2,
-              0.6,
-              0.2
-            ],
-            "D": [
-              0.2,
-              0.2,
-              0.6
-            ],
-            "E": [
-              0.2,
-              0.6,
-              0.2
-            ],
-            "F": [
-              0.2,
-              0.6,
-              0.2
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t12",
-          "graphId": "RG088_low",
-          "mainGraphId": "RG088",
-          "evidenceLevel": "low",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG144",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 2,
-            "D3": "strong",
-            "highKL": 1.823,
-            "reason": "matched_D2"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "D"
-            ],
-            [
-              "B",
-              "E"
-            ],
-            [
-              "C",
-              "E"
-            ],
-            [
-              "C",
-              "F"
-            ],
-            [
-              "D",
-              "E"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "C": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "D": [
-              0.3,
-              0.3,
-              0.4
-            ],
-            "E": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "F": [
-              0.3,
-              0.4,
-              0.3
             ]
           },
           "reportOrder": [
@@ -1412,61 +1332,304 @@
       ]
     },
     {
-      "blockId": "b5_RG112",
+      "blockId": "b11_n5_g004",
+      "trials": [
+        {
+          "trialId": "t11",
+          "graphId": "n5_g004_top11",
+          "mainGraphId": "n5_g004",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.133546,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 120,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 696,
+              "y": 530,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 284,
+              "y": 530,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 463,
+              "y": 299,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 526,
+              "y": 215,
+              "label": "E"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "E": [
+              0.15,
+              0.15,
+              0.7
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b12_n6_g006",
+      "trials": [
+        {
+          "trialId": "t12",
+          "graphId": "n6_g006_top12",
+          "mainGraphId": "n6_g006",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.12793,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 582,
+              "y": 307,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 307,
+              "y": 327,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 463,
+              "y": 530,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 374,
+              "y": 90,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 737,
+              "y": 526,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.15,
+              0.15,
+              0.7
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "F": [
+              0.25,
+              0.5,
+              0.25
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b13_n6_g004",
       "trials": [
         {
           "trialId": "t13",
-          "graphId": "RG112_high",
-          "mainGraphId": "RG112",
-          "evidenceLevel": "high",
+          "graphId": "n6_g004_top13",
+          "mainGraphId": "n6_g004",
+          "evidenceLevel": "mixed",
           "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
+            "D1": "",
+            "D2": "",
+            "D3": ""
           },
           "descriptor": {
-            "D1": 3,
-            "D2": 1,
-            "D3": "strong",
-            "highKL": 1.88,
-            "reason": "high_separability"
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.982467,
+            "reason": "analysis5_top30"
           },
           "orderMode": "sequential",
           "nodes": [
             {
               "id": "A",
               "x": 480,
-              "y": 90,
+              "y": 100,
               "label": "A"
             },
             {
               "id": "B",
-              "x": 680,
-              "y": 200,
+              "x": 617,
+              "y": 367,
               "label": "B"
             },
             {
               "id": "C",
-              "x": 680,
-              "y": 420,
+              "x": 337,
+              "y": 314,
               "label": "C"
             },
             {
               "id": "D",
-              "x": 480,
+              "x": 432,
               "y": 530,
               "label": "D"
             },
             {
               "id": "E",
-              "x": 280,
-              "y": 420,
+              "x": 529,
+              "y": 196,
               "label": "E"
             },
             {
               "id": "F",
-              "x": 280,
-              "y": 200,
+              "x": 863,
+              "y": 458,
               "label": "F"
             }
           ],
@@ -1480,15 +1643,15 @@
               "C"
             ],
             [
-              "A",
-              "D"
-            ],
-            [
               "B",
               "C"
             ],
             [
               "B",
+              "D"
+            ],
+            [
+              "B",
               "E"
             ],
             [
@@ -1497,306 +1660,38 @@
             ],
             [
               "C",
-              "E"
+              "D"
             ],
             [
               "C",
-              "F"
-            ],
-            [
-              "D",
               "E"
-            ],
-            [
-              "D",
-              "F"
             ]
           ],
           "initialBeliefs": {
             "B": [
-              0.9,
-              0.05,
-              0.05
+              0.5,
+              0.25,
+              0.25
             ],
             "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
               0.05,
               0.05,
               0.9
             ],
-            "D": [
-              0.05,
-              0.9,
-              0.05
-            ],
             "E": [
-              0.05,
-              0.9,
-              0.05
+              0.15,
+              0.15,
+              0.7
             ],
             "F": [
-              0.05,
-              0.9,
-              0.05
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t14",
-          "graphId": "RG112_medium",
-          "mainGraphId": "RG112",
-          "evidenceLevel": "medium",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 1,
-            "D3": "strong",
-            "highKL": 1.88,
-            "reason": "high_separability"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "E"
-            ],
-            [
-              "B",
-              "F"
-            ],
-            [
-              "C",
-              "E"
-            ],
-            [
-              "C",
-              "F"
-            ],
-            [
-              "D",
-              "E"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.6,
-              0.2,
-              0.2
-            ],
-            "C": [
-              0.2,
-              0.2,
-              0.6
-            ],
-            "D": [
-              0.2,
-              0.6,
-              0.2
-            ],
-            "E": [
-              0.2,
-              0.6,
-              0.2
-            ],
-            "F": [
-              0.2,
-              0.6,
-              0.2
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t15",
-          "graphId": "RG112_low",
-          "mainGraphId": "RG112",
-          "evidenceLevel": "low",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 1,
-            "D3": "strong",
-            "highKL": 1.88,
-            "reason": "high_separability"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "E"
-            ],
-            [
-              "B",
-              "F"
-            ],
-            [
-              "C",
-              "E"
-            ],
-            [
-              "C",
-              "F"
-            ],
-            [
-              "D",
-              "E"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "C": [
-              0.3,
-              0.3,
-              0.4
-            ],
-            "D": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "E": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "F": [
-              0.3,
-              0.4,
-              0.3
+              0.15,
+              0.7,
+              0.15
             ]
           },
           "reportOrder": [
@@ -1807,61 +1702,315 @@
       ]
     },
     {
-      "blockId": "b6_RG114",
+      "blockId": "b14_n6_g046",
+      "trials": [
+        {
+          "trialId": "t14",
+          "graphId": "n6_g046_top14",
+          "mainGraphId": "n6_g046",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.948016,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 647,
+              "y": 530,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 583,
+              "y": 447,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 200,
+              "y": 530,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 257,
+              "y": 440,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 403,
+              "y": 207,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "E": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "F": [
+              0.15,
+              0.15,
+              0.7
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b15_n6_g009",
+      "trials": [
+        {
+          "trialId": "t15",
+          "graphId": "n6_g009_top15",
+          "mainGraphId": "n6_g009",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.82252,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 560,
+              "y": 303,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 628,
+              "y": 530,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 335,
+              "y": 450,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 437,
+              "y": 477,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 322,
+              "y": 204,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "C": [
+              0.15,
+              0.7,
+              0.15
+            ],
+            "D": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "F": [
+              0.05,
+              0.9,
+              0.05
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b16_n6_g005",
       "trials": [
         {
           "trialId": "t16",
-          "graphId": "RG114_high",
-          "mainGraphId": "RG114",
-          "evidenceLevel": "high",
+          "graphId": "n6_g005_top16",
+          "mainGraphId": "n6_g005",
+          "evidenceLevel": "mixed",
           "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
+            "D1": "",
+            "D2": "",
+            "D3": ""
           },
           "descriptor": {
-            "D1": 3,
-            "D2": 1,
-            "D3": "strong",
-            "highKL": 1.771,
-            "reason": "high_separability"
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.663349,
+            "reason": "analysis5_top30"
           },
           "orderMode": "sequential",
           "nodes": [
             {
               "id": "A",
               "x": 480,
-              "y": 90,
+              "y": 100,
               "label": "A"
             },
             {
               "id": "B",
-              "x": 680,
-              "y": 200,
+              "x": 777,
+              "y": 225,
               "label": "B"
             },
             {
               "id": "C",
-              "x": 680,
-              "y": 420,
+              "x": 541,
+              "y": 484,
               "label": "C"
             },
             {
               "id": "D",
-              "x": 480,
+              "x": 870,
               "y": 530,
               "label": "D"
             },
             {
               "id": "E",
-              "x": 280,
-              "y": 420,
+              "x": 392,
+              "y": 195,
               "label": "E"
             },
             {
               "id": "F",
-              "x": 280,
-              "y": 200,
+              "x": 497,
+              "y": 205,
               "label": "F"
             }
           ],
@@ -1875,12 +2024,12 @@
               "C"
             ],
             [
-              "A",
-              "D"
+              "B",
+              "C"
             ],
             [
               "B",
-              "C"
+              "D"
             ],
             [
               "B",
@@ -1892,294 +2041,42 @@
             ],
             [
               "C",
+              "D"
+            ],
+            [
+              "C",
               "E"
             ],
             [
-              "D",
-              "E"
-            ],
-            [
-              "D",
+              "C",
               "F"
             ]
           ],
           "initialBeliefs": {
             "B": [
-              0.9,
-              0.05,
-              0.05
+              0.5,
+              0.25,
+              0.25
             ],
             "C": [
+              0.25,
+              0.5,
+              0.25
+            ],
+            "D": [
               0.05,
               0.05,
               0.9
             ],
-            "D": [
-              0.05,
-              0.9,
-              0.05
-            ],
             "E": [
               0.05,
-              0.9,
-              0.05
+              0.05,
+              0.9
             ],
             "F": [
               0.05,
-              0.9,
-              0.05
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t17",
-          "graphId": "RG114_medium",
-          "mainGraphId": "RG114",
-          "evidenceLevel": "medium",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 1,
-            "D3": "strong",
-            "highKL": 1.771,
-            "reason": "high_separability"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "E"
-            ],
-            [
-              "B",
-              "F"
-            ],
-            [
-              "C",
-              "E"
-            ],
-            [
-              "D",
-              "E"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.6,
-              0.2,
-              0.2
-            ],
-            "C": [
-              0.2,
-              0.2,
-              0.6
-            ],
-            "D": [
-              0.2,
-              0.6,
-              0.2
-            ],
-            "E": [
-              0.2,
-              0.6,
-              0.2
-            ],
-            "F": [
-              0.2,
-              0.6,
-              0.2
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t18",
-          "graphId": "RG114_low",
-          "mainGraphId": "RG114",
-          "evidenceLevel": "low",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 1,
-            "D3": "strong",
-            "highKL": 1.771,
-            "reason": "high_separability"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "B",
-              "E"
-            ],
-            [
-              "B",
-              "F"
-            ],
-            [
-              "C",
-              "E"
-            ],
-            [
-              "D",
-              "E"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "C": [
-              0.3,
-              0.3,
-              0.4
-            ],
-            "D": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "E": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "F": [
-              0.3,
-              0.4,
-              0.3
+              0.05,
+              0.9
             ]
           },
           "reportOrder": [
@@ -2190,61 +2087,296 @@
       ]
     },
     {
-      "blockId": "b7_RG139",
+      "blockId": "b17_n6_g034",
+      "trials": [
+        {
+          "trialId": "t17",
+          "graphId": "n6_g034_top17",
+          "mainGraphId": "n6_g034",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.390197,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 691,
+              "y": 516,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 242,
+              "y": 530,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 90,
+              "y": 90,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 430,
+              "y": 192,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 585,
+              "y": 90,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "C": [
+              0.25,
+              0.25,
+              0.5
+            ],
+            "D": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "E": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "F": [
+              0.05,
+              0.9,
+              0.05
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b18_n5_g015",
+      "trials": [
+        {
+          "trialId": "t18",
+          "graphId": "n5_g015_top18",
+          "mainGraphId": "n5_g015",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.882794,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 120,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 870,
+              "y": 323,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 90,
+              "y": 324,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 478,
+              "y": 331,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 480,
+              "y": 530,
+              "label": "E"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "E": [
+              0.05,
+              0.9,
+              0.05
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b19_n6_g072",
       "trials": [
         {
           "trialId": "t19",
-          "graphId": "RG139_high",
-          "mainGraphId": "RG139",
-          "evidenceLevel": "high",
+          "graphId": "n6_g072_top19",
+          "mainGraphId": "n6_g072",
+          "evidenceLevel": "mixed",
           "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
+            "D1": "",
+            "D2": "",
+            "D3": ""
           },
           "descriptor": {
-            "D1": 3,
-            "D2": 1,
-            "D3": "tree-like",
-            "highKL": 0.988,
-            "reason": "matched_D1"
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.787608,
+            "reason": "analysis5_top30"
           },
           "orderMode": "sequential",
           "nodes": [
             {
               "id": "A",
               "x": 480,
-              "y": 90,
+              "y": 100,
               "label": "A"
             },
             {
               "id": "B",
-              "x": 680,
-              "y": 200,
+              "x": 870,
+              "y": 90,
               "label": "B"
             },
             {
               "id": "C",
-              "x": 680,
-              "y": 420,
+              "x": 432,
+              "y": 530,
               "label": "C"
             },
             {
               "id": "D",
-              "x": 480,
+              "x": 271,
               "y": 530,
               "label": "D"
             },
             {
               "id": "E",
-              "x": 280,
-              "y": 420,
+              "x": 315,
+              "y": 90,
               "label": "E"
             },
             {
               "id": "F",
-              "x": 280,
-              "y": 200,
+              "x": 824,
+              "y": 530,
               "label": "F"
             }
           ],
@@ -2263,121 +2395,19 @@
             ],
             [
               "B",
-              "C"
-            ],
-            [
-              "D",
               "E"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.9,
-              0.05,
-              0.05
-            ],
-            "C": [
-              0.05,
-              0.05,
-              0.9
-            ],
-            "D": [
-              0.05,
-              0.9,
-              0.05
-            ],
-            "E": [
-              0.05,
-              0.9,
-              0.05
-            ],
-            "F": [
-              0.05,
-              0.9,
-              0.05
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t20",
-          "graphId": "RG139_medium",
-          "mainGraphId": "RG139",
-          "evidenceLevel": "medium",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 1,
-            "D3": "tree-like",
-            "highKL": 0.988,
-            "reason": "matched_D1"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
             ],
             [
               "B",
-              "C"
+              "F"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "C",
+              "F"
             ],
             [
               "D",
@@ -2390,143 +2420,29 @@
           ],
           "initialBeliefs": {
             "B": [
-              0.6,
-              0.2,
-              0.2
+              0.05,
+              0.9,
+              0.05
             ],
             "C": [
-              0.2,
-              0.2,
-              0.6
+              0.05,
+              0.9,
+              0.05
             ],
             "D": [
-              0.2,
-              0.6,
-              0.2
+              0.05,
+              0.9,
+              0.05
             ],
             "E": [
-              0.2,
-              0.6,
-              0.2
+              0.9,
+              0.05,
+              0.05
             ],
             "F": [
-              0.2,
-              0.6,
-              0.2
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t21",
-          "graphId": "RG139_low",
-          "mainGraphId": "RG139",
-          "evidenceLevel": "low",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 1,
-            "D3": "tree-like",
-            "highKL": 0.988,
-            "reason": "matched_D1"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "C"
-            ],
-            [
-              "D",
-              "E"
-            ],
-            [
-              "D",
-              "F"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "C": [
-              0.3,
-              0.3,
-              0.4
-            ],
-            "D": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "E": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "F": [
-              0.3,
-              0.4,
-              0.3
+              0.9,
+              0.05,
+              0.05
             ]
           },
           "reportOrder": [
@@ -2537,61 +2453,943 @@
       ]
     },
     {
-      "blockId": "b8_RG144",
+      "blockId": "b20_n6_g008",
       "trials": [
         {
-          "trialId": "t22",
-          "graphId": "RG144_high",
-          "mainGraphId": "RG144",
-          "evidenceLevel": "high",
+          "trialId": "t20",
+          "graphId": "n6_g008_top20",
+          "mainGraphId": "n6_g008",
+          "evidenceLevel": "mixed",
           "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
+            "D1": "",
+            "D2": "",
+            "D3": ""
           },
           "descriptor": {
-            "D1": 3,
-            "D2": 0,
-            "D3": "strong",
-            "highKL": 1.093,
-            "reason": "matched_D2"
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.614592,
+            "reason": "analysis5_top30"
           },
           "orderMode": "sequential",
           "nodes": [
             {
               "id": "A",
               "x": 480,
-              "y": 90,
+              "y": 100,
               "label": "A"
             },
             {
               "id": "B",
-              "x": 680,
-              "y": 200,
+              "x": 675,
+              "y": 416,
               "label": "B"
             },
             {
               "id": "C",
-              "x": 680,
-              "y": 420,
+              "x": 340,
+              "y": 435,
               "label": "C"
             },
             {
               "id": "D",
-              "x": 480,
+              "x": 296,
               "y": 530,
               "label": "D"
             },
             {
               "id": "E",
-              "x": 280,
-              "y": 420,
+              "x": 364,
+              "y": 126,
               "label": "E"
             },
             {
               "id": "F",
-              "x": 280,
-              "y": 200,
+              "x": 448,
+              "y": 204,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "C",
+              "F"
+            ],
+            [
+              "D",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.15,
+              0.7,
+              0.15
+            ],
+            "D": [
+              0.15,
+              0.7,
+              0.15
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "F": [
+              0.05,
+              0.05,
+              0.9
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b21_n6_g015",
+      "trials": [
+        {
+          "trialId": "t21",
+          "graphId": "n6_g015_top21",
+          "mainGraphId": "n6_g015",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.129886,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 288,
+              "y": 241,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 530,
+              "y": 342,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 359,
+              "y": 528,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 295,
+              "y": 444,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 90,
+              "y": 530,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ],
+            [
+              "E",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "E": [
+              0.15,
+              0.15,
+              0.7
+            ],
+            "F": [
+              0.7,
+              0.15,
+              0.15
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b22_n6_g073",
+      "trials": [
+        {
+          "trialId": "t22",
+          "graphId": "n6_g073_top22",
+          "mainGraphId": "n6_g073",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.785865,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 870,
+              "y": 336,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 93,
+              "y": 275,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 122,
+              "y": 90,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 483,
+              "y": 378,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 585,
+              "y": 90,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.15,
+              0.7,
+              0.15
+            ],
+            "C": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "D": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "E": [
+              0.9,
+              0.05,
+              0.05
+            ],
+            "F": [
+              0.9,
+              0.05,
+              0.05
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b23_n6_g045",
+      "trials": [
+        {
+          "trialId": "t23",
+          "graphId": "n6_g045_top23",
+          "mainGraphId": "n6_g045",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.663471,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 523,
+              "y": 512,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 627,
+              "y": 528,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 123,
+              "y": 530,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 250,
+              "y": 132,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 366,
+              "y": 90,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "D",
+              "E"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "C": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "D": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "E": [
+              0.15,
+              0.15,
+              0.7
+            ],
+            "F": [
+              0.05,
+              0.9,
+              0.05
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b24_n6_g014",
+      "trials": [
+        {
+          "trialId": "t24",
+          "graphId": "n6_g014_top24",
+          "mainGraphId": "n6_g014",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.455837,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 526,
+              "y": 334,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 265,
+              "y": 293,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 355,
+              "y": 530,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 375,
+              "y": 90,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 92,
+              "y": 530,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "F": [
+              0.7,
+              0.15,
+              0.15
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b25_n6_g053",
+      "trials": [
+        {
+          "trialId": "t25",
+          "graphId": "n6_g053_top25",
+          "mainGraphId": "n6_g053",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.71898,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 864,
+              "y": 95,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 722,
+              "y": 459,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 90,
+              "y": 90,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 464,
+              "y": 205,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 90,
+              "y": 486,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "E": [
+              0.9,
+              0.05,
+              0.05
+            ],
+            "F": [
+              0.5,
+              0.25,
+              0.25
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b26_n5_g004",
+      "trials": [
+        {
+          "trialId": "t26",
+          "graphId": "n5_g004_top26",
+          "mainGraphId": "n5_g004",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.403137,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 120,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 754,
+              "y": 448,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 381,
+              "y": 530,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 465,
+              "y": 224,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 549,
+              "y": 290,
+              "label": "E"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "C",
+              "E"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.25,
+              0.5,
+              0.25
+            ],
+            "D": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "E": [
+              0.05,
+              0.05,
+              0.9
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b27_n6_g071",
+      "trials": [
+        {
+          "trialId": "t27",
+          "graphId": "n6_g071_top27",
+          "mainGraphId": "n6_g071",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.770394,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 870,
+              "y": 289,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 119,
+              "y": 356,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 90,
+              "y": 90,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 484,
+              "y": 232,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 510,
+              "y": 502,
               "label": "F"
             }
           ],
@@ -2631,9 +3429,132 @@
           ],
           "initialBeliefs": {
             "B": [
+              0.15,
+              0.7,
+              0.15
+            ],
+            "C": [
+              0.15,
+              0.7,
+              0.15
+            ],
+            "D": [
+              0.05,
+              0.9,
+              0.05
+            ],
+            "E": [
               0.9,
               0.05,
               0.05
+            ],
+            "F": [
+              0.9,
+              0.05,
+              0.05
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b28_n6_g013",
+      "trials": [
+        {
+          "trialId": "t28",
+          "graphId": "n6_g013_top28",
+          "mainGraphId": "n6_g013",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 1.97722,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 346,
+              "y": 311,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 489,
+              "y": 530,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 225,
+              "y": 530,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 90,
+              "y": 330,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 198,
+              "y": 90,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "E",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
             ],
             "C": [
               0.05,
@@ -2651,253 +3572,267 @@
               0.05
             ],
             "F": [
+              0.15,
+              0.15,
+              0.7
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b29_n6_g012",
+      "trials": [
+        {
+          "trialId": "t29",
+          "graphId": "n6_g012_top29",
+          "mainGraphId": "n6_g012",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.210404,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 510,
+              "y": 391,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 222,
+              "y": 240,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 245,
+              "y": 530,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 756,
+              "y": 194,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 804,
+              "y": 495,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "D"
+            ],
+            [
+              "E",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.5,
+              0.25,
+              0.25
+            ],
+            "C": [
+              0.15,
+              0.7,
+              0.15
+            ],
+            "D": [
+              0.05,
+              0.05,
+              0.9
+            ],
+            "E": [
+              0.15,
+              0.7,
+              0.15
+            ],
+            "F": [
+              0.05,
+              0.05,
+              0.9
+            ]
+          },
+          "reportOrder": [
+            "A"
+          ],
+          "beliefApplyOrder": []
+        }
+      ]
+    },
+    {
+      "blockId": "b30_n6_g011",
+      "trials": [
+        {
+          "trialId": "t30",
+          "graphId": "n6_g011_top30",
+          "mainGraphId": "n6_g011",
+          "evidenceLevel": "mixed",
+          "comparisonGraphIds": {
+            "D1": "",
+            "D2": "",
+            "D3": ""
+          },
+          "descriptor": {
+            "D1": "",
+            "D2": "",
+            "D3": "",
+            "highKL": 2.28912,
+            "reason": "analysis5_top30"
+          },
+          "orderMode": "sequential",
+          "nodes": [
+            {
+              "id": "A",
+              "x": 480,
+              "y": 100,
+              "label": "A"
+            },
+            {
+              "id": "B",
+              "x": 412,
+              "y": 254,
+              "label": "B"
+            },
+            {
+              "id": "C",
+              "x": 576,
+              "y": 237,
+              "label": "C"
+            },
+            {
+              "id": "D",
+              "x": 315,
+              "y": 119,
+              "label": "D"
+            },
+            {
+              "id": "E",
+              "x": 507,
+              "y": 390,
+              "label": "E"
+            },
+            {
+              "id": "F",
+              "x": 241,
+              "y": 269,
+              "label": "F"
+            }
+          ],
+          "edges": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "C"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "B",
+              "C"
+            ],
+            [
+              "B",
+              "D"
+            ],
+            [
+              "B",
+              "E"
+            ],
+            [
+              "B",
+              "F"
+            ],
+            [
+              "C",
+              "E"
+            ],
+            [
+              "D",
+              "F"
+            ]
+          ],
+          "initialBeliefs": {
+            "B": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "C": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "D": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "E": [
+              0.15,
+              0.7,
+              0.15
+            ],
+            "F": [
               0.05,
               0.9,
               0.05
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t23",
-          "graphId": "RG144_medium",
-          "mainGraphId": "RG144",
-          "evidenceLevel": "medium",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 0,
-            "D3": "strong",
-            "highKL": 1.093,
-            "reason": "matched_D2"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "E"
-            ],
-            [
-              "B",
-              "F"
-            ],
-            [
-              "C",
-              "E"
-            ],
-            [
-              "C",
-              "F"
-            ],
-            [
-              "D",
-              "E"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.6,
-              0.2,
-              0.2
-            ],
-            "C": [
-              0.2,
-              0.6,
-              0.2
-            ],
-            "D": [
-              0.2,
-              0.2,
-              0.6
-            ],
-            "E": [
-              0.2,
-              0.6,
-              0.2
-            ],
-            "F": [
-              0.2,
-              0.6,
-              0.2
-            ]
-          },
-          "reportOrder": [
-            "A"
-          ],
-          "beliefApplyOrder": []
-        },
-        {
-          "trialId": "t24",
-          "graphId": "RG144_low",
-          "mainGraphId": "RG144",
-          "evidenceLevel": "low",
-          "comparisonGraphIds": {
-            "D1": "RG018",
-            "D2": "RG088",
-            "D3": "RG003"
-          },
-          "descriptor": {
-            "D1": 3,
-            "D2": 0,
-            "D3": "strong",
-            "highKL": 1.093,
-            "reason": "matched_D2"
-          },
-          "orderMode": "sequential",
-          "nodes": [
-            {
-              "id": "A",
-              "x": 480,
-              "y": 90,
-              "label": "A"
-            },
-            {
-              "id": "B",
-              "x": 680,
-              "y": 200,
-              "label": "B"
-            },
-            {
-              "id": "C",
-              "x": 680,
-              "y": 420,
-              "label": "C"
-            },
-            {
-              "id": "D",
-              "x": 480,
-              "y": 530,
-              "label": "D"
-            },
-            {
-              "id": "E",
-              "x": 280,
-              "y": 420,
-              "label": "E"
-            },
-            {
-              "id": "F",
-              "x": 280,
-              "y": 200,
-              "label": "F"
-            }
-          ],
-          "edges": [
-            [
-              "A",
-              "B"
-            ],
-            [
-              "A",
-              "C"
-            ],
-            [
-              "A",
-              "D"
-            ],
-            [
-              "B",
-              "E"
-            ],
-            [
-              "B",
-              "F"
-            ],
-            [
-              "C",
-              "E"
-            ],
-            [
-              "C",
-              "F"
-            ],
-            [
-              "D",
-              "E"
-            ]
-          ],
-          "initialBeliefs": {
-            "B": [
-              0.4,
-              0.3,
-              0.3
-            ],
-            "C": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "D": [
-              0.3,
-              0.3,
-              0.4
-            ],
-            "E": [
-              0.3,
-              0.4,
-              0.3
-            ],
-            "F": [
-              0.3,
-              0.4,
-              0.3
             ]
           },
           "reportOrder": [

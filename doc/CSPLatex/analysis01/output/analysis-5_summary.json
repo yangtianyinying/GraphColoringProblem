@@ -1,0 +1,25 @@
+{
+  "n_values": [
+    5,
+    6
+  ],
+  "family_order": [
+    "M_exact",
+    "M_0",
+    "M_rho",
+    "M_rho,beta",
+    "M_star",
+    "M_cluster"
+  ],
+  "total_rooted_graphs": 354,
+  "total_conditions_after_filters": 78084,
+  "top_k": 30,
+  "diversity_weights": {
+    "template": 0.35,
+    "occupancy": 0.2,
+    "graph": 0.15
+  },
+  "n5_structures_expected": 17,
+  "n6_structures_expected": 81,
+  "candidate_space_formula_todo": "17*5*(4^4)+81*6*(5^4)=325510"
+}

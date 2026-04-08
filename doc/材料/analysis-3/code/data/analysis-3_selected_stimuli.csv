@@ -1,9 +1,0 @@
-graph_id,n_nodes,D1_target_degree,D2_neighbor_coupling,D3_remote_class,S2_count,e12,e22,high_kl_A0_to_A4,selection_reasons,preferred_color_template
-RG003,5,4,2,D3-0:no-remote,0,0,0,0.132085,matched_D3,0-0-2-1
-RG018,5,2,1,D3-1:tree-like-remote,2,2,0,0.236732,matched_D1,0-2-0-2
-RG058,6,4,2,D3-2:strong-remote,1,3,0,1.030115,matched_D3,0-1-2-2-1
-RG088,6,3,2,D3-2:strong-remote,2,5,0,1.822683,matched_D2,0-1-2-1-1
-RG112,6,3,1,D3-2:strong-remote,2,6,0,1.879693,high_separability,0-2-1-1-1
-RG114,6,3,1,D3-2:strong-remote,2,5,0,1.770825,high_separability,0-2-1-1-1
-RG139,6,3,1,D3-1:tree-like-remote,2,2,0,0.988081,matched_D1,0-2-1-1-1
-RG144,6,3,0,D3-2:strong-remote,2,5,0,1.092892,matched_D2,0-1-2-1-1

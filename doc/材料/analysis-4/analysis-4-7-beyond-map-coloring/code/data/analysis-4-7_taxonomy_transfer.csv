@@ -1,7 +1,0 @@
-family,transfer_to_attractive_tasks,transfer_to_social_consensus,transfer_to_diffusion,notes
-M_exact,direct,direct,direct,Exact inference remains well-defined across all domains.
-M_0,direct,direct,direct,Nearest-neighbour-only truncation generalises cleanly.
-M_rho,direct,direct,direct,rho remains the main task-general structural attenuation parameter.
-"M_rho,beta",direct,direct,direct,beta may become even more psychologically important when couplings vary in strength.
-M_star,direct,direct,direct,Target-centred rewrite remains meaningful across repulsive and attractive tasks.
-M_cluster,strong,strong,moderate,Chunking local clusters may become more plausible under attractive couplings.

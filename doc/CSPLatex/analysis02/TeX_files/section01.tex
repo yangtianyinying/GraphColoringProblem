@@ -1,0 +1,108 @@
+\section{执行结果报告}
+
+\subsection{任务目标与实现说明}
+
+本节对应 \texttt{TODO.md} 中 ``拟合'' 部分的落地实现，目标是复现实验设计中的一句关键描述：
+
+\begin{quote}
+下面给出 heterogeneous top-30 上的 categorical fitting confusion matrix。行是真实 family，列是拟合出的 family。
+\end{quote}
+
+我们在 \texttt{analysis02/script/run\_analysis02.py} 中完成了完整流程：
+\begin{enumerate}
+    \item 读取 \texttt{analysis01/output/analysis-5\_top30.csv} 的 30 个 trial；
+    \item 基于已给定的 6 个 family 假设，重建每个 trial 的 posterior；
+    \item 对每个真实 family 生成 synthetic participant（每个 family 重复 200 次）；
+    \item 用 categorical log-likelihood 反推 best-fitting family；
+    \item 汇总 confusion matrix，并导出图表与结果文件。
+\end{enumerate}
+
+同时在 \texttt{analysis02/test/test\_analysis02.py} 中补充了 3 个单元测试，覆盖：
+\begin{itemize}
+    \item top-30 读取数量与 family 完整性检查；
+    \item confusion matrix 每行归一化检查；
+    \item 全流程运行后的输出文件检查。
+\end{itemize}
+
+\subsection{核心公式}
+
+对某个 synthetic participant 的 30 个离散反应 \(r_t\in\{R,G,B\}\)，family \(f\) 的对数似然定义为：
+\begin{equation}
+\mathcal L(f)=\sum_{t=1}^{30}\log p_f^{(t)}(r_t).
+\end{equation}
+
+拟合规则为：
+\begin{equation}
+\hat f=\arg\max_{f\in\mathcal F}\mathcal L(f).
+\end{equation}
+
+confusion matrix 的元素为：
+\begin{equation}
+C_{ij}=P(\hat f=j\mid f_{\text{true}}=i),
+\end{equation}
+其中行 \(i\) 表示真实 family，列 \(j\) 表示拟合出的 family。
+
+\subsection{数值结果}
+
+本次运行参数为：\(n_{\text{trials}}=30\)、每个真实 family 重复 \(200\) 次、随机种子 \(20260408\)。
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcccccc}
+\toprule
+true / fit & M\_exact & M\_0 & M\_rho & M\_rho,beta & M\_star & M\_cluster \\
+\midrule
+M\_exact   & 0.790 & 0.000 & 0.140 & 0.000 & 0.000 & 0.070 \\
+M\_0       & 0.000 & 0.845 & 0.005 & 0.150 & 0.000 & 0.000 \\
+M\_rho     & 0.190 & 0.015 & 0.550 & 0.225 & 0.000 & 0.020 \\
+M\_rho,beta& 0.010 & 0.200 & 0.215 & 0.560 & 0.000 & 0.015 \\
+M\_star    & 0.000 & 0.000 & 0.000 & 0.000 & 1.000 & 0.000 \\
+M\_cluster & 0.040 & 0.000 & 0.000 & 0.000 & 0.000 & 0.960 \\
+\bottomrule
+\end{tabular}
+\caption{heterogeneous top-30 上的 categorical fitting confusion matrix（行：真实 family，列：拟合 family）。}
+\label{tab:analysis02-confusion}
+\end{table}
+
+进一步汇总得到：
+\begin{itemize}
+    \item confusion matrix diagonal mean = \(0.784167\)；
+    \item mean log-likelihood gap = \(4.151152\)。
+\end{itemize}
+
+\subsection{可视化结果}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.88\textwidth]{fig_analysis02_confusion_heatmap.png}
+\caption{heterogeneous top-30 的 confusion matrix 热图。}
+\label{fig:analysis02-heatmap}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.80\textwidth]{fig_analysis02_diagonal_bars.png}
+\caption{各真实 family 的对角线识别率（即被正确拟合的概率）。}
+\label{fig:analysis02-diagonal}
+\end{figure}
+
+\subsection{结果解读}
+
+从表 \ref{tab:analysis02-confusion} 和图 \ref{fig:analysis02-heatmap} 可见：
+\begin{enumerate}
+    \item \textbf{最稳定可识别 family：} \(M_{\mathrm{star}}\) 与 \(M_{\mathrm{cluster}}\) 的对角线分别达到 1.000 与 0.960；
+    \item \textbf{主要混淆边界：} \(M_{\rho}\) 与 \(M_{\rho,\beta}\) 互相混淆明显（0.225 与 0.215），符合 ``同结构、不同强度'' 的理论预期；
+    \item \textbf{另一个边界：} \(M_0\) 与 \(M_{\rho,\beta}\) 存在次级混淆（0.150 与 0.200）；
+    \item \textbf{总体可辨识度：} 对角线均值 0.784167，说明在当前模拟噪声设定下，heterogeneous top-30 能提供中高水平的 family 区分能力。
+\end{enumerate}
+
+\subsection{输出文件索引}
+
+本节对应的机器产出位于 \texttt{analysis02/output/}：
+\begin{itemize}
+    \item \texttt{analysis02\_categorical\_confusion.json}：完整数值结果；
+    \item \texttt{analysis02\_categorical\_confusion\_matrix.csv}：矩阵表格版本；
+    \item \texttt{figures/fig\_analysis02\_confusion\_heatmap.png}：混淆矩阵热图；
+    \item \texttt{figures/fig\_analysis02\_diagonal\_bars.png}：对角线识别率柱状图。
+\end{itemize}

@@ -1,7 +1,0 @@
-key,value
-family_order,"M_exact, M_0, M_rho, M_rho,beta, M_star, M_cluster"
-overview_metric,JS divergence by default; use directional KL only when asymmetry is itself the scientific point.
-parameter_metric,Use local-neighbour identifiability or mean JS to a named anchor.
-colour_scale_rule,Keep identical colour scales across comparable heatmaps inside one analysis.
-naming_rule,analysis-N_figX_description.pdf with figure number fixed by report order.
-annotation_rule,"Every condition-specific panel must show graph, evidence, target and family order."

@@ -1,7 +1,0 @@
-family,class,graph_preserved_or_rewritten,local_vs_nonlocal_sensitivity,computational_simplicity,psychological_interpretation
-M_exact,normative benchmark,true graph G preserved exactly,D1=high; D2=high; D3=high,low,full graph-aware inference benchmark
-M_0,fixed-graph local baseline,true graph retained but only shell-0 edges remain active via rho=0 energy decay,D1=high; D2=moderate; D3=low,very high,strictly local bounded inference
-M_rho,fixed-graph attenuation family,true graph G preserved,D1=high; D2=high; D3=high but graded,moderate,continuous bounded propagation on the correct graph
-"M_rho,beta",fixed-graph attenuation with factor-strength uncertainty,true graph G preserved,D1=high; D2=high; D3=high but potentially confounded with beta,moderate,bounded propagation plus uncertainty about local constraint strength
-M_star,structure-rewrite family,graph is internally collapsed to a target-centred star,D1=high; D2=low; D3=moderate,high,all distal influence is rewritten into direct target-centred pushes
-M_cluster,local cluster / junction-lite family,"retain target, shell-1, shell-2 nodes and add shell-1 fill-in edges induced by shared shell-2 neighbours",D1=high; D2=very high; D3=moderate,moderate to high,participants chunk local motifs into a compact cluster representation
